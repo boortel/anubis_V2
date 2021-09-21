@@ -19,6 +19,8 @@ class Camera_control_gui(QtWidgets.QWidget):
     received_info = Signal(int)
     fps_info = Signal(float)
 
+    # TODO: upravit s ohledem na presunuti ctl prvku
+
     def __init__(self):
         super(Camera_control_gui, self).__init__()
 
