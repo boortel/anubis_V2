@@ -23,7 +23,7 @@ import atexit
 
 ##Global camera object
 cams = Camera_connector()
-active_cam = '0'
+active_cam = ["-1", "-1", "-1", "-1"]
 
 def close_cameras():
     """!@brief Function to properly disconnect all cameras when exiting the application
@@ -34,9 +34,9 @@ def close_cameras():
 
 atexit.register(close_cameras)
 
-def change_active_cam(new):
+def change_active_cam(new, index):
     """!@brief Function is used to change the value of the global variable active_cam
         @param[in] new index of the active camera.
         """
     global active_cam
-    active_cam = new
+    active_cam[index] = new

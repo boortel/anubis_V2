@@ -102,16 +102,16 @@ class Ui_MainWindow(QtCore.QObject):
         self.tabs.addTab(self.tab_connect, "")
 
         #Tab - Camera control
-        self.tab_camera_cfg1 = Tab_camera()
+        self.tab_camera_cfg1 = Tab_camera(0)
         self.tabs.addTab(self.tab_camera_cfg1, "")
 
-        self.tab_camera_cfg2 = Tab_camera()
+        self.tab_camera_cfg2 = Tab_camera(1)
         self.tabs.addTab(self.tab_camera_cfg2, "")
 
-        self.tab_camera_cfg3 = Tab_camera()
+        self.tab_camera_cfg3 = Tab_camera(2)
         self.tabs.addTab(self.tab_camera_cfg3, "")
 
-        self.tab_camera_cfg4 = Tab_camera()
+        self.tab_camera_cfg4 = Tab_camera(3)
         self.tabs.addTab(self.tab_camera_cfg4, "")
         
         # Initial refresh of the camera parameters
@@ -127,7 +127,7 @@ class Ui_MainWindow(QtCore.QObject):
 
         self.feat_refresh_timer  = QtCore.QTimer(self)
         self.feat_refresh_timer.setInterval(4000)
-        self.feat_refresh_timer.timeout.connect(self.tab_changed())
+        self.feat_refresh_timer.timeout.connect(self.tab_changed)
         self.feat_refresh_timer.start()
         
         self.gridLayout.addWidget(self.tabs, 0, 0, 2, 1)
@@ -303,15 +303,16 @@ class Ui_MainWindow(QtCore.QObject):
         self.preview_and_control.connection_update.connect(self.update_camera_status)
         self.preview_and_control.send_status_msg.connect(self.set_status_msg)
         self.preview_and_control.recording_update.connect(self.update_recording)
-        self.preview_and_control.request_prediction.connect(self.predict)
         self.preview_and_control.fps_info.connect(self.update_fps)
         self.preview_and_control.received_info.connect(self.update_received_frames)
         
         self.action_save_settings.triggered.connect(self.save_cti_config)
         self.actionRemove_cti_file.triggered.connect(self.tab_connect.remove_cti)
         self.actionAdd_Remove_cti_file.triggered.connect(self.tab_connect.add_cti)
-        self.actionSave_camera_config.triggered.connect(self.tab_config.save_cam_config)
-        self.actionLoad_camera_config.triggered.connect(self.tab_config.load_cam_config)
+
+        # TODO
+        #self.actionSave_camera_config.triggered.connect(self.tab_config.save_cam_config)
+        #self.actionLoad_camera_config.triggered.connect(self.tab_config.load_cam_config)
         self.actionOpen_Help.triggered.connect(lambda: 
                             webbrowser.open(
                                 os.path.dirname(os.path.realpath(__file__)) + 
@@ -334,7 +335,6 @@ class Ui_MainWindow(QtCore.QObject):
         @details Used to do actions when entering specific tab.
         """
         index = self.tabs.currentIndex()
-        self.tab_camera_cfg.tab_index = index
         
         if index == 0:
             pass

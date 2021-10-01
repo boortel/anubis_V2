@@ -1,4 +1,4 @@
-from PyQt5 import QtCore, QtWidgets, QtGui
+from PyQt5 import QtCore, QtWidgets 
 import global_camera
 from PyQt5.QtCore import pyqtSignal as Signal
 import os
@@ -6,53 +6,49 @@ import threading
 from queue import Queue
 from config_level import Config_level
 
-
 class Tab_camera(QtWidgets.QWidget):
     #signals
     ##Used to send status message to the GUI
     send_status_msg = Signal(str, int)
 
-    # TBD: Pridat na spodek tabu informaci o kamere, statusu, FPS a received frames
-
-    def __init__(self):
+    def __init__(self, camIndex):
         super(Tab_camera, self).__init__()
-
-                ##Widget used to transfer GUI changes from thread into the main thread while updating preview
-        self.resize_signal = QtWidgets.QLineEdit()
-        self.resize_signal.textChanged.connect(self.update_img)
-
-        self.save_location = ""
-        self.save_filename = ""
-        self.sequence_duration = ""
-
-        ##Holds current frame displayed in the GUI
-        self.image_pixmap = None
-        ##Width of the preview area
-        self.w_preview = 0
-        ##Height of the preview area
-        self.h_preview = 0
-
-        ##Signals that a recording was stopped, either by timer or manually
-        self.interrupt_flag = threading.Event()
-
-        ##Current frames per second received from the camera
-        self.fps = 0.0
-        ##Total sum of received frames for active camera session
-        self.received = 0
-
-        ##Last value of the dragging in the preview area - x axis
-        self.move_x_prev = 0
-        ##Last value of the dragging in the preview area - y axis
-        self.move_y_prev = 0
-
-        ##Value of current preview zoom in %/100
-        self.preview_zoom = 1
-        ##Resizing image to preview area size instead of using zoom
-        self.preview_fit = True
-
-        self.connected = False
         self.preview_live = False
         self.recording = False
+        ##Holds parameter category paths for tree widget
+        self.top_items = {}
+        ##Holds children widgets for tree widget
+        self.children_items = {}
+
+        ##Flag is not set while the application is getting parameters from the cam object
+        self.param_flag = threading.Event()
+
+        ##Flag used when running various parameter refreshing methods
+        self.update_flag = threading.Event()
+        ##Flag used when running various parameter refreshing methods
+        self.update_completed_flag = threading.Event()
+        self.update_completed_flag.set()
+
+
+        ##Used to store values of parameters when automatically refreshing them
+        self.parameter_values = {}
+
+        self.tab_index = 0
+        
+        ##Contains all dynamically created widgets for parameters
+        self.feat_widgets = {}
+        ##Contains all dynamically created labels of parameters
+        self.feat_labels = {}
+        ##Stores dictionaries of every parameter until they are processed to the GUI
+        self.feat_queue = Queue()
+
+        self.connected = False
+        ##Widget used to transfer GUI changes from thread into the main thread while showing parameters
+        self.parameters_signal = QtWidgets.QLineEdit()
+        self.parameters_signal.textChanged.connect(self.show_parameters)
+
+        ##Indexing variable
+        self.camIndex = camIndex
 
         self.add_widgets()
         self.connect_actions()
@@ -226,7 +222,7 @@ class Tab_camera(QtWidgets.QWidget):
 
         # Recording
         self.line_edit_save_location.textChanged.connect(self.send_conf_update)
-        self.line_edit_sequence_duration.valueChanged.connect(self.send_conf_update)
+        self.line_edit_sequence_duration.textChanged.connect(self.send_conf_update)
         self.line_edit_sequence_name.textChanged.connect(self.send_conf_update)
         self.file_manager_save_location.clicked.connect(lambda: self.get_directory(self.line_edit_save_location))
         self.btn_save_sequence_settings.clicked.connect(self.save_seq_settings)
@@ -476,7 +472,7 @@ class Tab_camera(QtWidgets.QWidget):
                     
                     #Call feature change for this feature when enter is pressed in this field.
                     #Text is the value that will be set to the feature.
-                    self.feat_widgets[param["name"]].valueChanged.connect(lambda new_val,param=param: global_camera.cams.active_devices[global_camera.active_cam].set_parameter(param["name"],new_val))
+                    self.feat_widgets[param["name"]].valueChanged.connect(lambda new_val,param=param: global_camera.cams.active_devices[global_camera.active_cam[self.camIndex]].set_parameter(param["name"],new_val))
                 elif param["attr_type"] == "FloatFeature":
                     #For float feature a Line edit field is created, but only 
                     #real numbers can be written in.
@@ -491,7 +487,7 @@ class Tab_camera(QtWidgets.QWidget):
                     
                     #Call feature change for this feature when enter is pressed in this field.
                     #Text is the value that will be set to the feature.
-                    self.feat_widgets[param["name"]].valueChanged.connect(lambda new_val,param=param: global_camera.cams.active_devices[global_camera.active_cam].set_parameter(param["name"],new_val))
+                    self.feat_widgets[param["name"]].valueChanged.connect(lambda new_val,param=param: global_camera.cams.active_devices[global_camera.active_cam[self.camIndex]].set_parameter(param["name"],new_val))
                 elif param["attr_type"] == "StringFeature":
                     #For string feature a Line edit field is created.
                     self.feat_widgets[param["name"]] = QtWidgets.QLineEdit(self)
@@ -501,7 +497,7 @@ class Tab_camera(QtWidgets.QWidget):
                     
                     #Call feature change for this feature when enter is pressed in this field.
                     #Text is the value that will be set to the feature.
-                    self.feat_widgets[param["name"]].returnPressed.connect(lambda new_val,param=param: global_camera.cams.active_devices[global_camera.active_cam].set_parameter(param["name"],new_val))            
+                    self.feat_widgets[param["name"]].returnPressed.connect(lambda new_val,param=param: global_camera.cams.active_devices[global_camera.active_cam[self.camIndex]].set_parameter(param["name"],new_val))            
                 elif param["attr_type"] == "BoolFeature":
                     #For bool feature a checkbox is created.
                     self.feat_widgets[param["name"]] = QtWidgets.QCheckBox(self)
@@ -511,7 +507,7 @@ class Tab_camera(QtWidgets.QWidget):
                     
                     #When state of the checkbox change, the feature is sent to 
                     #the camera and changed to the new state
-                    self.feat_widgets[param["name"]].stateChanged.connect(lambda new_val,param=param: global_camera.cams.active_devices[global_camera.active_cam].set_parameter(param["name"],new_val))
+                    self.feat_widgets[param["name"]].stateChanged.connect(lambda new_val,param=param: global_camera.cams.active_devices[global_camera.active_cam[self.camIndex]].set_parameter(param["name"],new_val))
                 elif param["attr_type"] == "EnumFeature":
                     #For enum feature a combo box is created.
                     self.feat_widgets[param["name"]] = QtWidgets.QComboBox(self)
@@ -530,13 +526,13 @@ class Tab_camera(QtWidgets.QWidget):
                     
                     #When different option is selected change the given enum in
                     #the camera
-                    self.feat_widgets[param["name"]].activated.connect(lambda new_val,param=param: global_camera.cams.active_devices[global_camera.active_cam].set_parameter(param["name"],new_val+1))
+                    self.feat_widgets[param["name"]].activated.connect(lambda new_val,param=param: global_camera.cams.active_devices[global_camera.active_cam[self.camIndex]].set_parameter(param["name"],new_val+1))
                 elif param["attr_type"] == "CommandFeature":
                     #If the feature type is not recognized, create a label with 
                     #the text error
                     self.feat_widgets[param["name"]] = QtWidgets.QPushButton(self)
                     self.feat_widgets[param["name"]].setText("Execute command")
-                    self.feat_widgets[param["name"]].clicked.connect(lambda val,param=param: global_camera.cams.active_devices[global_camera.active_cam].execute_command(param["name"]))
+                    self.feat_widgets[param["name"]].clicked.connect(lambda val,param=param: global_camera.cams.active_devices[global_camera.active_cam[self.camIndex]].execute_command(param["name"]))
                 else:
                     #If the feature type is not recognized, create a label with 
                     #the text error
@@ -587,7 +583,7 @@ class Tab_camera(QtWidgets.QWidget):
         params = Queue()
         tries = 0
         while(tries <= 10):
-            if(global_camera.cams.active_devices[global_camera.active_cam].get_parameters(params, 
+            if(global_camera.cams.active_devices[global_camera.active_cam[self.camIndex]].get_parameters(params, 
                     threading.Event(), 
                     self.combo_config_level.currentIndex()+1)):
                 break
@@ -657,7 +653,7 @@ class Tab_camera(QtWidgets.QWidget):
             
             #empty feature queue
             self.get_params_thread = threading.Thread(
-                target=global_camera.cams.active_devices[global_camera.active_cam].get_parameters,
+                target=global_camera.cams.active_devices[global_camera.active_cam[self.camIndex]].get_parameters,
                 kwargs={'feature_queue': self.feat_queue,
                         'flag': self.param_flag,
                         'visibility': Config_level(self.combo_config_level.currentIndex()+1)})
@@ -685,7 +681,7 @@ class Tab_camera(QtWidgets.QWidget):
                                                          directory="config.xml")
             
             #Save camera config to path specified in name (0 index)
-            global_camera.cams.active_devices[global_camera.active_cam].save_config(name[0])
+            global_camera.cams.active_devices[global_camera.active_cam[self.camIndex]].save_config(name[0])
     
     def load_cam_config(self):
         """!@brief Allows a user to choose saved xml configuration and load it
@@ -703,7 +699,7 @@ class Tab_camera(QtWidgets.QWidget):
                 if(name[0]):
                     tries = 0
                     while(tries <= 10):
-                        if(global_camera.cams.active_devices[global_camera.active_cam].load_config(name[0])):
+                        if(global_camera.cams.active_devices[global_camera.active_cam[self.camIndex]].load_config(name[0])):
                             self.send_status_msg.emit("Configuration loaded", 0)
                             return
                         else:
