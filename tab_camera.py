@@ -386,7 +386,7 @@ class Tab_camera(QtWidgets.QWidget):
         manually terminated stop the recording.
         """
         #wait for the first frame to be received
-        while global_queue.active_frame_queue[global_camera.active_cam].empty():
+        while global_queue.active_frame_queue[global_camera.active_cam[self.camIndex]].empty():
             time.sleep(0.001)
         
         #print status message
@@ -529,18 +529,18 @@ class Tab_camera(QtWidgets.QWidget):
             cycles = cycles + 1
             
             #Draw only if thre is at least 1 frame to draw
-            if not global_queue.active_frame_queue[global_camera.active_cam].qsize() == 0:
-                image = global_queue.active_frame_queue[global_camera.active_cam].get_nowait()
+            if not global_queue.active_frame_queue[global_camera.active_cam[self.camIndex]].qsize() == 0:
+                image = global_queue.active_frame_queue[global_camera.active_cam[self.camIndex]].get_nowait()
                 self.received = self.received + 1
                 
                 frames += 1
                 
                 #Dump all remaining frames (If frames are received faster than 
                 #refresh_rate).
-                while not global_queue.active_frame_queue[global_camera.active_cam].qsize() == 0:
+                while not global_queue.active_frame_queue[global_camera.active_cam[self.camIndex]].qsize() == 0:
                     frames += 1
                     self.received = self.received + 1
-                    global_queue.active_frame_queue[global_camera.active_cam].get_nowait()
+                    global_queue.active_frame_queue[global_camera.active_cam[self.camIndex]].get_nowait()
                 
                 #Try to run a prediction
                 self.request_prediction.emit(image[0])
