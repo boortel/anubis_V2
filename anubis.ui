@@ -15,6 +15,180 @@
   </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QGridLayout" name="gridLayout">
+    <item row="0" column="2" rowspan="2">
+     <widget class="QWidget" name="preview_and_control" native="true">
+      <layout class="QGridLayout" name="gridLayout_2">
+       <item row="0" column="0">
+        <widget class="QScrollArea" name="scrollArea_1">
+         <property name="widgetResizable">
+          <bool>true</bool>
+         </property>
+         <widget class="QWidget" name="scrollAreaWidgetContents_1">
+          <property name="geometry">
+           <rect>
+            <x>0</x>
+            <y>0</y>
+            <width>282</width>
+            <height>352</height>
+           </rect>
+          </property>
+          <widget class="QLabel" name="camera_preview_1">
+           <property name="geometry">
+            <rect>
+             <x>10</x>
+             <y>10</y>
+             <width>261</width>
+             <height>331</height>
+            </rect>
+           </property>
+           <property name="autoFillBackground">
+            <bool>false</bool>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+           <property name="pixmap">
+            <pixmap>default_preview.png</pixmap>
+           </property>
+           <property name="scaledContents">
+            <bool>false</bool>
+           </property>
+           <property name="indent">
+            <number>-1</number>
+           </property>
+          </widget>
+         </widget>
+        </widget>
+       </item>
+       <item row="0" column="1">
+        <widget class="QScrollArea" name="scrollArea_2">
+         <property name="widgetResizable">
+          <bool>true</bool>
+         </property>
+         <widget class="QWidget" name="scrollAreaWidgetContents_2">
+          <property name="geometry">
+           <rect>
+            <x>0</x>
+            <y>0</y>
+            <width>281</width>
+            <height>352</height>
+           </rect>
+          </property>
+          <widget class="QLabel" name="camera_preview_2">
+           <property name="geometry">
+            <rect>
+             <x>10</x>
+             <y>10</y>
+             <width>261</width>
+             <height>331</height>
+            </rect>
+           </property>
+           <property name="autoFillBackground">
+            <bool>false</bool>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+           <property name="pixmap">
+            <pixmap>default_preview.png</pixmap>
+           </property>
+           <property name="scaledContents">
+            <bool>false</bool>
+           </property>
+           <property name="indent">
+            <number>-1</number>
+           </property>
+          </widget>
+         </widget>
+        </widget>
+       </item>
+       <item row="1" column="0">
+        <widget class="QScrollArea" name="scrollArea_3">
+         <property name="widgetResizable">
+          <bool>true</bool>
+         </property>
+         <widget class="QWidget" name="scrollAreaWidgetContents_3">
+          <property name="geometry">
+           <rect>
+            <x>0</x>
+            <y>0</y>
+            <width>282</width>
+            <height>351</height>
+           </rect>
+          </property>
+          <widget class="QLabel" name="camera_preview_3">
+           <property name="geometry">
+            <rect>
+             <x>10</x>
+             <y>10</y>
+             <width>261</width>
+             <height>331</height>
+            </rect>
+           </property>
+           <property name="autoFillBackground">
+            <bool>false</bool>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+           <property name="pixmap">
+            <pixmap>default_preview.png</pixmap>
+           </property>
+           <property name="scaledContents">
+            <bool>false</bool>
+           </property>
+           <property name="indent">
+            <number>-1</number>
+           </property>
+          </widget>
+         </widget>
+        </widget>
+       </item>
+       <item row="1" column="1">
+        <widget class="QScrollArea" name="scrollArea_4">
+         <property name="widgetResizable">
+          <bool>true</bool>
+         </property>
+         <widget class="QWidget" name="scrollAreaWidgetContents_4">
+          <property name="geometry">
+           <rect>
+            <x>0</x>
+            <y>0</y>
+            <width>281</width>
+            <height>351</height>
+           </rect>
+          </property>
+          <widget class="QLabel" name="camera_preview_4">
+           <property name="geometry">
+            <rect>
+             <x>10</x>
+             <y>10</y>
+             <width>261</width>
+             <height>331</height>
+            </rect>
+           </property>
+           <property name="autoFillBackground">
+            <bool>false</bool>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+           <property name="pixmap">
+            <pixmap>default_preview.png</pixmap>
+           </property>
+           <property name="scaledContents">
+            <bool>false</bool>
+           </property>
+           <property name="indent">
+            <number>-1</number>
+           </property>
+          </widget>
+         </widget>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+    </item>
     <item row="0" column="0" rowspan="2">
      <widget class="QTabWidget" name="tabs">
       <property name="accessibleName">
@@ -315,155 +489,6 @@
         </item>
        </layout>
       </widget>
-     </widget>
-    </item>
-    <item row="0" column="2" rowspan="2">
-     <widget class="QWidget" name="preview_and_control" native="true">
-      <layout class="QGridLayout" name="gridLayout_2">
-       <item row="1" column="0">
-        <widget class="QScrollArea" name="scrollArea_3">
-         <property name="widgetResizable">
-          <bool>true</bool>
-         </property>
-         <widget class="QWidget" name="scrollAreaWidgetContents_3">
-          <property name="geometry">
-           <rect>
-            <x>0</x>
-            <y>0</y>
-            <width>282</width>
-            <height>351</height>
-           </rect>
-          </property>
-          <widget class="QLabel" name="camera_preview_3">
-           <property name="geometry">
-            <rect>
-             <x>9</x>
-             <y>-10</y>
-             <width>721</width>
-             <height>381</height>
-            </rect>
-           </property>
-           <property name="autoFillBackground">
-            <bool>false</bool>
-           </property>
-           <property name="text">
-            <string/>
-           </property>
-           <property name="pixmap">
-            <pixmap>default_preview.png</pixmap>
-           </property>
-           <property name="scaledContents">
-            <bool>false</bool>
-           </property>
-           <property name="indent">
-            <number>-1</number>
-           </property>
-          </widget>
-         </widget>
-        </widget>
-       </item>
-       <item row="0" column="1">
-        <widget class="QScrollArea" name="scrollArea_2">
-         <property name="widgetResizable">
-          <bool>true</bool>
-         </property>
-         <widget class="QWidget" name="scrollAreaWidgetContents_2">
-          <property name="geometry">
-           <rect>
-            <x>0</x>
-            <y>0</y>
-            <width>281</width>
-            <height>352</height>
-           </rect>
-          </property>
-         </widget>
-        </widget>
-       </item>
-       <item row="1" column="1">
-        <widget class="QScrollArea" name="scrollArea_4">
-         <property name="widgetResizable">
-          <bool>true</bool>
-         </property>
-         <widget class="QWidget" name="scrollAreaWidgetContents_4">
-          <property name="geometry">
-           <rect>
-            <x>0</x>
-            <y>0</y>
-            <width>281</width>
-            <height>351</height>
-           </rect>
-          </property>
-          <widget class="QLabel" name="camera_preview_4">
-           <property name="geometry">
-            <rect>
-             <x>9</x>
-             <y>-10</y>
-             <width>721</width>
-             <height>381</height>
-            </rect>
-           </property>
-           <property name="autoFillBackground">
-            <bool>false</bool>
-           </property>
-           <property name="text">
-            <string/>
-           </property>
-           <property name="pixmap">
-            <pixmap>default_preview.png</pixmap>
-           </property>
-           <property name="scaledContents">
-            <bool>false</bool>
-           </property>
-           <property name="indent">
-            <number>-1</number>
-           </property>
-          </widget>
-         </widget>
-        </widget>
-       </item>
-       <item row="0" column="0">
-        <widget class="QScrollArea" name="scrollArea_1">
-         <property name="widgetResizable">
-          <bool>true</bool>
-         </property>
-         <widget class="QWidget" name="scrollAreaWidgetContents">
-          <property name="geometry">
-           <rect>
-            <x>0</x>
-            <y>0</y>
-            <width>282</width>
-            <height>352</height>
-           </rect>
-          </property>
-          <widget class="QLabel" name="camera_preview_1">
-           <property name="geometry">
-            <rect>
-             <x>9</x>
-             <y>-10</y>
-             <width>721</width>
-             <height>381</height>
-            </rect>
-           </property>
-           <property name="autoFillBackground">
-            <bool>false</bool>
-           </property>
-           <property name="text">
-            <string/>
-           </property>
-           <property name="pixmap">
-            <pixmap>default_preview.png</pixmap>
-           </property>
-           <property name="scaledContents">
-            <bool>false</bool>
-           </property>
-           <property name="indent">
-            <number>-1</number>
-           </property>
-          </widget>
-         </widget>
-        </widget>
-       </item>
-      </layout>
      </widget>
     </item>
    </layout>
