@@ -17,13 +17,13 @@ class Camera_control_gui(QtWidgets.QWidget):
         self.add_widgets()
 
     def add_widgets(self):
-        self.preview_and_control = QtWidgets.QWidget(self)
-        self.preview_and_control.setObjectName(u"preview_and_control")
+        #self.preview_and_control = QtWidgets.QWidget(self)
+        self.setObjectName(u"preview_and_control")
 
-        self.gridLayout_2 = QtWidgets.QGridLayout(self.preview_and_control)
+        self.gridLayout_2 = QtWidgets.QGridLayout(self)
         self.gridLayout_2.setObjectName(u"gridLayout_2")
 
-        self.scrollArea_1 = QtWidgets.QScrollArea(self.preview_and_control)
+        self.scrollArea_1 = QtWidgets.QScrollArea(self)
         self.scrollArea_1.setObjectName(u"scrollArea_1")
         self.scrollArea_1.setWidgetResizable(True)
         self.scrollAreaWidgetContents_1 = QtWidgets.QWidget()
@@ -40,7 +40,7 @@ class Camera_control_gui(QtWidgets.QWidget):
 
         self.gridLayout_2.addWidget(self.scrollArea_1, 0, 0, 1, 1)
 
-        self.scrollArea_2 = QtWidgets.QScrollArea(self.preview_and_control)
+        self.scrollArea_2 = QtWidgets.QScrollArea(self)
         self.scrollArea_2.setObjectName(u"scrollArea_2")
         self.scrollArea_2.setWidgetResizable(True)
         self.scrollAreaWidgetContents_2 = QtWidgets.QWidget()
@@ -57,7 +57,7 @@ class Camera_control_gui(QtWidgets.QWidget):
 
         self.gridLayout_2.addWidget(self.scrollArea_2, 0, 1, 1, 1)
 
-        self.scrollArea_3 = QtWidgets.QScrollArea(self.preview_and_control)
+        self.scrollArea_3 = QtWidgets.QScrollArea(self)
         self.scrollArea_3.setObjectName(u"scrollArea_3")
         self.scrollArea_3.setWidgetResizable(True)
         self.scrollAreaWidgetContents_3 = QtWidgets.QWidget()
@@ -74,7 +74,7 @@ class Camera_control_gui(QtWidgets.QWidget):
 
         self.gridLayout_2.addWidget(self.scrollArea_3, 1, 0, 1, 1)
 
-        self.scrollArea_4 = QtWidgets.QScrollArea(self.preview_and_control)
+        self.scrollArea_4 = QtWidgets.QScrollArea(self)
         self.scrollArea_4.setObjectName(u"scrollArea_4")
         self.scrollArea_4.setWidgetResizable(True)
         self.scrollAreaWidgetContents_4 = QtWidgets.QWidget()

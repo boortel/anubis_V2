@@ -28,7 +28,7 @@ class Tab_camera(QtWidgets.QWidget):
     received_info = Signal(int)
     fps_info = Signal(float)
 
-    def __init__(self, camIndex):
+    def __init__(self, camIndex, prevRef):
         super(Tab_camera, self).__init__()
         self.preview_live = False
         self.recording = False
@@ -66,6 +66,9 @@ class Tab_camera(QtWidgets.QWidget):
 
         ##Indexing variable
         self.camIndex = camIndex
+
+        ##Reference to the preview window
+        self.camera_preview = prevRef
 
         ##Camera control stuff
         ##Widget used to transfer GUI changes from thread into the main thread while updating preview
@@ -186,7 +189,7 @@ class Tab_camera(QtWidgets.QWidget):
 
         self.gridLayout_5.addWidget(self.label_sequence_duration, 3, 0, 1, 2)
 
-        self.line_edit_sequence_duration = QtWidgets.QLineEdit(self.conf_recording)
+        self.line_edit_sequence_duration = QtWidgets.QDoubleSpinBox(self.conf_recording)
         self.line_edit_sequence_duration.setObjectName(u"line_edit_sequence_duration")
 
         self.gridLayout_5.addWidget(self.line_edit_sequence_duration, 3, 2, 1, 2)
@@ -277,7 +280,7 @@ class Tab_camera(QtWidgets.QWidget):
 
         # Recording
         self.line_edit_save_location.textChanged.connect(self.send_conf_update)
-        self.line_edit_sequence_duration.textChanged.connect(self.send_conf_update)
+        self.line_edit_sequence_duration.valueChanged.connect(self.send_conf_update)
         self.line_edit_sequence_name.textChanged.connect(self.send_conf_update)
         self.file_manager_save_location.clicked.connect(lambda: self.get_directory(self.line_edit_save_location))
         self.btn_save_sequence_settings.clicked.connect(self.save_seq_settings)
@@ -417,7 +420,7 @@ class Tab_camera(QtWidgets.QWidget):
                 self.preview_live = True
                 
                 #Start camera frame acquisition (not recording)
-                global_camera.cams.active_devices[global_camera.active_cam].start_acquisition()
+                global_camera.cams.active_devices[global_camera.active_cam[self.camIndex]].start_acquisition()
                 
                 
                 #Create and run thread to draw frames to gui
@@ -430,7 +433,7 @@ class Tab_camera(QtWidgets.QWidget):
                 self.send_status_msg.emit("Stopping preview",1500)
                 
                 #Stop receiving frames
-                global_camera.cams.active_devices[global_camera.active_cam].stop_acquisition()
+                global_camera.cams.active_devices[global_camera.active_cam[self.camIndex]].stop_acquisition()
                 
                 self.preview_live = False
                 self.preview_update.emit(False)
@@ -473,7 +476,7 @@ class Tab_camera(QtWidgets.QWidget):
             self.connection_update.emit(True, 2, "-1")
             
             #Get image
-            image, pixel_format = global_camera.cams.active_devices[global_camera.active_cam].get_single_frame()
+            image, pixel_format = global_camera.cams.active_devices[global_camera.active_cam[self.camIndex]].get_single_frame()
             
             #Try to run prediction
             self.request_prediction.emit(image)
@@ -489,8 +492,8 @@ class Tab_camera(QtWidgets.QWidget):
 
             
             #get size of preview window
-            w_preview = self.preview_area.size().width()
-            h_preview = self.preview_area.size().height()
+            w_preview = self.camera_preview.size().width()
+            h_preview = self.camera_preview.size().height()
             
             image_scaled = image.scaled(w_preview, 
                                         h_preview, 
@@ -581,8 +584,8 @@ class Tab_camera(QtWidgets.QWidget):
                 
                 #get size of preview window if zoom fit is selected
                 if(self.preview_fit == True):
-                    self.w_preview = self.preview_area.size().width()
-                    self.h_preview = self.preview_area.size().height()
+                    self.w_preview = self.camera_preview.size().width()
+                    self.h_preview = self.camera_preview.size().height()
                     image_scaled = image.scaled(self.w_preview, 
                                                 self.h_preview, 
                                                 QtCore.Qt.KeepAspectRatio)
@@ -618,7 +621,7 @@ class Tab_camera(QtWidgets.QWidget):
         method is called and do the scrolling based on the distance dragged in
         each direction.
         """
-        if (obj == self.preview_area):
+        if (obj == self.camera_preview):
             if(event.type() == QtCore.QEvent.MouseMove ):
     
                 if self.move_x_prev == 0:
@@ -628,10 +631,10 @@ class Tab_camera(QtWidgets.QWidget):
     
                 dist_x = self.move_x_prev - event.pos().x()
                 dist_y = self.move_y_prev - event.pos().y()
-                self.preview_area.verticalScrollBar().setValue(
-                    self.preview_area.verticalScrollBar().value() + dist_y)
-                self.preview_area.horizontalScrollBar().setValue(
-                    self.preview_area.horizontalScrollBar().value() + dist_x)
+                self.camera_preview.verticalScrollBar().setValue(
+                    self.camera_preview.verticalScrollBar().value() + dist_y)
+                self.camera_preview.horizontalScrollBar().setValue(
+                    self.camera_preview.horizontalScrollBar().value() + dist_x)
                 #self.preview_area.scrollContentsBy(dist_x,dist_y)
                 self.move_x_prev = event.pos().x()
                 self.move_y_prev = event.pos().y()
@@ -1046,9 +1049,9 @@ class Tab_camera(QtWidgets.QWidget):
                         'visibility': Config_level(self.combo_config_level.currentIndex()+1)})
             self.param_callback_thread = threading.Thread(target=self.callback_parameters)
             
-            self.param_callback_thread.start().daemon = True
-            self.get_params_thread.start().daemon = True
-
+            
+            self.param_callback_thread.setDaemon(True)
+            self.get_params_thread.setDaemon(True)
             self.param_callback_thread.start()
             self.get_params_thread.start()
     
@@ -1105,3 +1108,133 @@ class Tab_camera(QtWidgets.QWidget):
             self.parameters_signal.setText("A")
         else:
             self.parameters_signal.setText("B")
+
+    def _get_QImage_format(self, format_string):
+        """!@brief The image format provided by camera object (according to 
+        GenICam standard) is transoformed to one of the color formats supported
+        by PyQt.
+        @param[in] format_string text containing color format defined by GenICam
+        or another standard.
+        """
+        image_format = None
+        
+        if(format_string == 'Format_Mono'):
+            image_format = QtGui.QImage.Format_Mono
+        elif(format_string == 'Format_MonoLSB'):
+            image_format = QtGui.QImage.Format_MonoLSB
+        elif(format_string == 'Format_Indexed8'):
+            image_format = QtGui.QImage.Format_Indexed8
+        elif(format_string == 'Format_RGB32'):
+            image_format = QtGui.QImage.Format_RGB32
+        elif(format_string == 'Format_ARGB32'):
+            image_format = QtGui.QImage.Format_ARGB32
+        elif(format_string == 'Format_ARGB32_Premultiplied'):
+            image_format = QtGui.QImage.Format_ARGB32_Premultiplied
+        elif(format_string == 'Format_RGB16'):
+            image_format = QtGui.QImage.Format_RGB16
+        elif(format_string == 'Format_ARGB8565_Premultiplied'):
+            image_format = QtGui.QImage.Format_ARGB8565_Premultiplied
+        elif(format_string == 'Format_RGB666'):
+            image_format = QtGui.QImage.Format_RGB666
+        elif(format_string == 'Format_ARGB6666_Premultiplied'):
+            image_format = QtGui.QImage.Format_ARGB6666_Premultiplied
+        elif(format_string == 'Format_RGB555'):
+            image_format = QtGui.QImage.Format_RGB555
+        elif(format_string == 'Format_ARGB8555_Premultiplied'):
+            image_format = QtGui.QImage.Format_ARGB8555_Premultiplied
+        elif(format_string == 'Format_RGB888' or format_string == 'RGB8'):
+            image_format = QtGui.QImage.Format_RGB888
+        elif(format_string == 'Format_RGB444'):
+            image_format = QtGui.QImage.Format_RGB444
+        elif(format_string == 'Format_ARGB4444_Premultiplied'):
+            image_format = QtGui.QImage.Format_ARGB4444_Premultiplied
+        elif(format_string == 'Format_RGBX8888'):
+            image_format = QtGui.QImage.Format_RGBX8888
+        elif(format_string == 'Format_RGBA8888' or format_string == 'RGBa8'):
+            image_format = QtGui.QImage.Format_RGBA8888
+        elif(format_string == 'Format_RGBA8888_Premultiplied'):
+            image_format = QtGui.QImage.Format_RGBA8888_Premultiplied
+        elif(format_string == 'Format_BGR30'):
+            image_format = QtGui.QImage.Format_BGR30
+        elif(format_string == 'Format_A2BGR30_Premultiplied'):
+            image_format = QtGui.QImage.Format_A2BGR30_Premultiplied
+        elif(format_string == 'Format_RGB30'):
+            image_format = QtGui.QImage.Format_RGB30
+        elif(format_string == 'Format_A2RGB30_Premultiplied'):
+            image_format = QtGui.QImage.Format_A2RGB30_Premultiplied
+        elif(format_string == 'Format_Alpha8'):
+            image_format = QtGui.QImage.Format_Alpha8
+        elif(format_string == 'Format_Grayscale8' or format_string == 'Mono8'):
+            image_format = QtGui.QImage.Format_Grayscale8
+        elif(format_string == 'Format_Grayscale16' or format_string == 'Mono16'):
+            image_format = QtGui.QImage.Format_Grayscale16
+        elif(format_string == 'Format_RGBX64'):
+            image_format = QtGui.QImage.Format_RGBX64
+        elif(format_string == 'Format_RGBA64'):
+            image_format = QtGui.QImage.Format_RGBA64
+        elif(format_string == 'Format_RGBA64_Premultiplied'):
+            image_format = QtGui.QImage.Format_RGBA64_Premultiplied
+        elif(format_string == 'Format_BGR888' or format_string == 'BGR8'):
+            image_format = QtGui.QImage.Format_BGR888
+        else:
+            image_format = QtGui.QImage.Format_Invalid
+        
+        return image_format
+        
+        '''
+        SFNC OPTIONS not yet implemented
+        Mono1p
+        Mono2p, Mono4p, Mono8s, Mono10, Mono10p, Mono12, Mono12p, Mono14, 
+        , R8, G8, B8, , RGB8_Planar, , RGB10, RGB10_Planar, 
+        RGB10p32, RGB12, RGB12_Planar, RGB16, RGB16_Planar, RGB565p, BGR10, 
+        BGR12, BGR16, BGR565p, , BGRa8, YUV422_8, YCbCr411_8, YCbCr422_8, 
+        YCbCr601_422_8, YCbCr709_422_8, YCbCr8, BayerBG8, BayerGB8, BayerGR8, 
+        BayerRG8, BayerBG10, BayerGB10, BayerGR10, BayerRG10, BayerBG12, 
+        BayerGB12, BayerGR12, BayerRG12, BayerBG16, BayerGB16, BayerGR16, 
+        BayerRG16, Coord3D_A8, Coord3D_B8, Coord3D_C8, Coord3D_ABC8, 
+        Coord3D_ABC8_Planar, Coord3D_A16, Coord3D_B16, Coord3D_C16, 
+        Coord3D_ABC16, Coord3D_ABC16_Planar, Coord3D_A32f, Coord3D_B32f, 
+        Coord3D_C32f, Coord3D_ABC32f, Coord3D_ABC32f_Planar, Confidence1, 
+        Confidence1p, Confidence8, Confidence16, Confidence32f, Raw8, Raw16, 
+        Device-specific
+        - GigE Vision Specific:
+        Mono12Packed, BayerGR10Packed, BayerRG10Packed, BayerGB10Packed, 
+        BayerBG10Packed, BayerGR12Packed, BayerRG12Packed, BayerGB12Packed, 
+        BayerBG12Packed, RGB10V1Packed, RGB12V1Packed, 
+        - Deprecated:
+            will not be implemented for now as they are not used in genicam anymore
+        '''
+        '''
+        SFNC OPTIONS - all
+        Mono1p
+        Mono2p, Mono4p, Mono8, Mono8s, Mono10, Mono10p, Mono12, Mono12p, Mono14, 
+        Mono16, R8, G8, B8, RGB8, RGB8_Planar, RGBa8, RGB10, RGB10_Planar, 
+        RGB10p32, RGB12, RGB12_Planar, RGB16, RGB16_Planar, RGB565p, BGR10, 
+        BGR12, BGR16, BGR565p, BGR8, BGRa8, YUV422_8, YCbCr411_8, YCbCr422_8, 
+        YCbCr601_422_8, YCbCr709_422_8, YCbCr8, BayerBG8, BayerGB8, BayerGR8, 
+        BayerRG8, BayerBG10, BayerGB10, BayerGR10, BayerRG10, BayerBG12, 
+        BayerGB12, BayerGR12, BayerRG12, BayerBG16, BayerGB16, BayerGR16, 
+        BayerRG16, Coord3D_A8, Coord3D_B8, Coord3D_C8, Coord3D_ABC8, 
+        Coord3D_ABC8_Planar, Coord3D_A16, Coord3D_B16, Coord3D_C16, 
+        Coord3D_ABC16, Coord3D_ABC16_Planar, Coord3D_A32f, Coord3D_B32f, 
+        Coord3D_C32f, Coord3D_ABC32f, Coord3D_ABC32f_Planar, Confidence1, 
+        Confidence1p, Confidence8, Confidence16, Confidence32f, Raw8, Raw16, 
+        Device-specific
+        - GigE Vision Specific:
+        Mono12Packed, BayerGR10Packed, BayerRG10Packed, BayerGB10Packed, 
+        BayerBG10Packed, BayerGR12Packed, BayerRG12Packed, BayerGB12Packed, 
+        BayerBG12Packed, RGB10V1Packed, RGB12V1Packed, 
+        - Deprecated:
+        Mono8Signed (Deprecated, use Mono8s)
+        RGB8Packed (Deprecated, use RGB8) ,BGR8Packed (Deprecated, use BGR8), 
+        RGBA8Packed (Deprecated, use RGBa8), BGRA8Packed (Deprecated, use BGRa8), 
+        RGB10Packed (Deprecated, use RGB10), BGR10Packed (Deprecated, use BGR10), 
+        RGB12Packed (Deprecated, use RGB12), BGR12Packed (Deprecated, use BGR12), 
+        RGB16Packed (Deprecated, use RGB16), BGR16Packed (Deprecated, use BGR16), 
+        RGB10V2Packed (Deprecated, use RGB10p32), BGR10V2Packed (Deprecated, use BGR10p32), 
+        RGB565Packed (Deprecated, use RGB565p), BGR565Packed (Deprecated, use BGR565p), 
+        YUV411Packed (Deprecated, use YUV411_8_UYYVYY), YUV422Packed (Deprecated, use YUV422_8_UYVY), 
+        YUV444Packed (Deprecated, use YUV8_UYV), YUYVPacked (Deprecated, use YUV422_8), 
+        RGB8Planar (Deprecated, use RGB8_Planar), RGB10Planar (Deprecated, use RGB10_Planar),
+        RGB12Planar (Deprecated, use RGB12_Planar), RGB16Planar (Deprecated, use RGB16_Planar), 
+        '''

@@ -38,6 +38,18 @@ class Tab_connect(QtWidgets.QWidget):
         self.layout_main.addWidget(self.widget_4)
         self.list_detected_cameras = QtWidgets.QListWidget(self)
         self.list_detected_cameras.setObjectName("list_detected_cameras")
+
+        self.label_conn_tab = QtWidgets.QLabel(self.widget_4)
+        self.label_conn_tab.setObjectName(u"label_conn_tab")
+        self.layout_buttons.addWidget(self.label_conn_tab)
+
+        self.combo_tab_selector = QtWidgets.QComboBox(self.widget_4)
+        self.combo_tab_selector.addItem("Cam1")
+        self.combo_tab_selector.addItem("Cam2")
+        self.combo_tab_selector.addItem("Cam3")
+        self.combo_tab_selector.addItem("Cam4")
+        self.combo_tab_selector.setObjectName(u"combo_tab_selector")
+        self.layout_buttons.addWidget(self.combo_tab_selector)
         
         self.layout_main.addWidget(self.list_detected_cameras)
         
@@ -83,6 +95,12 @@ class Tab_connect(QtWidgets.QWidget):
         self.tip_add_cti.setText("Tip: If you can\'t detect your camera try adding new .cti file from your camera vendor")
         self.btn_add_cti.setText("Add a new .cti file")
         self.btn_remove_cti.setText("Remove selected .cti")
+
+        self.label_conn_tab.setText("Camera tab")
+        self.combo_tab_selector.setItemText(0, "Camera 1")
+        self.combo_tab_selector.setItemText(1, "Camera 2")
+        self.combo_tab_selector.setItemText(2, "Camera 3")
+        self.combo_tab_selector.setItemText(3, "Camera 4")
         
 
     def add_cti(self):
@@ -146,6 +164,7 @@ class Tab_connect(QtWidgets.QWidget):
         #Something must be selected
         if index != -1:
             
+            # TODO: osetrit pro situaci, kdy uz kamera na zalozce pripojena je!
             #If some camera is connected, disconnect it first
             if self.connected:
                 self.disconnect_camera()
@@ -157,7 +176,7 @@ class Tab_connect(QtWidgets.QWidget):
             self.send_status_msg.emit("Connecting camera", 0)
             
             #Connect camera
-            global_camera.change_active_cam(global_camera.cams.select_camera(self.detected[index]['mechanism'], self.detected[index]['id_']))
+            global_camera.change_active_cam(global_camera.cams.select_camera(self.detected[index]['mechanism'], self.detected[index]['id_']), self.combo_tab_selector.currentIndex())
             print(global_camera.active_cam)
             
             self.send_status_msg.emit("Camera connected", 0)
@@ -182,7 +201,7 @@ class Tab_connect(QtWidgets.QWidget):
             
             
             #Disconnect camera
-            global_camera.cams.disconnect_camera(int(global_camera.active_cam))
+            global_camera.cams.disconnect_camera(int(global_camera.active_cam[self.combo_tab_selector.currentIndex()]))
             
             self.send_status_msg.emit("Camera disconnected", 0)
             

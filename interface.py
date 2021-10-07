@@ -78,7 +78,7 @@ class Ui_MainWindow(QtCore.QObject):
         """
         
         MainWindow.setObjectName("MainWindow")
-        MainWindow.resize(1005, 610)
+        MainWindow.resize(1206, 790)
         self.centralwidget = QtWidgets.QWidget(MainWindow)
         self.centralwidget.setObjectName("centralwidget")
         
@@ -89,7 +89,7 @@ class Ui_MainWindow(QtCore.QObject):
         
         self.preview_and_control = Camera_control_gui()
         
-        self.gridLayout.addWidget(self.preview_and_control, 0, 2, 1, 1)
+        self.gridLayout.addWidget(self.preview_and_control, 0, 2, 2, 1)
         #Definition of all the tabs on the left side of the UI
         #--------------------------------------------------------------------
         self.tabs = QtWidgets.QTabWidget(self.centralwidget)
@@ -102,16 +102,16 @@ class Ui_MainWindow(QtCore.QObject):
         self.tabs.addTab(self.tab_connect, "")
 
         #Tab - Camera control
-        self.tab_camera_cfg1 = Tab_camera(0)
+        self.tab_camera_cfg1 = Tab_camera(0, self.preview_and_control.camera_preview_1)
         self.tabs.addTab(self.tab_camera_cfg1, "")
 
-        self.tab_camera_cfg2 = Tab_camera(1)
+        self.tab_camera_cfg2 = Tab_camera(1, self.preview_and_control.camera_preview_2)
         self.tabs.addTab(self.tab_camera_cfg2, "")
 
-        self.tab_camera_cfg3 = Tab_camera(2)
+        self.tab_camera_cfg3 = Tab_camera(2, self.preview_and_control.camera_preview_3)
         self.tabs.addTab(self.tab_camera_cfg3, "")
 
-        self.tab_camera_cfg4 = Tab_camera(3)
+        self.tab_camera_cfg4 = Tab_camera(3, self.preview_and_control.camera_preview_4)
         self.tabs.addTab(self.tab_camera_cfg4, "")
         
         # Initial refresh of the camera parameters
@@ -160,22 +160,73 @@ class Ui_MainWindow(QtCore.QObject):
         self.status_label.setObjectName("status_label")
         self.statusbar.addWidget(self.status_label,stretch=40)
         
-        self.camera_icon = QtWidgets.QLabel()
-        self.camera_icon.setObjectName("camera_icon")
-        self.camera_icon.setScaledContents(True)
-        self.statusbar.addPermanentWidget(self.camera_icon)
+        self.camera1_icon = QtWidgets.QLabel()
+        self.camera1_icon.setObjectName("camera_icon")
+        self.camera1_icon.setScaledContents(True)
+        self.statusbar.addPermanentWidget(self.camera1_icon)
         
-        self.camera_status = QtWidgets.QLabel()
-        self.camera_status.setObjectName("camera_status")
-        self.statusbar.addPermanentWidget(self.camera_status,stretch=30)
+        self.camera1_status = QtWidgets.QLabel()
+        self.camera1_status.setObjectName("camera_status")
+        self.statusbar.addPermanentWidget(self.camera1_status,stretch=25)
         
-        self.fps_status = QtWidgets.QLabel()
-        self.fps_status.setObjectName("fps_status")
-        self.statusbar.addPermanentWidget(self.fps_status,stretch=10)
+        self.fps1_status = QtWidgets.QLabel()
+        self.fps1_status.setObjectName("fps_status")
+        self.statusbar.addPermanentWidget(self.fps1_status,stretch=8)
         
-        self.receive_status = QtWidgets.QLabel()
-        self.receive_status.setObjectName("receive_status")
-        self.statusbar.addPermanentWidget(self.receive_status,stretch=20)
+        self.receive1_status = QtWidgets.QLabel()
+        self.receive1_status.setObjectName("receive_status")
+        self.statusbar.addPermanentWidget(self.receive1_status,stretch=15)
+        
+        self.camera2_icon = QtWidgets.QLabel()
+        self.camera2_icon.setObjectName("camera_icon")
+        self.camera2_icon.setScaledContents(True)
+        self.statusbar.addPermanentWidget(self.camera2_icon)
+        
+        self.camera2_status = QtWidgets.QLabel()
+        self.camera2_status.setObjectName("camera_status")
+        self.statusbar.addPermanentWidget(self.camera2_status,stretch=25)
+        
+        self.fps2_status = QtWidgets.QLabel()
+        self.fps2_status.setObjectName("fps_status")
+        self.statusbar.addPermanentWidget(self.fps2_status,stretch=8)
+        
+        self.receive2_status = QtWidgets.QLabel()
+        self.receive2_status.setObjectName("receive_status")
+        self.statusbar.addPermanentWidget(self.receive2_status,stretch=15)
+
+        self.camera3_icon = QtWidgets.QLabel()
+        self.camera3_icon.setObjectName("camera_icon")
+        self.camera3_icon.setScaledContents(True)
+        self.statusbar.addPermanentWidget(self.camera3_icon)
+        
+        self.camera3_status = QtWidgets.QLabel()
+        self.camera3_status.setObjectName("camera_status")
+        self.statusbar.addPermanentWidget(self.camera3_status,stretch=25)
+        
+        self.fps3_status = QtWidgets.QLabel()
+        self.fps3_status.setObjectName("fps_status")
+        self.statusbar.addPermanentWidget(self.fps3_status,stretch=8)
+        
+        self.receive3_status = QtWidgets.QLabel()
+        self.receive3_status.setObjectName("receive_status")
+        self.statusbar.addPermanentWidget(self.receive3_status,stretch=15)
+
+        self.camera4_icon = QtWidgets.QLabel()
+        self.camera4_icon.setObjectName("camera_icon")
+        self.camera4_icon.setScaledContents(True)
+        self.statusbar.addPermanentWidget(self.camera4_icon)
+        
+        self.camera4_status = QtWidgets.QLabel()
+        self.camera4_status.setObjectName("camera_status")
+        self.statusbar.addPermanentWidget(self.camera4_status,stretch=25)
+        
+        self.fps4_status = QtWidgets.QLabel()
+        self.fps4_status.setObjectName("fps_status")
+        self.statusbar.addPermanentWidget(self.fps4_status,stretch=8)
+        
+        self.receive4_status = QtWidgets.QLabel()
+        self.receive4_status.setObjectName("receive_status")
+        self.statusbar.addPermanentWidget(self.receive4_status,stretch=15)
         
         MainWindow.setStatusBar(self.statusbar)
         
@@ -270,10 +321,25 @@ class Ui_MainWindow(QtCore.QObject):
 
         # TODO: nutne doplnit pro dalsi kamery
 
-        self.camera_status.setText("Camera: Not connected")
-        self.receive_status.setText("Received frames: 0")
-        self.fps_status.setText("FPS: 0")
-        self.camera_icon.setPixmap(self.icon_offline)
+        self.camera1_status.setText("Cam1: Not connected")
+        self.receive1_status.setText("Received frames: 0")
+        self.fps1_status.setText("FPS: 0")
+        self.camera1_icon.setPixmap(self.icon_offline)
+
+        self.camera2_status.setText("Cam2: Not connected")
+        self.receive2_status.setText("Received frames: 0")
+        self.fps2_status.setText("FPS: 0")
+        self.camera2_icon.setPixmap(self.icon_offline)
+
+        self.camera3_status.setText("Cam3: Not connected")
+        self.receive3_status.setText("Received frames: 0")
+        self.fps3_status.setText("FPS: 0")
+        self.camera3_icon.setPixmap(self.icon_offline)
+
+        self.camera4_status.setText("Cam4: Not connected")
+        self.receive4_status.setText("Received frames: 0")
+        self.fps4_status.setText("FPS: 0")
+        self.camera4_icon.setPixmap(self.icon_offline)
     
 #Start of custom methods (not generated by QtDesigner)
     def connect_actions(self):
@@ -515,14 +581,14 @@ class Ui_MainWindow(QtCore.QObject):
         self.tab_camera_cfg4.connected = connected
         
         if name != "-1":
-            self.camera_status.setText("Camera: " + name)
+            self.camera1_status.setText("Camera: " + name)
             
         if(state == 1):
-            self.camera_icon.setPixmap(self.icon_standby)
+            self.camera1_icon.setPixmap(self.icon_standby)
         elif(state == 2):
-            self.camera_icon.setPixmap(self.icon_busy)
+            self.camera1_icon.setPixmap(self.icon_busy)
         else:
-            self.camera_icon.setPixmap(self.icon_offline)
+            self.camera1_icon.setPixmap(self.icon_offline)
             self.update_preview(False)
             self.update_recording(False)
             self.update_fps(0)
@@ -555,13 +621,15 @@ class Ui_MainWindow(QtCore.QObject):
         self.tab_camera_cfg3.recording = state
         self.tab_camera_cfg4.recording = state
 
+    # TODO: Presunout tyhle veci do tab_camera
+
     def update_fps(self, fps):
         """!@brief Method is used to transfer information from camera preview object
         to the status bar
         @param[in] fps Current fps value
         """
         self.fps = fps
-        self.fps_status.setText("FPS: " + str(self.fps))
+        self.fps1_status.setText("FPS: " + str(self.fps))
 
     def update_received_frames(self, received_amount):
         """!@brief Method is used to transfer information from camera preview object
@@ -569,7 +637,7 @@ class Ui_MainWindow(QtCore.QObject):
         @param[in] received_amount How many frames were received
         """
         self.received = received_amount
-        self.receive_status.setText("Received frames: " + str(self.received))
+        self.receive1_status.setText("Received frames: " + str(self.received))
 
     def update_recording_config(self, name, location, duration):
         """!@brief Method is used to transfer information from recording configuration
