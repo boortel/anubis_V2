@@ -21,8 +21,6 @@ from queue import Queue
 frame_queue = {"0": Queue()}
 active_frame_queue = {"0": Queue()}
 
-# TODO pro vycitani obrazku z okna pristupovat ke frame_queue s danym ID
-
 def add_frame_queue(cam_id):
     frame_queue[str(cam_id)] = Queue()
     active_frame_queue[str(cam_id)] = Queue()

@@ -29,7 +29,6 @@ def close_cameras():
     """!@brief Function to properly disconnect all cameras when exiting the application
         """
     for index in range(cams.active_devices_count):
-        print(index)
         cams.disconnect_camera(index)
 
 atexit.register(close_cameras)

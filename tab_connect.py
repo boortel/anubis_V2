@@ -7,7 +7,9 @@ class Tab_connect(QtWidgets.QWidget):
     ##Used to send status message to the GUI
     send_status_msg = Signal(str, int)
     ##Signals current state of camera connection
-    connection_update = Signal(bool, int, str)#connected, state - 0=disconnected 1=standby 2=busy, camera name
+    connection_update = Signal(bool, int, str, int)#connected, state - 0=disconnected 1=standby 2=busy, camera name, camera tab index
+
+    conntabList = [-1, -1, -1, -1]
 
     def __init__(self):
         super(Tab_connect, self).__init__()
@@ -81,6 +83,7 @@ class Tab_connect(QtWidgets.QWidget):
         
         self.btn_connect_camera.clicked.connect(
             lambda: self.connect_camera(self.list_detected_cameras.currentRow()))
+        #print(self.list_detected_cameras.currentRow())
         
         self.list_detected_cameras.itemDoubleClicked.connect(
             lambda: self.connect_camera(self.list_detected_cameras.currentRow()))
@@ -163,10 +166,9 @@ class Tab_connect(QtWidgets.QWidget):
         """
         #Something must be selected
         if index != -1:
-            
-            # TODO: osetrit pro situaci, kdy uz kamera na zalozce pripojena je!
+
             #If some camera is connected, disconnect it first
-            if self.connected:
+            if self.conntabList[self.combo_tab_selector.currentIndex()] == 1:
                 self.disconnect_camera()
             
             #set green background to the selected camera
@@ -177,14 +179,13 @@ class Tab_connect(QtWidgets.QWidget):
             
             #Connect camera
             global_camera.change_active_cam(global_camera.cams.select_camera(self.detected[index]['mechanism'], self.detected[index]['id_']), self.combo_tab_selector.currentIndex())
-            print(global_camera.active_cam)
-            
+            #print(global_camera.active_cam)
+
             self.send_status_msg.emit("Camera connected", 0)
             
             #Set up the status bar
-            
-            self.connected = True
-            self.connection_update.emit(True, 1, self.detected[index]['model'])
+            self.conntabList[self.combo_tab_selector.currentIndex()] == 1
+            self.connection_update.emit(True, 1, self.detected[index]['model'], self.combo_tab_selector.currentIndex())
     
     def disconnect_camera(self):
         """!@brief Disconnect current camera
@@ -195,7 +196,7 @@ class Tab_connect(QtWidgets.QWidget):
         if self.connected:
             #Get default states
             self.connected = False
-            self.connection_update.emit(False, 0, "Not connected")
+            self.connection_update.emit(False, 0, "Not connected", self.combo_tab_selector.currentIndex())
             
             self.send_status_msg.emit("Disconnecting camera", 0)
             
@@ -204,6 +205,9 @@ class Tab_connect(QtWidgets.QWidget):
             global_camera.cams.disconnect_camera(int(global_camera.active_cam[self.combo_tab_selector.currentIndex()]))
             
             self.send_status_msg.emit("Camera disconnected", 0)
+
+            #Mark current tab as free
+            self.conntabList[self.combo_tab_selector.currentIndex()] == -1
             
             #Imidiately search for new cameras
             self.refresh_cameras()
