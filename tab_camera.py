@@ -573,7 +573,7 @@ class Tab_camera(QtWidgets.QWidget):
             if not global_queue.active_frame_queue[global_camera.active_cam[self.camIndex]].qsize() == 0:
                 image = global_queue.active_frame_queue[global_camera.active_cam[self.camIndex]].get_nowait()
                 self.received = self.received + 1
-                
+
                 frames += 1
                 
                 #Dump all remaining frames (If frames are received faster than refresh_rate).

@@ -2,6 +2,11 @@ import cv2
 import numpy as np
 
 def processImage_main(image_in):
+    """!@brief Function is used to process the input image and for 
+    its return to the processing queue.
+    @param[image_in] Input image
+    """
+
     # Create output image
     image_out = image_in
 

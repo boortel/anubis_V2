@@ -193,7 +193,8 @@ class Tab_connect(QtWidgets.QWidget):
         their default state.
         """
         #Disconnect only if already connected
-        if self.connected:
+        # TODO: blbne!
+        if self.conntabList[self.combo_tab_selector.currentIndex()] == 1:
             #Get default states
             self.connected = False
             self.connection_update.emit(False, 0, "Not connected", self.combo_tab_selector.currentIndex())

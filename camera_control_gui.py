@@ -1,14 +1,4 @@
-from PyQt5 import QtCore, QtGui, QtWidgets
-import global_camera
-from PyQt5.QtCore import pyqtSignal as Signal, QRect
-from PyQt5.QtCore import QRect
-from PyQt5.QtGui import QPixmap
-import threading
-import win32api
-import time
-
-import global_camera
-import global_queue
+from PyQt5 import QtGui, QtWidgets
 
 class Camera_control_gui(QtWidgets.QWidget):
 
