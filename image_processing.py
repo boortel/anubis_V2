@@ -6,8 +6,8 @@ import sys
 import os
 sys.path.append("./svdd_anubis/")
 from PIL import Image, ImageDraw
-from utils.config import Config
-from deepSVDD import DeepSVDD
+from svdd_anubis.utils.config import Config
+from svdd_anubis import DeepSVDD
 from datasets.preprocessing import global_contrast_normalization
 import torchvision.transforms as transforms
 
