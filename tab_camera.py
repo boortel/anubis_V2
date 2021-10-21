@@ -9,7 +9,7 @@ from config_level import Config_level
 import numpy as np
 import image_processing as imp
 import time
-import win32api
+#import win32api
 import global_queue
 
 class Tab_camera(QtWidgets.QWidget):
@@ -555,8 +555,9 @@ class Tab_camera(QtWidgets.QWidget):
         """
         #Determine refresh rate of used display. This way the method will not
         #run too slowly or redundantly fast.
-        device = win32api.EnumDisplayDevices()
-        refresh_rate = win32api.EnumDisplaySettings(device.DeviceName, -1).DisplayFrequency
+        #device = win32api.EnumDisplayDevices()
+        #refresh_rate = win32api.EnumDisplaySettings(device.DeviceName, -1).DisplayFrequency
+        refresh_rate = 30
         
         #Auxiliary variables for fps calculation
         frames = 0
@@ -655,8 +656,9 @@ class Tab_camera(QtWidgets.QWidget):
         """
         #Determine refresh rate of used display. This way the method will not
         #run too slowly or redundantly fast.
-        device = win32api.EnumDisplayDevices()
-        refresh_rate = win32api.EnumDisplaySettings(device.DeviceName, -1).DisplayFrequency
+        #device = win32api.EnumDisplayDevices()
+        #refresh_rate = win32api.EnumDisplaySettings(device.DeviceName, -1).DisplayFrequency
+        refresh_rate = 30
         
         #Auxiliary variables for fps calculation
         frames = 0

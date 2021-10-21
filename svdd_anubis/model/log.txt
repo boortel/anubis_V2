@@ -1,0 +1,843 @@
+2020-11-26 14:18:32,350 - root - INFO - Log file is ../log/v3/mydata_300_HRes_480_one_pre/log.txt.
+2020-11-26 14:18:32,351 - root - INFO - Data path is ../data.
+2020-11-26 14:18:32,351 - root - INFO - Export path is ../log/v3/mydata_300_HRes_480_one_pre.
+2020-11-26 14:18:32,352 - root - INFO - Dataset: mydata300HRes_480
+2020-11-26 14:18:32,352 - root - INFO - Normal class: 1
+2020-11-26 14:18:32,353 - root - INFO - Network: my_LeNet_480
+2020-11-26 14:18:32,353 - root - INFO - Deep SVDD objective: one-class
+2020-11-26 14:18:32,354 - root - INFO - Nu-paramerter: 0.50
+2020-11-26 14:18:32,354 - root - INFO - Set seed to 0.
+2020-11-26 14:18:32,355 - root - INFO - Computation device: cuda
+2020-11-26 14:18:32,355 - root - INFO - Number of dataloader workers: 0
+2020-11-26 14:18:37,723 - root - INFO - Pretraining: True
+2020-11-26 14:18:37,724 - root - INFO - Pretraining optimizer: adam
+2020-11-26 14:18:37,725 - root - INFO - Pretraining learning rate: 0.0001
+2020-11-26 14:18:37,725 - root - INFO - Pretraining epochs: 250
+2020-11-26 14:18:37,726 - root - INFO - Pretraining learning rate scheduler milestones: (150,)
+2020-11-26 14:18:37,726 - root - INFO - Pretraining batch size: 50
+2020-11-26 14:18:37,727 - root - INFO - Pretraining weight decay: 5e-07
+2020-11-26 14:18:37,781 - root - INFO - Starting pretraining...
+2020-11-26 14:18:40,423 - root - INFO -   Epoch 1/250	 Time: 2.642	 Loss: 163640.71093750
+2020-11-26 14:18:40,867 - root - INFO -   Epoch 1/250	 Time: 0.443	 AUC on val_dataset: 83.40
+2020-11-26 14:18:43,459 - root - INFO -   Epoch 2/250	 Time: 2.591	 Loss: 135026.19661458
+2020-11-26 14:18:43,913 - root - INFO -   Epoch 2/250	 Time: 0.453	 AUC on val_dataset: 86.96
+2020-11-26 14:18:46,540 - root - INFO -   Epoch 3/250	 Time: 2.626	 Loss: 120203.15104167
+2020-11-26 14:18:46,989 - root - INFO -   Epoch 3/250	 Time: 0.447	 AUC on val_dataset: 83.56
+2020-11-26 14:18:49,599 - root - INFO -   Epoch 4/250	 Time: 2.610	 Loss: 111069.96875000
+2020-11-26 14:18:50,059 - root - INFO -   Epoch 4/250	 Time: 0.459	 AUC on val_dataset: 73.36
+2020-11-26 14:18:52,641 - root - INFO -   Epoch 5/250	 Time: 2.581	 Loss: 106563.51302083
+2020-11-26 14:18:53,086 - root - INFO -   Epoch 5/250	 Time: 0.445	 AUC on val_dataset: 59.56
+2020-11-26 14:18:55,677 - root - INFO -   Epoch 6/250	 Time: 2.590	 Loss: 99522.10286458
+2020-11-26 14:18:56,198 - root - INFO -   Epoch 6/250	 Time: 0.520	 AUC on val_dataset: 49.68
+2020-11-26 14:18:58,790 - root - INFO -   Epoch 7/250	 Time: 2.591	 Loss: 95697.83463542
+2020-11-26 14:18:59,239 - root - INFO -   Epoch 7/250	 Time: 0.447	 AUC on val_dataset: 44.56
+2020-11-26 14:19:01,825 - root - INFO -   Epoch 8/250	 Time: 2.585	 Loss: 92255.38151042
+2020-11-26 14:19:02,270 - root - INFO -   Epoch 8/250	 Time: 0.445	 AUC on val_dataset: 44.44
+2020-11-26 14:19:04,864 - root - INFO -   Epoch 9/250	 Time: 2.593	 Loss: 87659.98697917
+2020-11-26 14:19:05,311 - root - INFO -   Epoch 9/250	 Time: 0.446	 AUC on val_dataset: 44.52
+2020-11-26 14:19:07,918 - root - INFO -   Epoch 10/250	 Time: 2.606	 Loss: 84490.87500000
+2020-11-26 14:19:08,365 - root - INFO -   Epoch 10/250	 Time: 0.446	 AUC on val_dataset: 45.36
+2020-11-26 14:19:10,953 - root - INFO -   Epoch 11/250	 Time: 2.588	 Loss: 81372.48307292
+2020-11-26 14:19:11,400 - root - INFO -   Epoch 11/250	 Time: 0.446	 AUC on val_dataset: 45.60
+2020-11-26 14:19:14,000 - root - INFO -   Epoch 12/250	 Time: 2.599	 Loss: 77984.74218750
+2020-11-26 14:19:14,446 - root - INFO -   Epoch 12/250	 Time: 0.445	 AUC on val_dataset: 55.80
+2020-11-26 14:19:17,049 - root - INFO -   Epoch 13/250	 Time: 2.603	 Loss: 79225.04687500
+2020-11-26 14:19:17,496 - root - INFO -   Epoch 13/250	 Time: 0.446	 AUC on val_dataset: 66.96
+2020-11-26 14:19:20,107 - root - INFO -   Epoch 14/250	 Time: 2.610	 Loss: 74991.50911458
+2020-11-26 14:19:20,554 - root - INFO -   Epoch 14/250	 Time: 0.446	 AUC on val_dataset: 71.40
+2020-11-26 14:19:23,146 - root - INFO -   Epoch 15/250	 Time: 2.591	 Loss: 71181.12239583
+2020-11-26 14:19:23,592 - root - INFO -   Epoch 15/250	 Time: 0.445	 AUC on val_dataset: 76.64
+2020-11-26 14:19:26,185 - root - INFO -   Epoch 16/250	 Time: 2.592	 Loss: 69317.85156250
+2020-11-26 14:19:26,631 - root - INFO -   Epoch 16/250	 Time: 0.445	 AUC on val_dataset: 79.52
+2020-11-26 14:19:29,221 - root - INFO -   Epoch 17/250	 Time: 2.590	 Loss: 66549.97005208
+2020-11-26 14:19:29,675 - root - INFO -   Epoch 17/250	 Time: 0.452	 AUC on val_dataset: 79.68
+2020-11-26 14:19:32,267 - root - INFO -   Epoch 18/250	 Time: 2.591	 Loss: 65084.56054688
+2020-11-26 14:19:32,713 - root - INFO -   Epoch 18/250	 Time: 0.445	 AUC on val_dataset: 76.56
+2020-11-26 14:19:35,313 - root - INFO -   Epoch 19/250	 Time: 2.599	 Loss: 62884.25260417
+2020-11-26 14:19:35,768 - root - INFO -   Epoch 19/250	 Time: 0.454	 AUC on val_dataset: 75.16
+2020-11-26 14:19:38,370 - root - INFO -   Epoch 20/250	 Time: 2.602	 Loss: 60200.38997396
+2020-11-26 14:19:38,820 - root - INFO -   Epoch 20/250	 Time: 0.448	 AUC on val_dataset: 77.96
+2020-11-26 14:19:41,491 - root - INFO -   Epoch 21/250	 Time: 2.670	 Loss: 58134.77473958
+2020-11-26 14:19:41,950 - root - INFO -   Epoch 21/250	 Time: 0.457	 AUC on val_dataset: 81.60
+2020-11-26 14:19:44,554 - root - INFO -   Epoch 22/250	 Time: 2.604	 Loss: 56247.55924479
+2020-11-26 14:19:45,000 - root - INFO -   Epoch 22/250	 Time: 0.445	 AUC on val_dataset: 83.24
+2020-11-26 14:19:47,610 - root - INFO -   Epoch 23/250	 Time: 2.609	 Loss: 54895.89908854
+2020-11-26 14:19:48,061 - root - INFO -   Epoch 23/250	 Time: 0.450	 AUC on val_dataset: 82.00
+2020-11-26 14:19:50,667 - root - INFO -   Epoch 24/250	 Time: 2.605	 Loss: 52652.98763021
+2020-11-26 14:19:51,113 - root - INFO -   Epoch 24/250	 Time: 0.446	 AUC on val_dataset: 82.24
+2020-11-26 14:19:53,718 - root - INFO -   Epoch 25/250	 Time: 2.604	 Loss: 51186.34505208
+2020-11-26 14:19:54,175 - root - INFO -   Epoch 25/250	 Time: 0.456	 AUC on val_dataset: 81.20
+2020-11-26 14:19:56,779 - root - INFO -   Epoch 26/250	 Time: 2.604	 Loss: 48859.16406250
+2020-11-26 14:19:57,230 - root - INFO -   Epoch 26/250	 Time: 0.449	 AUC on val_dataset: 79.64
+2020-11-26 14:19:59,831 - root - INFO -   Epoch 27/250	 Time: 2.601	 Loss: 47630.49544271
+2020-11-26 14:20:00,280 - root - INFO -   Epoch 27/250	 Time: 0.447	 AUC on val_dataset: 77.08
+2020-11-26 14:20:02,887 - root - INFO -   Epoch 28/250	 Time: 2.607	 Loss: 45713.14257812
+2020-11-26 14:20:03,335 - root - INFO -   Epoch 28/250	 Time: 0.446	 AUC on val_dataset: 75.92
+2020-11-26 14:20:05,941 - root - INFO -   Epoch 29/250	 Time: 2.606	 Loss: 43975.54231771
+2020-11-26 14:20:06,389 - root - INFO -   Epoch 29/250	 Time: 0.446	 AUC on val_dataset: 76.76
+2020-11-26 14:20:08,995 - root - INFO -   Epoch 30/250	 Time: 2.606	 Loss: 42726.17838542
+2020-11-26 14:20:09,445 - root - INFO -   Epoch 30/250	 Time: 0.448	 AUC on val_dataset: 77.64
+2020-11-26 14:20:12,064 - root - INFO -   Epoch 31/250	 Time: 2.618	 Loss: 41789.45247396
+2020-11-26 14:20:12,513 - root - INFO -   Epoch 31/250	 Time: 0.448	 AUC on val_dataset: 74.32
+2020-11-26 14:20:15,124 - root - INFO -   Epoch 32/250	 Time: 2.610	 Loss: 39995.28059896
+2020-11-26 14:20:15,572 - root - INFO -   Epoch 32/250	 Time: 0.447	 AUC on val_dataset: 73.88
+2020-11-26 14:20:18,183 - root - INFO -   Epoch 33/250	 Time: 2.611	 Loss: 38618.63346354
+2020-11-26 14:20:18,631 - root - INFO -   Epoch 33/250	 Time: 0.446	 AUC on val_dataset: 73.52
+2020-11-26 14:20:21,241 - root - INFO -   Epoch 34/250	 Time: 2.610	 Loss: 36970.50325521
+2020-11-26 14:20:21,700 - root - INFO -   Epoch 34/250	 Time: 0.458	 AUC on val_dataset: 73.12
+2020-11-26 14:20:24,311 - root - INFO -   Epoch 35/250	 Time: 2.611	 Loss: 35836.64713542
+2020-11-26 14:20:24,767 - root - INFO -   Epoch 35/250	 Time: 0.454	 AUC on val_dataset: 74.64
+2020-11-26 14:20:27,378 - root - INFO -   Epoch 36/250	 Time: 2.610	 Loss: 35623.67838542
+2020-11-26 14:20:27,826 - root - INFO -   Epoch 36/250	 Time: 0.447	 AUC on val_dataset: 70.72
+2020-11-26 14:20:30,434 - root - INFO -   Epoch 37/250	 Time: 2.608	 Loss: 33850.44596354
+2020-11-26 14:20:30,883 - root - INFO -   Epoch 37/250	 Time: 0.448	 AUC on val_dataset: 71.64
+2020-11-26 14:20:33,499 - root - INFO -   Epoch 38/250	 Time: 2.615	 Loss: 31773.80208333
+2020-11-26 14:20:33,952 - root - INFO -   Epoch 38/250	 Time: 0.452	 AUC on val_dataset: 74.60
+2020-11-26 14:20:36,569 - root - INFO -   Epoch 39/250	 Time: 2.616	 Loss: 30519.81608073
+2020-11-26 14:20:37,020 - root - INFO -   Epoch 39/250	 Time: 0.450	 AUC on val_dataset: 74.80
+2020-11-26 14:20:39,643 - root - INFO -   Epoch 40/250	 Time: 2.623	 Loss: 28652.33919271
+2020-11-26 14:20:40,095 - root - INFO -   Epoch 40/250	 Time: 0.451	 AUC on val_dataset: 74.84
+2020-11-26 14:20:42,708 - root - INFO -   Epoch 41/250	 Time: 2.612	 Loss: 26837.18554688
+2020-11-26 14:20:43,161 - root - INFO -   Epoch 41/250	 Time: 0.452	 AUC on val_dataset: 73.92
+2020-11-26 14:20:45,780 - root - INFO -   Epoch 42/250	 Time: 2.618	 Loss: 24815.22167969
+2020-11-26 14:20:46,229 - root - INFO -   Epoch 42/250	 Time: 0.449	 AUC on val_dataset: 75.08
+2020-11-26 14:20:48,852 - root - INFO -   Epoch 43/250	 Time: 2.622	 Loss: 22969.18717448
+2020-11-26 14:20:49,304 - root - INFO -   Epoch 43/250	 Time: 0.451	 AUC on val_dataset: 76.04
+2020-11-26 14:20:51,925 - root - INFO -   Epoch 44/250	 Time: 2.620	 Loss: 21953.22949219
+2020-11-26 14:20:52,389 - root - INFO -   Epoch 44/250	 Time: 0.462	 AUC on val_dataset: 74.68
+2020-11-26 14:20:55,039 - root - INFO -   Epoch 45/250	 Time: 2.649	 Loss: 20058.89322917
+2020-11-26 14:20:55,492 - root - INFO -   Epoch 45/250	 Time: 0.452	 AUC on val_dataset: 73.92
+2020-11-26 14:20:58,131 - root - INFO -   Epoch 46/250	 Time: 2.639	 Loss: 18596.86295573
+2020-11-26 14:20:58,586 - root - INFO -   Epoch 46/250	 Time: 0.453	 AUC on val_dataset: 74.20
+2020-11-26 14:21:01,225 - root - INFO -   Epoch 47/250	 Time: 2.639	 Loss: 17251.38183594
+2020-11-26 14:21:01,682 - root - INFO -   Epoch 47/250	 Time: 0.455	 AUC on val_dataset: 74.92
+2020-11-26 14:21:04,312 - root - INFO -   Epoch 48/250	 Time: 2.629	 Loss: 15682.56966146
+2020-11-26 14:21:04,763 - root - INFO -   Epoch 48/250	 Time: 0.450	 AUC on val_dataset: 76.48
+2020-11-26 14:21:07,407 - root - INFO -   Epoch 49/250	 Time: 2.644	 Loss: 14721.40804036
+2020-11-26 14:21:07,860 - root - INFO -   Epoch 49/250	 Time: 0.451	 AUC on val_dataset: 77.00
+2020-11-26 14:21:10,488 - root - INFO -   Epoch 50/250	 Time: 2.628	 Loss: 13854.06233724
+2020-11-26 14:21:10,949 - root - INFO -   Epoch 50/250	 Time: 0.460	 AUC on val_dataset: 77.56
+2020-11-26 14:21:13,579 - root - INFO -   Epoch 51/250	 Time: 2.629	 Loss: 12809.51871745
+2020-11-26 14:21:14,030 - root - INFO -   Epoch 51/250	 Time: 0.450	 AUC on val_dataset: 77.88
+2020-11-26 14:21:16,680 - root - INFO -   Epoch 52/250	 Time: 2.649	 Loss: 11870.45149740
+2020-11-26 14:21:17,138 - root - INFO -   Epoch 52/250	 Time: 0.457	 AUC on val_dataset: 79.36
+2020-11-26 14:21:19,761 - root - INFO -   Epoch 53/250	 Time: 2.623	 Loss: 11241.19303385
+2020-11-26 14:21:20,212 - root - INFO -   Epoch 53/250	 Time: 0.450	 AUC on val_dataset: 79.76
+2020-11-26 14:21:22,837 - root - INFO -   Epoch 54/250	 Time: 2.624	 Loss: 10255.47623698
+2020-11-26 14:21:23,303 - root - INFO -   Epoch 54/250	 Time: 0.464	 AUC on val_dataset: 78.88
+2020-11-26 14:21:25,935 - root - INFO -   Epoch 55/250	 Time: 2.631	 Loss: 9746.20898438
+2020-11-26 14:21:26,392 - root - INFO -   Epoch 55/250	 Time: 0.455	 AUC on val_dataset: 80.16
+2020-11-26 14:21:29,025 - root - INFO -   Epoch 56/250	 Time: 2.633	 Loss: 9205.14518229
+2020-11-26 14:21:29,480 - root - INFO -   Epoch 56/250	 Time: 0.453	 AUC on val_dataset: 81.08
+2020-11-26 14:21:32,106 - root - INFO -   Epoch 57/250	 Time: 2.626	 Loss: 8723.07226562
+2020-11-26 14:21:32,559 - root - INFO -   Epoch 57/250	 Time: 0.452	 AUC on val_dataset: 80.72
+2020-11-26 14:21:35,185 - root - INFO -   Epoch 58/250	 Time: 2.625	 Loss: 8072.64314779
+2020-11-26 14:21:35,655 - root - INFO -   Epoch 58/250	 Time: 0.469	 AUC on val_dataset: 81.00
+2020-11-26 14:21:38,292 - root - INFO -   Epoch 59/250	 Time: 2.636	 Loss: 7763.94938151
+2020-11-26 14:21:38,751 - root - INFO -   Epoch 59/250	 Time: 0.458	 AUC on val_dataset: 81.04
+2020-11-26 14:21:41,393 - root - INFO -   Epoch 60/250	 Time: 2.642	 Loss: 7221.21215820
+2020-11-26 14:21:41,843 - root - INFO -   Epoch 60/250	 Time: 0.449	 AUC on val_dataset: 82.60
+2020-11-26 14:21:44,475 - root - INFO -   Epoch 61/250	 Time: 2.631	 Loss: 7227.17513021
+2020-11-26 14:21:44,928 - root - INFO -   Epoch 61/250	 Time: 0.452	 AUC on val_dataset: 79.00
+2020-11-26 14:21:47,606 - root - INFO -   Epoch 62/250	 Time: 2.677	 Loss: 6788.42895508
+2020-11-26 14:21:48,064 - root - INFO -   Epoch 62/250	 Time: 0.458	 AUC on val_dataset: 78.88
+2020-11-26 14:21:50,698 - root - INFO -   Epoch 63/250	 Time: 2.634	 Loss: 6503.44905599
+2020-11-26 14:21:51,152 - root - INFO -   Epoch 63/250	 Time: 0.452	 AUC on val_dataset: 80.76
+2020-11-26 14:21:53,800 - root - INFO -   Epoch 64/250	 Time: 2.647	 Loss: 5991.18750000
+2020-11-26 14:21:54,254 - root - INFO -   Epoch 64/250	 Time: 0.454	 AUC on val_dataset: 82.32
+2020-11-26 14:21:56,883 - root - INFO -   Epoch 65/250	 Time: 2.627	 Loss: 5831.94401042
+2020-11-26 14:21:57,341 - root - INFO -   Epoch 65/250	 Time: 0.458	 AUC on val_dataset: 81.40
+2020-11-26 14:21:59,968 - root - INFO -   Epoch 66/250	 Time: 2.626	 Loss: 5665.85970052
+2020-11-26 14:22:00,418 - root - INFO -   Epoch 66/250	 Time: 0.448	 AUC on val_dataset: 82.32
+2020-11-26 14:22:03,046 - root - INFO -   Epoch 67/250	 Time: 2.627	 Loss: 5434.83146159
+2020-11-26 14:22:03,496 - root - INFO -   Epoch 67/250	 Time: 0.448	 AUC on val_dataset: 82.76
+2020-11-26 14:22:06,126 - root - INFO -   Epoch 68/250	 Time: 2.630	 Loss: 5257.72745768
+2020-11-26 14:22:06,580 - root - INFO -   Epoch 68/250	 Time: 0.453	 AUC on val_dataset: 85.28
+2020-11-26 14:22:09,208 - root - INFO -   Epoch 69/250	 Time: 2.627	 Loss: 5100.26521810
+2020-11-26 14:22:09,664 - root - INFO -   Epoch 69/250	 Time: 0.455	 AUC on val_dataset: 84.60
+2020-11-26 14:22:12,286 - root - INFO -   Epoch 70/250	 Time: 2.622	 Loss: 4792.90437826
+2020-11-26 14:22:12,742 - root - INFO -   Epoch 70/250	 Time: 0.454	 AUC on val_dataset: 82.92
+2020-11-26 14:22:15,368 - root - INFO -   Epoch 71/250	 Time: 2.625	 Loss: 4601.97631836
+2020-11-26 14:22:15,820 - root - INFO -   Epoch 71/250	 Time: 0.451	 AUC on val_dataset: 83.44
+2020-11-26 14:22:18,449 - root - INFO -   Epoch 72/250	 Time: 2.629	 Loss: 4316.07128906
+2020-11-26 14:22:18,903 - root - INFO -   Epoch 72/250	 Time: 0.453	 AUC on val_dataset: 84.12
+2020-11-26 14:22:21,536 - root - INFO -   Epoch 73/250	 Time: 2.632	 Loss: 4057.57316081
+2020-11-26 14:22:21,987 - root - INFO -   Epoch 73/250	 Time: 0.450	 AUC on val_dataset: 83.96
+2020-11-26 14:22:24,613 - root - INFO -   Epoch 74/250	 Time: 2.625	 Loss: 4011.78165690
+2020-11-26 14:22:25,116 - root - INFO -   Epoch 74/250	 Time: 0.502	 AUC on val_dataset: 84.64
+2020-11-26 14:22:27,750 - root - INFO -   Epoch 75/250	 Time: 2.634	 Loss: 3911.58353678
+2020-11-26 14:22:28,205 - root - INFO -   Epoch 75/250	 Time: 0.454	 AUC on val_dataset: 84.80
+2020-11-26 14:22:30,841 - root - INFO -   Epoch 76/250	 Time: 2.635	 Loss: 3755.61149089
+2020-11-26 14:22:31,307 - root - INFO -   Epoch 76/250	 Time: 0.465	 AUC on val_dataset: 85.12
+2020-11-26 14:22:33,932 - root - INFO -   Epoch 77/250	 Time: 2.625	 Loss: 3811.73559570
+2020-11-26 14:22:34,388 - root - INFO -   Epoch 77/250	 Time: 0.454	 AUC on val_dataset: 84.48
+2020-11-26 14:22:37,011 - root - INFO -   Epoch 78/250	 Time: 2.622	 Loss: 3611.43375651
+2020-11-26 14:22:37,462 - root - INFO -   Epoch 78/250	 Time: 0.450	 AUC on val_dataset: 82.92
+2020-11-26 14:22:40,084 - root - INFO -   Epoch 79/250	 Time: 2.621	 Loss: 3507.29585775
+2020-11-26 14:22:40,533 - root - INFO -   Epoch 79/250	 Time: 0.448	 AUC on val_dataset: 83.84
+2020-11-26 14:22:43,155 - root - INFO -   Epoch 80/250	 Time: 2.621	 Loss: 3267.33064779
+2020-11-26 14:22:43,605 - root - INFO -   Epoch 80/250	 Time: 0.449	 AUC on val_dataset: 83.80
+2020-11-26 14:22:46,234 - root - INFO -   Epoch 81/250	 Time: 2.629	 Loss: 3304.25431315
+2020-11-26 14:22:46,684 - root - INFO -   Epoch 81/250	 Time: 0.449	 AUC on val_dataset: 85.04
+2020-11-26 14:22:49,320 - root - INFO -   Epoch 82/250	 Time: 2.636	 Loss: 3197.43139648
+2020-11-26 14:22:49,768 - root - INFO -   Epoch 82/250	 Time: 0.447	 AUC on val_dataset: 85.32
+2020-11-26 14:22:52,394 - root - INFO -   Epoch 83/250	 Time: 2.625	 Loss: 3185.86022949
+2020-11-26 14:22:52,842 - root - INFO -   Epoch 83/250	 Time: 0.447	 AUC on val_dataset: 82.40
+2020-11-26 14:22:55,463 - root - INFO -   Epoch 84/250	 Time: 2.620	 Loss: 3013.67476400
+2020-11-26 14:22:55,911 - root - INFO -   Epoch 84/250	 Time: 0.447	 AUC on val_dataset: 84.52
+2020-11-26 14:22:58,533 - root - INFO -   Epoch 85/250	 Time: 2.621	 Loss: 2945.31726074
+2020-11-26 14:22:58,987 - root - INFO -   Epoch 85/250	 Time: 0.453	 AUC on val_dataset: 83.68
+2020-11-26 14:23:01,615 - root - INFO -   Epoch 86/250	 Time: 2.627	 Loss: 2766.81673177
+2020-11-26 14:23:02,070 - root - INFO -   Epoch 86/250	 Time: 0.454	 AUC on val_dataset: 82.68
+2020-11-26 14:23:04,702 - root - INFO -   Epoch 87/250	 Time: 2.631	 Loss: 2792.32946777
+2020-11-26 14:23:05,158 - root - INFO -   Epoch 87/250	 Time: 0.455	 AUC on val_dataset: 84.68
+2020-11-26 14:23:07,785 - root - INFO -   Epoch 88/250	 Time: 2.627	 Loss: 2750.08223470
+2020-11-26 14:23:08,243 - root - INFO -   Epoch 88/250	 Time: 0.456	 AUC on val_dataset: 82.20
+2020-11-26 14:23:10,880 - root - INFO -   Epoch 89/250	 Time: 2.637	 Loss: 2540.30753581
+2020-11-26 14:23:11,339 - root - INFO -   Epoch 89/250	 Time: 0.457	 AUC on val_dataset: 84.88
+2020-11-26 14:23:13,977 - root - INFO -   Epoch 90/250	 Time: 2.637	 Loss: 2357.89217122
+2020-11-26 14:23:14,426 - root - INFO -   Epoch 90/250	 Time: 0.449	 AUC on val_dataset: 86.56
+2020-11-26 14:23:17,060 - root - INFO -   Epoch 91/250	 Time: 2.633	 Loss: 2610.50862630
+2020-11-26 14:23:17,510 - root - INFO -   Epoch 91/250	 Time: 0.449	 AUC on val_dataset: 84.04
+2020-11-26 14:23:20,145 - root - INFO -   Epoch 92/250	 Time: 2.634	 Loss: 2539.98832194
+2020-11-26 14:23:20,603 - root - INFO -   Epoch 92/250	 Time: 0.457	 AUC on val_dataset: 80.80
+2020-11-26 14:23:23,242 - root - INFO -   Epoch 93/250	 Time: 2.638	 Loss: 2534.51151530
+2020-11-26 14:23:23,695 - root - INFO -   Epoch 93/250	 Time: 0.452	 AUC on val_dataset: 80.68
+2020-11-26 14:23:26,337 - root - INFO -   Epoch 94/250	 Time: 2.641	 Loss: 2290.24674479
+2020-11-26 14:23:26,789 - root - INFO -   Epoch 94/250	 Time: 0.451	 AUC on val_dataset: 87.00
+2020-11-26 14:23:29,440 - root - INFO -   Epoch 95/250	 Time: 2.650	 Loss: 2099.45332845
+2020-11-26 14:23:29,889 - root - INFO -   Epoch 95/250	 Time: 0.447	 AUC on val_dataset: 87.84
+2020-11-26 14:23:32,519 - root - INFO -   Epoch 96/250	 Time: 2.629	 Loss: 2121.63193766
+2020-11-26 14:23:32,967 - root - INFO -   Epoch 96/250	 Time: 0.447	 AUC on val_dataset: 88.36
+2020-11-26 14:23:35,606 - root - INFO -   Epoch 97/250	 Time: 2.638	 Loss: 2034.05285645
+2020-11-26 14:23:36,057 - root - INFO -   Epoch 97/250	 Time: 0.450	 AUC on val_dataset: 88.52
+2020-11-26 14:23:38,700 - root - INFO -   Epoch 98/250	 Time: 2.643	 Loss: 2049.44020589
+2020-11-26 14:23:39,156 - root - INFO -   Epoch 98/250	 Time: 0.454	 AUC on val_dataset: 85.20
+2020-11-26 14:23:41,802 - root - INFO -   Epoch 99/250	 Time: 2.646	 Loss: 1876.86328125
+2020-11-26 14:23:42,256 - root - INFO -   Epoch 99/250	 Time: 0.453	 AUC on val_dataset: 84.32
+2020-11-26 14:23:44,901 - root - INFO -   Epoch 100/250	 Time: 2.644	 Loss: 2109.18739827
+2020-11-26 14:23:45,359 - root - INFO -   Epoch 100/250	 Time: 0.456	 AUC on val_dataset: 81.48
+2020-11-26 14:23:48,006 - root - INFO -   Epoch 101/250	 Time: 2.647	 Loss: 1891.18157959
+2020-11-26 14:23:48,459 - root - INFO -   Epoch 101/250	 Time: 0.452	 AUC on val_dataset: 83.04
+2020-11-26 14:23:51,093 - root - INFO -   Epoch 102/250	 Time: 2.633	 Loss: 1887.87807210
+2020-11-26 14:23:51,544 - root - INFO -   Epoch 102/250	 Time: 0.450	 AUC on val_dataset: 84.32
+2020-11-26 14:23:54,174 - root - INFO -   Epoch 103/250	 Time: 2.629	 Loss: 2013.95631917
+2020-11-26 14:23:54,623 - root - INFO -   Epoch 103/250	 Time: 0.448	 AUC on val_dataset: 86.68
+2020-11-26 14:23:57,261 - root - INFO -   Epoch 104/250	 Time: 2.637	 Loss: 1744.13608805
+2020-11-26 14:23:57,713 - root - INFO -   Epoch 104/250	 Time: 0.451	 AUC on val_dataset: 88.04
+2020-11-26 14:24:00,340 - root - INFO -   Epoch 105/250	 Time: 2.626	 Loss: 1742.11464437
+2020-11-26 14:24:00,788 - root - INFO -   Epoch 105/250	 Time: 0.447	 AUC on val_dataset: 85.24
+2020-11-26 14:24:03,418 - root - INFO -   Epoch 106/250	 Time: 2.629	 Loss: 1739.40962728
+2020-11-26 14:24:03,867 - root - INFO -   Epoch 106/250	 Time: 0.448	 AUC on val_dataset: 83.48
+2020-11-26 14:24:06,494 - root - INFO -   Epoch 107/250	 Time: 2.626	 Loss: 1620.18886312
+2020-11-26 14:24:06,953 - root - INFO -   Epoch 107/250	 Time: 0.458	 AUC on val_dataset: 82.56
+2020-11-26 14:24:09,590 - root - INFO -   Epoch 108/250	 Time: 2.636	 Loss: 1673.48781331
+2020-11-26 14:24:10,041 - root - INFO -   Epoch 108/250	 Time: 0.450	 AUC on val_dataset: 85.32
+2020-11-26 14:24:12,676 - root - INFO -   Epoch 109/250	 Time: 2.634	 Loss: 1479.43375651
+2020-11-26 14:24:13,128 - root - INFO -   Epoch 109/250	 Time: 0.451	 AUC on val_dataset: 86.48
+2020-11-26 14:24:15,762 - root - INFO -   Epoch 110/250	 Time: 2.634	 Loss: 1474.93343099
+2020-11-26 14:24:16,214 - root - INFO -   Epoch 110/250	 Time: 0.451	 AUC on val_dataset: 87.12
+2020-11-26 14:24:18,845 - root - INFO -   Epoch 111/250	 Time: 2.629	 Loss: 1497.27309163
+2020-11-26 14:24:19,290 - root - INFO -   Epoch 111/250	 Time: 0.445	 AUC on val_dataset: 86.84
+2020-11-26 14:24:21,925 - root - INFO -   Epoch 112/250	 Time: 2.633	 Loss: 1423.26232910
+2020-11-26 14:24:22,376 - root - INFO -   Epoch 112/250	 Time: 0.450	 AUC on val_dataset: 86.96
+2020-11-26 14:24:25,006 - root - INFO -   Epoch 113/250	 Time: 2.630	 Loss: 1526.51735433
+2020-11-26 14:24:25,456 - root - INFO -   Epoch 113/250	 Time: 0.448	 AUC on val_dataset: 85.00
+2020-11-26 14:24:28,085 - root - INFO -   Epoch 114/250	 Time: 2.629	 Loss: 1385.88157145
+2020-11-26 14:24:28,535 - root - INFO -   Epoch 114/250	 Time: 0.448	 AUC on val_dataset: 86.80
+2020-11-26 14:24:31,174 - root - INFO -   Epoch 115/250	 Time: 2.639	 Loss: 1346.27394613
+2020-11-26 14:24:31,628 - root - INFO -   Epoch 115/250	 Time: 0.453	 AUC on val_dataset: 86.92
+2020-11-26 14:24:34,264 - root - INFO -   Epoch 116/250	 Time: 2.635	 Loss: 1448.98962402
+2020-11-26 14:24:34,726 - root - INFO -   Epoch 116/250	 Time: 0.461	 AUC on val_dataset: 85.56
+2020-11-26 14:24:37,364 - root - INFO -   Epoch 117/250	 Time: 2.637	 Loss: 1409.19708252
+2020-11-26 14:24:37,816 - root - INFO -   Epoch 117/250	 Time: 0.451	 AUC on val_dataset: 83.40
+2020-11-26 14:24:40,456 - root - INFO -   Epoch 118/250	 Time: 2.639	 Loss: 1282.31355794
+2020-11-26 14:24:40,935 - root - INFO -   Epoch 118/250	 Time: 0.478	 AUC on val_dataset: 84.84
+2020-11-26 14:24:43,576 - root - INFO -   Epoch 119/250	 Time: 2.640	 Loss: 1369.07132975
+2020-11-26 14:24:44,026 - root - INFO -   Epoch 119/250	 Time: 0.449	 AUC on val_dataset: 84.40
+2020-11-26 14:24:46,661 - root - INFO -   Epoch 120/250	 Time: 2.635	 Loss: 1258.05185954
+2020-11-26 14:24:47,113 - root - INFO -   Epoch 120/250	 Time: 0.450	 AUC on val_dataset: 86.32
+2020-11-26 14:24:49,754 - root - INFO -   Epoch 121/250	 Time: 2.641	 Loss: 1264.47959391
+2020-11-26 14:24:50,207 - root - INFO -   Epoch 121/250	 Time: 0.451	 AUC on val_dataset: 85.52
+2020-11-26 14:24:52,852 - root - INFO -   Epoch 122/250	 Time: 2.644	 Loss: 1224.73728434
+2020-11-26 14:24:53,321 - root - INFO -   Epoch 122/250	 Time: 0.468	 AUC on val_dataset: 84.76
+2020-11-26 14:24:55,956 - root - INFO -   Epoch 123/250	 Time: 2.634	 Loss: 1195.96555583
+2020-11-26 14:24:56,408 - root - INFO -   Epoch 123/250	 Time: 0.451	 AUC on val_dataset: 85.52
+2020-11-26 14:24:59,049 - root - INFO -   Epoch 124/250	 Time: 2.641	 Loss: 1164.76230876
+2020-11-26 14:24:59,500 - root - INFO -   Epoch 124/250	 Time: 0.450	 AUC on val_dataset: 83.72
+2020-11-26 14:25:02,139 - root - INFO -   Epoch 125/250	 Time: 2.638	 Loss: 1098.29309082
+2020-11-26 14:25:02,597 - root - INFO -   Epoch 125/250	 Time: 0.457	 AUC on val_dataset: 86.20
+2020-11-26 14:25:05,231 - root - INFO -   Epoch 126/250	 Time: 2.633	 Loss: 1075.29409790
+2020-11-26 14:25:05,681 - root - INFO -   Epoch 126/250	 Time: 0.448	 AUC on val_dataset: 87.08
+2020-11-26 14:25:08,317 - root - INFO -   Epoch 127/250	 Time: 2.635	 Loss: 1066.97497559
+2020-11-26 14:25:08,768 - root - INFO -   Epoch 127/250	 Time: 0.450	 AUC on val_dataset: 85.28
+2020-11-26 14:25:11,415 - root - INFO -   Epoch 128/250	 Time: 2.646	 Loss: 1079.69771322
+2020-11-26 14:25:11,866 - root - INFO -   Epoch 128/250	 Time: 0.450	 AUC on val_dataset: 84.92
+2020-11-26 14:25:14,508 - root - INFO -   Epoch 129/250	 Time: 2.641	 Loss: 1046.44835409
+2020-11-26 14:25:14,961 - root - INFO -   Epoch 129/250	 Time: 0.451	 AUC on val_dataset: 84.44
+2020-11-26 14:25:17,603 - root - INFO -   Epoch 130/250	 Time: 2.641	 Loss: 1011.48658244
+2020-11-26 14:25:18,055 - root - INFO -   Epoch 130/250	 Time: 0.451	 AUC on val_dataset: 87.56
+2020-11-26 14:25:20,715 - root - INFO -   Epoch 131/250	 Time: 2.659	 Loss: 1014.83509318
+2020-11-26 14:25:21,178 - root - INFO -   Epoch 131/250	 Time: 0.462	 AUC on val_dataset: 87.28
+2020-11-26 14:25:23,831 - root - INFO -   Epoch 132/250	 Time: 2.652	 Loss: 1035.69419352
+2020-11-26 14:25:24,291 - root - INFO -   Epoch 132/250	 Time: 0.459	 AUC on val_dataset: 83.64
+2020-11-26 14:25:26,938 - root - INFO -   Epoch 133/250	 Time: 2.647	 Loss: 980.62065633
+2020-11-26 14:25:27,399 - root - INFO -   Epoch 133/250	 Time: 0.460	 AUC on val_dataset: 85.96
+2020-11-26 14:25:30,040 - root - INFO -   Epoch 134/250	 Time: 2.641	 Loss: 1043.83122762
+2020-11-26 14:25:30,493 - root - INFO -   Epoch 134/250	 Time: 0.451	 AUC on val_dataset: 85.16
+2020-11-26 14:25:33,140 - root - INFO -   Epoch 135/250	 Time: 2.646	 Loss: 1109.46269735
+2020-11-26 14:25:33,593 - root - INFO -   Epoch 135/250	 Time: 0.452	 AUC on val_dataset: 82.64
+2020-11-26 14:25:36,245 - root - INFO -   Epoch 136/250	 Time: 2.652	 Loss: 946.91457113
+2020-11-26 14:25:36,700 - root - INFO -   Epoch 136/250	 Time: 0.454	 AUC on val_dataset: 84.72
+2020-11-26 14:25:39,354 - root - INFO -   Epoch 137/250	 Time: 2.652	 Loss: 961.78579712
+2020-11-26 14:25:39,807 - root - INFO -   Epoch 137/250	 Time: 0.452	 AUC on val_dataset: 83.76
+2020-11-26 14:25:42,453 - root - INFO -   Epoch 138/250	 Time: 2.646	 Loss: 935.24772135
+2020-11-26 14:25:42,913 - root - INFO -   Epoch 138/250	 Time: 0.459	 AUC on val_dataset: 86.64
+2020-11-26 14:25:45,555 - root - INFO -   Epoch 139/250	 Time: 2.642	 Loss: 871.47277832
+2020-11-26 14:25:46,007 - root - INFO -   Epoch 139/250	 Time: 0.451	 AUC on val_dataset: 86.88
+2020-11-26 14:25:48,654 - root - INFO -   Epoch 140/250	 Time: 2.646	 Loss: 847.57498169
+2020-11-26 14:25:49,112 - root - INFO -   Epoch 140/250	 Time: 0.457	 AUC on val_dataset: 85.88
+2020-11-26 14:25:51,819 - root - INFO -   Epoch 141/250	 Time: 2.707	 Loss: 852.09083049
+2020-11-26 14:25:52,275 - root - INFO -   Epoch 141/250	 Time: 0.455	 AUC on val_dataset: 86.04
+2020-11-26 14:25:54,923 - root - INFO -   Epoch 142/250	 Time: 2.647	 Loss: 841.71489461
+2020-11-26 14:25:55,377 - root - INFO -   Epoch 142/250	 Time: 0.453	 AUC on val_dataset: 85.68
+2020-11-26 14:25:58,016 - root - INFO -   Epoch 143/250	 Time: 2.639	 Loss: 794.52924601
+2020-11-26 14:25:58,473 - root - INFO -   Epoch 143/250	 Time: 0.455	 AUC on val_dataset: 87.72
+2020-11-26 14:26:01,117 - root - INFO -   Epoch 144/250	 Time: 2.644	 Loss: 846.19300334
+2020-11-26 14:26:01,627 - root - INFO -   Epoch 144/250	 Time: 0.509	 AUC on val_dataset: 86.40
+2020-11-26 14:26:04,263 - root - INFO -   Epoch 145/250	 Time: 2.635	 Loss: 800.97265625
+2020-11-26 14:26:04,714 - root - INFO -   Epoch 145/250	 Time: 0.450	 AUC on val_dataset: 88.20
+2020-11-26 14:26:07,355 - root - INFO -   Epoch 146/250	 Time: 2.640	 Loss: 739.33895874
+2020-11-26 14:26:07,804 - root - INFO -   Epoch 146/250	 Time: 0.448	 AUC on val_dataset: 86.80
+2020-11-26 14:26:10,430 - root - INFO -   Epoch 147/250	 Time: 2.626	 Loss: 751.64374797
+2020-11-26 14:26:10,901 - root - INFO -   Epoch 147/250	 Time: 0.469	 AUC on val_dataset: 85.84
+2020-11-26 14:26:13,608 - root - INFO -   Epoch 148/250	 Time: 2.706	 Loss: 756.79012044
+2020-11-26 14:26:14,056 - root - INFO -   Epoch 148/250	 Time: 0.447	 AUC on val_dataset: 84.56
+2020-11-26 14:26:16,702 - root - INFO -   Epoch 149/250	 Time: 2.645	 Loss: 740.01014201
+2020-11-26 14:26:17,152 - root - INFO -   Epoch 149/250	 Time: 0.449	 AUC on val_dataset: 85.20
+2020-11-26 14:26:19,788 - root - INFO -   Epoch 150/250	 Time: 2.635	 Loss: 718.50423177
+2020-11-26 14:26:20,260 - root - INFO -   Epoch 150/250	 Time: 0.471	 AUC on val_dataset: 85.88
+2020-11-26 14:26:20,261 - root - INFO -   LR scheduler: new learning rate is 1e-06
+2020-11-26 14:26:22,941 - root - INFO -   Epoch 151/250	 Time: 2.679	 Loss: 715.45730591
+2020-11-26 14:26:23,394 - root - INFO -   Epoch 151/250	 Time: 0.452	 AUC on val_dataset: 85.80
+2020-11-26 14:26:26,048 - root - INFO -   Epoch 152/250	 Time: 2.654	 Loss: 727.70175171
+2020-11-26 14:26:26,501 - root - INFO -   Epoch 152/250	 Time: 0.452	 AUC on val_dataset: 85.48
+2020-11-26 14:26:29,146 - root - INFO -   Epoch 153/250	 Time: 2.644	 Loss: 689.99208577
+2020-11-26 14:26:29,598 - root - INFO -   Epoch 153/250	 Time: 0.450	 AUC on val_dataset: 85.72
+2020-11-26 14:26:32,245 - root - INFO -   Epoch 154/250	 Time: 2.647	 Loss: 693.04789225
+2020-11-26 14:26:32,722 - root - INFO -   Epoch 154/250	 Time: 0.476	 AUC on val_dataset: 86.12
+2020-11-26 14:26:35,369 - root - INFO -   Epoch 155/250	 Time: 2.645	 Loss: 675.59623210
+2020-11-26 14:26:35,832 - root - INFO -   Epoch 155/250	 Time: 0.462	 AUC on val_dataset: 86.32
+2020-11-26 14:26:38,474 - root - INFO -   Epoch 156/250	 Time: 2.642	 Loss: 664.67518107
+2020-11-26 14:26:38,948 - root - INFO -   Epoch 156/250	 Time: 0.473	 AUC on val_dataset: 86.52
+2020-11-26 14:26:41,606 - root - INFO -   Epoch 157/250	 Time: 2.656	 Loss: 685.36235555
+2020-11-26 14:26:42,059 - root - INFO -   Epoch 157/250	 Time: 0.452	 AUC on val_dataset: 86.44
+2020-11-26 14:26:44,718 - root - INFO -   Epoch 158/250	 Time: 2.658	 Loss: 657.86977132
+2020-11-26 14:26:45,178 - root - INFO -   Epoch 158/250	 Time: 0.460	 AUC on val_dataset: 86.68
+2020-11-26 14:26:47,875 - root - INFO -   Epoch 159/250	 Time: 2.696	 Loss: 673.81247965
+2020-11-26 14:26:48,337 - root - INFO -   Epoch 159/250	 Time: 0.461	 AUC on val_dataset: 86.76
+2020-11-26 14:26:50,986 - root - INFO -   Epoch 160/250	 Time: 2.649	 Loss: 661.03162638
+2020-11-26 14:26:51,443 - root - INFO -   Epoch 160/250	 Time: 0.455	 AUC on val_dataset: 86.92
+2020-11-26 14:26:54,097 - root - INFO -   Epoch 161/250	 Time: 2.653	 Loss: 671.84894816
+2020-11-26 14:26:54,550 - root - INFO -   Epoch 161/250	 Time: 0.453	 AUC on val_dataset: 86.84
+2020-11-26 14:26:57,250 - root - INFO -   Epoch 162/250	 Time: 2.699	 Loss: 647.80029297
+2020-11-26 14:26:57,715 - root - INFO -   Epoch 162/250	 Time: 0.464	 AUC on val_dataset: 86.56
+2020-11-26 14:27:00,362 - root - INFO -   Epoch 163/250	 Time: 2.646	 Loss: 661.91724650
+2020-11-26 14:27:00,816 - root - INFO -   Epoch 163/250	 Time: 0.452	 AUC on val_dataset: 86.80
+2020-11-26 14:27:03,462 - root - INFO -   Epoch 164/250	 Time: 2.646	 Loss: 657.10829671
+2020-11-26 14:27:03,915 - root - INFO -   Epoch 164/250	 Time: 0.452	 AUC on val_dataset: 86.64
+2020-11-26 14:27:06,565 - root - INFO -   Epoch 165/250	 Time: 2.650	 Loss: 658.83298747
+2020-11-26 14:27:07,074 - root - INFO -   Epoch 165/250	 Time: 0.508	 AUC on val_dataset: 86.72
+2020-11-26 14:27:09,721 - root - INFO -   Epoch 166/250	 Time: 2.646	 Loss: 643.03688558
+2020-11-26 14:27:10,182 - root - INFO -   Epoch 166/250	 Time: 0.460	 AUC on val_dataset: 86.76
+2020-11-26 14:27:12,833 - root - INFO -   Epoch 167/250	 Time: 2.650	 Loss: 693.31511434
+2020-11-26 14:27:13,291 - root - INFO -   Epoch 167/250	 Time: 0.457	 AUC on val_dataset: 86.92
+2020-11-26 14:27:15,946 - root - INFO -   Epoch 168/250	 Time: 2.654	 Loss: 665.96693929
+2020-11-26 14:27:16,402 - root - INFO -   Epoch 168/250	 Time: 0.455	 AUC on val_dataset: 86.88
+2020-11-26 14:27:19,046 - root - INFO -   Epoch 169/250	 Time: 2.644	 Loss: 665.82538859
+2020-11-26 14:27:19,502 - root - INFO -   Epoch 169/250	 Time: 0.454	 AUC on val_dataset: 86.64
+2020-11-26 14:27:22,185 - root - INFO -   Epoch 170/250	 Time: 2.682	 Loss: 641.44860840
+2020-11-26 14:27:22,660 - root - INFO -   Epoch 170/250	 Time: 0.475	 AUC on val_dataset: 86.52
+2020-11-26 14:27:25,314 - root - INFO -   Epoch 171/250	 Time: 2.653	 Loss: 653.76586914
+2020-11-26 14:27:25,768 - root - INFO -   Epoch 171/250	 Time: 0.452	 AUC on val_dataset: 86.48
+2020-11-26 14:27:28,417 - root - INFO -   Epoch 172/250	 Time: 2.648	 Loss: 635.31545003
+2020-11-26 14:27:28,873 - root - INFO -   Epoch 172/250	 Time: 0.454	 AUC on val_dataset: 86.56
+2020-11-26 14:27:31,529 - root - INFO -   Epoch 173/250	 Time: 2.656	 Loss: 785.71336873
+2020-11-26 14:27:31,985 - root - INFO -   Epoch 173/250	 Time: 0.454	 AUC on val_dataset: 86.44
+2020-11-26 14:27:34,640 - root - INFO -   Epoch 174/250	 Time: 2.655	 Loss: 657.51616414
+2020-11-26 14:27:35,095 - root - INFO -   Epoch 174/250	 Time: 0.454	 AUC on val_dataset: 86.24
+2020-11-26 14:27:37,747 - root - INFO -   Epoch 175/250	 Time: 2.651	 Loss: 635.56605021
+2020-11-26 14:27:38,203 - root - INFO -   Epoch 175/250	 Time: 0.455	 AUC on val_dataset: 86.16
+2020-11-26 14:27:40,869 - root - INFO -   Epoch 176/250	 Time: 2.665	 Loss: 631.63677979
+2020-11-26 14:27:41,332 - root - INFO -   Epoch 176/250	 Time: 0.462	 AUC on val_dataset: 86.44
+2020-11-26 14:27:43,982 - root - INFO -   Epoch 177/250	 Time: 2.649	 Loss: 639.18919881
+2020-11-26 14:27:44,434 - root - INFO -   Epoch 177/250	 Time: 0.451	 AUC on val_dataset: 86.68
+2020-11-26 14:27:47,083 - root - INFO -   Epoch 178/250	 Time: 2.648	 Loss: 639.73904419
+2020-11-26 14:27:47,543 - root - INFO -   Epoch 178/250	 Time: 0.458	 AUC on val_dataset: 86.68
+2020-11-26 14:27:50,194 - root - INFO -   Epoch 179/250	 Time: 2.651	 Loss: 620.30593872
+2020-11-26 14:27:50,648 - root - INFO -   Epoch 179/250	 Time: 0.453	 AUC on val_dataset: 86.72
+2020-11-26 14:27:53,350 - root - INFO -   Epoch 180/250	 Time: 2.701	 Loss: 626.95775350
+2020-11-26 14:27:53,806 - root - INFO -   Epoch 180/250	 Time: 0.455	 AUC on val_dataset: 86.68
+2020-11-26 14:27:56,458 - root - INFO -   Epoch 181/250	 Time: 2.651	 Loss: 608.08691406
+2020-11-26 14:27:56,911 - root - INFO -   Epoch 181/250	 Time: 0.452	 AUC on val_dataset: 86.64
+2020-11-26 14:27:59,569 - root - INFO -   Epoch 182/250	 Time: 2.657	 Loss: 644.81427002
+2020-11-26 14:28:00,085 - root - INFO -   Epoch 182/250	 Time: 0.515	 AUC on val_dataset: 86.60
+2020-11-26 14:28:02,746 - root - INFO -   Epoch 183/250	 Time: 2.660	 Loss: 636.42086792
+2020-11-26 14:28:03,235 - root - INFO -   Epoch 183/250	 Time: 0.488	 AUC on val_dataset: 86.48
+2020-11-26 14:28:05,880 - root - INFO -   Epoch 184/250	 Time: 2.644	 Loss: 613.37364705
+2020-11-26 14:28:06,335 - root - INFO -   Epoch 184/250	 Time: 0.454	 AUC on val_dataset: 86.52
+2020-11-26 14:28:08,994 - root - INFO -   Epoch 185/250	 Time: 2.659	 Loss: 620.75816854
+2020-11-26 14:28:09,486 - root - INFO -   Epoch 185/250	 Time: 0.491	 AUC on val_dataset: 86.32
+2020-11-26 14:28:12,135 - root - INFO -   Epoch 186/250	 Time: 2.648	 Loss: 618.59363810
+2020-11-26 14:28:12,591 - root - INFO -   Epoch 186/250	 Time: 0.454	 AUC on val_dataset: 86.28
+2020-11-26 14:28:15,252 - root - INFO -   Epoch 187/250	 Time: 2.660	 Loss: 626.40547689
+2020-11-26 14:28:15,705 - root - INFO -   Epoch 187/250	 Time: 0.452	 AUC on val_dataset: 86.20
+2020-11-26 14:28:18,353 - root - INFO -   Epoch 188/250	 Time: 2.647	 Loss: 628.26544189
+2020-11-26 14:28:18,813 - root - INFO -   Epoch 188/250	 Time: 0.459	 AUC on val_dataset: 86.28
+2020-11-26 14:28:21,460 - root - INFO -   Epoch 189/250	 Time: 2.646	 Loss: 645.18452962
+2020-11-26 14:28:21,915 - root - INFO -   Epoch 189/250	 Time: 0.454	 AUC on val_dataset: 86.52
+2020-11-26 14:28:24,565 - root - INFO -   Epoch 190/250	 Time: 2.649	 Loss: 619.65249634
+2020-11-26 14:28:25,017 - root - INFO -   Epoch 190/250	 Time: 0.450	 AUC on val_dataset: 86.52
+2020-11-26 14:28:27,662 - root - INFO -   Epoch 191/250	 Time: 2.644	 Loss: 627.78538005
+2020-11-26 14:28:28,116 - root - INFO -   Epoch 191/250	 Time: 0.453	 AUC on val_dataset: 86.84
+2020-11-26 14:28:30,762 - root - INFO -   Epoch 192/250	 Time: 2.645	 Loss: 630.35170492
+2020-11-26 14:28:31,215 - root - INFO -   Epoch 192/250	 Time: 0.452	 AUC on val_dataset: 87.04
+2020-11-26 14:28:33,860 - root - INFO -   Epoch 193/250	 Time: 2.644	 Loss: 622.56998698
+2020-11-26 14:28:34,313 - root - INFO -   Epoch 193/250	 Time: 0.452	 AUC on val_dataset: 86.60
+2020-11-26 14:28:36,961 - root - INFO -   Epoch 194/250	 Time: 2.648	 Loss: 600.63106283
+2020-11-26 14:28:37,415 - root - INFO -   Epoch 194/250	 Time: 0.452	 AUC on val_dataset: 86.52
+2020-11-26 14:28:40,061 - root - INFO -   Epoch 195/250	 Time: 2.646	 Loss: 601.08791097
+2020-11-26 14:28:40,517 - root - INFO -   Epoch 195/250	 Time: 0.455	 AUC on val_dataset: 86.60
+2020-11-26 14:28:43,166 - root - INFO -   Epoch 196/250	 Time: 2.648	 Loss: 672.80740356
+2020-11-26 14:28:43,622 - root - INFO -   Epoch 196/250	 Time: 0.454	 AUC on val_dataset: 86.96
+2020-11-26 14:28:46,267 - root - INFO -   Epoch 197/250	 Time: 2.645	 Loss: 594.46777344
+2020-11-26 14:28:46,720 - root - INFO -   Epoch 197/250	 Time: 0.452	 AUC on val_dataset: 86.88
+2020-11-26 14:28:49,374 - root - INFO -   Epoch 198/250	 Time: 2.653	 Loss: 604.16362508
+2020-11-26 14:28:49,828 - root - INFO -   Epoch 198/250	 Time: 0.454	 AUC on val_dataset: 86.80
+2020-11-26 14:28:52,476 - root - INFO -   Epoch 199/250	 Time: 2.647	 Loss: 608.20308431
+2020-11-26 14:28:52,930 - root - INFO -   Epoch 199/250	 Time: 0.453	 AUC on val_dataset: 86.68
+2020-11-26 14:28:55,578 - root - INFO -   Epoch 200/250	 Time: 2.647	 Loss: 613.48401896
+2020-11-26 14:28:56,041 - root - INFO -   Epoch 200/250	 Time: 0.462	 AUC on val_dataset: 86.24
+2020-11-26 14:28:58,714 - root - INFO -   Epoch 201/250	 Time: 2.672	 Loss: 596.64567057
+2020-11-26 14:28:59,170 - root - INFO -   Epoch 201/250	 Time: 0.455	 AUC on val_dataset: 86.08
+2020-11-26 14:29:01,812 - root - INFO -   Epoch 202/250	 Time: 2.642	 Loss: 595.02920532
+2020-11-26 14:29:02,266 - root - INFO -   Epoch 202/250	 Time: 0.452	 AUC on val_dataset: 86.64
+2020-11-26 14:29:04,912 - root - INFO -   Epoch 203/250	 Time: 2.646	 Loss: 657.54234823
+2020-11-26 14:29:05,366 - root - INFO -   Epoch 203/250	 Time: 0.452	 AUC on val_dataset: 86.52
+2020-11-26 14:29:08,009 - root - INFO -   Epoch 204/250	 Time: 2.642	 Loss: 612.55087280
+2020-11-26 14:29:08,462 - root - INFO -   Epoch 204/250	 Time: 0.452	 AUC on val_dataset: 86.56
+2020-11-26 14:29:11,110 - root - INFO -   Epoch 205/250	 Time: 2.647	 Loss: 598.99190267
+2020-11-26 14:29:11,565 - root - INFO -   Epoch 205/250	 Time: 0.454	 AUC on val_dataset: 86.20
+2020-11-26 14:29:14,210 - root - INFO -   Epoch 206/250	 Time: 2.645	 Loss: 615.30759684
+2020-11-26 14:29:14,663 - root - INFO -   Epoch 206/250	 Time: 0.452	 AUC on val_dataset: 86.24
+2020-11-26 14:29:17,311 - root - INFO -   Epoch 207/250	 Time: 2.648	 Loss: 630.48247274
+2020-11-26 14:29:17,778 - root - INFO -   Epoch 207/250	 Time: 0.465	 AUC on val_dataset: 86.36
+2020-11-26 14:29:20,423 - root - INFO -   Epoch 208/250	 Time: 2.644	 Loss: 601.25596110
+2020-11-26 14:29:20,875 - root - INFO -   Epoch 208/250	 Time: 0.451	 AUC on val_dataset: 86.52
+2020-11-26 14:29:23,540 - root - INFO -   Epoch 209/250	 Time: 2.664	 Loss: 622.08783976
+2020-11-26 14:29:23,999 - root - INFO -   Epoch 209/250	 Time: 0.457	 AUC on val_dataset: 86.16
+2020-11-26 14:29:26,661 - root - INFO -   Epoch 210/250	 Time: 2.661	 Loss: 622.04880778
+2020-11-26 14:29:27,167 - root - INFO -   Epoch 210/250	 Time: 0.505	 AUC on val_dataset: 86.20
+2020-11-26 14:29:29,849 - root - INFO -   Epoch 211/250	 Time: 2.681	 Loss: 610.19497681
+2020-11-26 14:29:30,304 - root - INFO -   Epoch 211/250	 Time: 0.454	 AUC on val_dataset: 86.28
+2020-11-26 14:29:32,965 - root - INFO -   Epoch 212/250	 Time: 2.660	 Loss: 584.27566528
+2020-11-26 14:29:33,441 - root - INFO -   Epoch 212/250	 Time: 0.475	 AUC on val_dataset: 86.60
+2020-11-26 14:29:36,104 - root - INFO -   Epoch 213/250	 Time: 2.663	 Loss: 590.10813395
+2020-11-26 14:29:36,607 - root - INFO -   Epoch 213/250	 Time: 0.502	 AUC on val_dataset: 86.56
+2020-11-26 14:29:39,270 - root - INFO -   Epoch 214/250	 Time: 2.663	 Loss: 581.93234253
+2020-11-26 14:29:39,762 - root - INFO -   Epoch 214/250	 Time: 0.490	 AUC on val_dataset: 86.68
+2020-11-26 14:29:42,471 - root - INFO -   Epoch 215/250	 Time: 2.708	 Loss: 573.64727783
+2020-11-26 14:29:42,933 - root - INFO -   Epoch 215/250	 Time: 0.460	 AUC on val_dataset: 86.76
+2020-11-26 14:29:45,582 - root - INFO -   Epoch 216/250	 Time: 2.648	 Loss: 587.15024821
+2020-11-26 14:29:46,056 - root - INFO -   Epoch 216/250	 Time: 0.472	 AUC on val_dataset: 86.92
+2020-11-26 14:29:48,750 - root - INFO -   Epoch 217/250	 Time: 2.694	 Loss: 584.61447144
+2020-11-26 14:29:49,220 - root - INFO -   Epoch 217/250	 Time: 0.469	 AUC on val_dataset: 86.72
+2020-11-26 14:29:51,922 - root - INFO -   Epoch 218/250	 Time: 2.701	 Loss: 614.88704427
+2020-11-26 14:29:52,384 - root - INFO -   Epoch 218/250	 Time: 0.461	 AUC on val_dataset: 86.40
+2020-11-26 14:29:55,064 - root - INFO -   Epoch 219/250	 Time: 2.679	 Loss: 570.52697754
+2020-11-26 14:29:55,527 - root - INFO -   Epoch 219/250	 Time: 0.462	 AUC on val_dataset: 86.24
+2020-11-26 14:29:58,210 - root - INFO -   Epoch 220/250	 Time: 2.683	 Loss: 627.21246338
+2020-11-26 14:29:58,667 - root - INFO -   Epoch 220/250	 Time: 0.455	 AUC on val_dataset: 86.60
+2020-11-26 14:30:01,317 - root - INFO -   Epoch 221/250	 Time: 2.649	 Loss: 574.72331746
+2020-11-26 14:30:01,810 - root - INFO -   Epoch 221/250	 Time: 0.491	 AUC on val_dataset: 86.72
+2020-11-26 14:30:04,455 - root - INFO -   Epoch 222/250	 Time: 2.644	 Loss: 585.38546753
+2020-11-26 14:30:04,909 - root - INFO -   Epoch 222/250	 Time: 0.453	 AUC on val_dataset: 86.76
+2020-11-26 14:30:07,587 - root - INFO -   Epoch 223/250	 Time: 2.678	 Loss: 615.95775350
+2020-11-26 14:30:08,051 - root - INFO -   Epoch 223/250	 Time: 0.463	 AUC on val_dataset: 86.48
+2020-11-26 14:30:10,710 - root - INFO -   Epoch 224/250	 Time: 2.658	 Loss: 567.85284424
+2020-11-26 14:30:11,163 - root - INFO -   Epoch 224/250	 Time: 0.452	 AUC on val_dataset: 86.76
+2020-11-26 14:30:13,811 - root - INFO -   Epoch 225/250	 Time: 2.647	 Loss: 603.03036499
+2020-11-26 14:30:14,266 - root - INFO -   Epoch 225/250	 Time: 0.454	 AUC on val_dataset: 86.72
+2020-11-26 14:30:16,913 - root - INFO -   Epoch 226/250	 Time: 2.647	 Loss: 589.24472046
+2020-11-26 14:30:17,370 - root - INFO -   Epoch 226/250	 Time: 0.455	 AUC on val_dataset: 86.28
+2020-11-26 14:30:20,019 - root - INFO -   Epoch 227/250	 Time: 2.648	 Loss: 605.86829631
+2020-11-26 14:30:20,475 - root - INFO -   Epoch 227/250	 Time: 0.454	 AUC on val_dataset: 86.04
+2020-11-26 14:30:23,125 - root - INFO -   Epoch 228/250	 Time: 2.650	 Loss: 560.30753581
+2020-11-26 14:30:23,578 - root - INFO -   Epoch 228/250	 Time: 0.451	 AUC on val_dataset: 86.40
+2020-11-26 14:30:26,221 - root - INFO -   Epoch 229/250	 Time: 2.642	 Loss: 572.06928507
+2020-11-26 14:30:26,682 - root - INFO -   Epoch 229/250	 Time: 0.460	 AUC on val_dataset: 86.48
+2020-11-26 14:30:29,341 - root - INFO -   Epoch 230/250	 Time: 2.658	 Loss: 556.84087118
+2020-11-26 14:30:29,805 - root - INFO -   Epoch 230/250	 Time: 0.463	 AUC on val_dataset: 86.68
+2020-11-26 14:30:32,475 - root - INFO -   Epoch 231/250	 Time: 2.669	 Loss: 579.98178101
+2020-11-26 14:30:32,937 - root - INFO -   Epoch 231/250	 Time: 0.461	 AUC on val_dataset: 86.84
+2020-11-26 14:30:35,641 - root - INFO -   Epoch 232/250	 Time: 2.703	 Loss: 580.50777181
+2020-11-26 14:30:36,096 - root - INFO -   Epoch 232/250	 Time: 0.454	 AUC on val_dataset: 86.48
+2020-11-26 14:30:38,744 - root - INFO -   Epoch 233/250	 Time: 2.647	 Loss: 570.24348958
+2020-11-26 14:30:39,200 - root - INFO -   Epoch 233/250	 Time: 0.455	 AUC on val_dataset: 86.44
+2020-11-26 14:30:41,859 - root - INFO -   Epoch 234/250	 Time: 2.659	 Loss: 574.50560506
+2020-11-26 14:30:42,320 - root - INFO -   Epoch 234/250	 Time: 0.459	 AUC on val_dataset: 86.44
+2020-11-26 14:30:44,982 - root - INFO -   Epoch 235/250	 Time: 2.662	 Loss: 581.64481608
+2020-11-26 14:30:45,435 - root - INFO -   Epoch 235/250	 Time: 0.452	 AUC on val_dataset: 86.60
+2020-11-26 14:30:48,091 - root - INFO -   Epoch 236/250	 Time: 2.655	 Loss: 544.28079224
+2020-11-26 14:30:48,546 - root - INFO -   Epoch 236/250	 Time: 0.454	 AUC on val_dataset: 86.76
+2020-11-26 14:30:51,209 - root - INFO -   Epoch 237/250	 Time: 2.662	 Loss: 596.18638102
+2020-11-26 14:30:51,665 - root - INFO -   Epoch 237/250	 Time: 0.456	 AUC on val_dataset: 86.64
+2020-11-26 14:30:54,313 - root - INFO -   Epoch 238/250	 Time: 2.647	 Loss: 569.25690715
+2020-11-26 14:30:54,774 - root - INFO -   Epoch 238/250	 Time: 0.460	 AUC on val_dataset: 86.44
+2020-11-26 14:30:57,434 - root - INFO -   Epoch 239/250	 Time: 2.660	 Loss: 548.71041870
+2020-11-26 14:30:57,886 - root - INFO -   Epoch 239/250	 Time: 0.451	 AUC on val_dataset: 86.44
+2020-11-26 14:31:00,538 - root - INFO -   Epoch 240/250	 Time: 2.651	 Loss: 606.84543864
+2020-11-26 14:31:01,002 - root - INFO -   Epoch 240/250	 Time: 0.463	 AUC on val_dataset: 86.28
+2020-11-26 14:31:03,669 - root - INFO -   Epoch 241/250	 Time: 2.667	 Loss: 574.43372599
+2020-11-26 14:31:04,129 - root - INFO -   Epoch 241/250	 Time: 0.459	 AUC on val_dataset: 86.40
+2020-11-26 14:31:06,800 - root - INFO -   Epoch 242/250	 Time: 2.671	 Loss: 559.32777913
+2020-11-26 14:31:07,265 - root - INFO -   Epoch 242/250	 Time: 0.463	 AUC on val_dataset: 86.68
+2020-11-26 14:31:09,933 - root - INFO -   Epoch 243/250	 Time: 2.668	 Loss: 585.81908162
+2020-11-26 14:31:10,393 - root - INFO -   Epoch 243/250	 Time: 0.459	 AUC on val_dataset: 86.84
+2020-11-26 14:31:13,061 - root - INFO -   Epoch 244/250	 Time: 2.667	 Loss: 592.67094930
+2020-11-26 14:31:13,522 - root - INFO -   Epoch 244/250	 Time: 0.460	 AUC on val_dataset: 86.52
+2020-11-26 14:31:16,191 - root - INFO -   Epoch 245/250	 Time: 2.668	 Loss: 606.76093547
+2020-11-26 14:31:16,684 - root - INFO -   Epoch 245/250	 Time: 0.492	 AUC on val_dataset: 86.44
+2020-11-26 14:31:19,363 - root - INFO -   Epoch 246/250	 Time: 2.678	 Loss: 544.79695638
+2020-11-26 14:31:19,819 - root - INFO -   Epoch 246/250	 Time: 0.454	 AUC on val_dataset: 86.60
+2020-11-26 14:31:22,491 - root - INFO -   Epoch 247/250	 Time: 2.672	 Loss: 545.14762370
+2020-11-26 14:31:22,951 - root - INFO -   Epoch 247/250	 Time: 0.459	 AUC on val_dataset: 86.80
+2020-11-26 14:31:25,620 - root - INFO -   Epoch 248/250	 Time: 2.669	 Loss: 545.37585449
+2020-11-26 14:31:26,080 - root - INFO -   Epoch 248/250	 Time: 0.459	 AUC on val_dataset: 86.76
+2020-11-26 14:31:28,749 - root - INFO -   Epoch 249/250	 Time: 2.668	 Loss: 546.15258789
+2020-11-26 14:31:29,304 - root - INFO -   Epoch 249/250	 Time: 0.553	 AUC on val_dataset: 86.84
+2020-11-26 14:31:32,249 - root - INFO -   Epoch 250/250	 Time: 2.927	 Loss: 545.70032756
+2020-11-26 14:31:32,818 - root - INFO -   Epoch 250/250	 Time: 0.568	 AUC on val_dataset: 86.96
+2020-11-26 14:31:32,819 - root - INFO - Pretraining time: 775.037
+2020-11-26 14:31:32,819 - root - INFO - Finished pretraining.
+2020-11-26 14:31:32,827 - root - INFO - Testing autoencoder...
+2020-11-26 14:31:37,111 - root - INFO - Test set Loss: 5367.48829410
+2020-11-26 14:31:37,112 - root - INFO - Test set AUC: 94.67%
+2020-11-26 14:31:37,113 - root - INFO - Autoencoder testing time: 4.285
+2020-11-26 14:31:37,113 - root - INFO - Finished testing autoencoder.
+2020-11-26 14:31:37,118 - root - INFO - Training optimizer: adam
+2020-11-26 14:31:37,118 - root - INFO - Training learning rate: 0.0001
+2020-11-26 14:31:37,118 - root - INFO - Training epochs: 150
+2020-11-26 14:31:37,119 - root - INFO - Training learning rate scheduler milestones: (50,)
+2020-11-26 14:31:37,119 - root - INFO - Training batch size: 50
+2020-11-26 14:31:37,120 - root - INFO - Training weight decay: 5e-07
+2020-11-26 14:31:37,125 - root - INFO - Initializing center c...
+2020-11-26 14:31:38,099 - root - INFO - Center c initialized.
+2020-11-26 14:31:38,099 - root - INFO - Starting training...
+2020-11-26 14:31:39,908 - root - INFO -   Epoch 1/150	 Time: 1.809	 Loss: 752.75850423
+2020-11-26 14:31:40,258 - root - INFO -   Epoch 1/150	 Time: 0.349	 AUC on val_dataset: 92.00
+2020-11-26 14:31:42,070 - root - INFO -   Epoch 2/150	 Time: 1.811	 Loss: 179.15817769
+2020-11-26 14:31:42,483 - root - INFO -   Epoch 2/150	 Time: 0.412	 AUC on val_dataset: 94.44
+2020-11-26 14:31:44,312 - root - INFO -   Epoch 3/150	 Time: 1.828	 Loss: 77.01167870
+2020-11-26 14:31:44,663 - root - INFO -   Epoch 3/150	 Time: 0.350	 AUC on val_dataset: 95.28
+2020-11-26 14:31:46,551 - root - INFO -   Epoch 4/150	 Time: 1.887	 Loss: 46.57804871
+2020-11-26 14:31:47,003 - root - INFO -   Epoch 4/150	 Time: 0.450	 AUC on val_dataset: 95.48
+2020-11-26 14:31:49,032 - root - INFO -   Epoch 5/150	 Time: 2.022	 Loss: 29.67806307
+2020-11-26 14:31:49,430 - root - INFO -   Epoch 5/150	 Time: 0.397	 AUC on val_dataset: 94.96
+2020-11-26 14:31:51,336 - root - INFO -   Epoch 6/150	 Time: 1.905	 Loss: 20.27002605
+2020-11-26 14:31:51,696 - root - INFO -   Epoch 6/150	 Time: 0.359	 AUC on val_dataset: 94.68
+2020-11-26 14:31:53,523 - root - INFO -   Epoch 7/150	 Time: 1.826	 Loss: 14.25338030
+2020-11-26 14:31:53,876 - root - INFO -   Epoch 7/150	 Time: 0.353	 AUC on val_dataset: 93.12
+2020-11-26 14:31:55,696 - root - INFO -   Epoch 8/150	 Time: 1.819	 Loss: 11.16082652
+2020-11-26 14:31:56,051 - root - INFO -   Epoch 8/150	 Time: 0.354	 AUC on val_dataset: 94.16
+2020-11-26 14:31:57,889 - root - INFO -   Epoch 9/150	 Time: 1.838	 Loss: 8.53406827
+2020-11-26 14:31:58,243 - root - INFO -   Epoch 9/150	 Time: 0.353	 AUC on val_dataset: 92.32
+2020-11-26 14:32:00,067 - root - INFO -   Epoch 10/150	 Time: 1.823	 Loss: 6.89026380
+2020-11-26 14:32:00,420 - root - INFO -   Epoch 10/150	 Time: 0.352	 AUC on val_dataset: 93.16
+2020-11-26 14:32:02,240 - root - INFO -   Epoch 11/150	 Time: 1.819	 Loss: 5.78170196
+2020-11-26 14:32:02,594 - root - INFO -   Epoch 11/150	 Time: 0.353	 AUC on val_dataset: 92.84
+2020-11-26 14:32:04,459 - root - INFO -   Epoch 12/150	 Time: 1.865	 Loss: 5.00640853
+2020-11-26 14:32:04,817 - root - INFO -   Epoch 12/150	 Time: 0.356	 AUC on val_dataset: 93.56
+2020-11-26 14:32:06,655 - root - INFO -   Epoch 13/150	 Time: 1.838	 Loss: 4.39373195
+2020-11-26 14:32:07,040 - root - INFO -   Epoch 13/150	 Time: 0.384	 AUC on val_dataset: 93.60
+2020-11-26 14:32:08,912 - root - INFO -   Epoch 14/150	 Time: 1.872	 Loss: 3.95453902
+2020-11-26 14:32:09,417 - root - INFO -   Epoch 14/150	 Time: 0.504	 AUC on val_dataset: 93.52
+2020-11-26 14:32:11,318 - root - INFO -   Epoch 15/150	 Time: 1.900	 Loss: 3.56101139
+2020-11-26 14:32:11,858 - root - INFO -   Epoch 15/150	 Time: 0.539	 AUC on val_dataset: 93.88
+2020-11-26 14:32:14,115 - root - INFO -   Epoch 16/150	 Time: 2.256	 Loss: 3.26612107
+2020-11-26 14:32:14,595 - root - INFO -   Epoch 16/150	 Time: 0.468	 AUC on val_dataset: 93.76
+2020-11-26 14:32:16,719 - root - INFO -   Epoch 17/150	 Time: 2.113	 Loss: 2.98534322
+2020-11-26 14:32:17,223 - root - INFO -   Epoch 17/150	 Time: 0.502	 AUC on val_dataset: 93.48
+2020-11-26 14:32:19,460 - root - INFO -   Epoch 18/150	 Time: 2.237	 Loss: 2.74209738
+2020-11-26 14:32:19,945 - root - INFO -   Epoch 18/150	 Time: 0.483	 AUC on val_dataset: 93.72
+2020-11-26 14:32:22,101 - root - INFO -   Epoch 19/150	 Time: 2.155	 Loss: 2.57950036
+2020-11-26 14:32:22,557 - root - INFO -   Epoch 19/150	 Time: 0.455	 AUC on val_dataset: 93.76
+2020-11-26 14:32:24,676 - root - INFO -   Epoch 20/150	 Time: 2.118	 Loss: 2.42293918
+2020-11-26 14:32:25,136 - root - INFO -   Epoch 20/150	 Time: 0.459	 AUC on val_dataset: 93.32
+2020-11-26 14:32:27,093 - root - INFO -   Epoch 21/150	 Time: 1.956	 Loss: 2.28114867
+2020-11-26 14:32:27,447 - root - INFO -   Epoch 21/150	 Time: 0.352	 AUC on val_dataset: 93.28
+2020-11-26 14:32:29,267 - root - INFO -   Epoch 22/150	 Time: 1.820	 Loss: 2.11735014
+2020-11-26 14:32:29,622 - root - INFO -   Epoch 22/150	 Time: 0.353	 AUC on val_dataset: 93.60
+2020-11-26 14:32:31,449 - root - INFO -   Epoch 23/150	 Time: 1.826	 Loss: 1.99167264
+2020-11-26 14:32:31,807 - root - INFO -   Epoch 23/150	 Time: 0.357	 AUC on val_dataset: 93.68
+2020-11-26 14:32:33,627 - root - INFO -   Epoch 24/150	 Time: 1.819	 Loss: 1.89106818
+2020-11-26 14:32:33,980 - root - INFO -   Epoch 24/150	 Time: 0.352	 AUC on val_dataset: 93.44
+2020-11-26 14:32:35,797 - root - INFO -   Epoch 25/150	 Time: 1.816	 Loss: 1.77634257
+2020-11-26 14:32:36,148 - root - INFO -   Epoch 25/150	 Time: 0.350	 AUC on val_dataset: 92.44
+2020-11-26 14:32:37,969 - root - INFO -   Epoch 26/150	 Time: 1.820	 Loss: 1.70454452
+2020-11-26 14:32:38,331 - root - INFO -   Epoch 26/150	 Time: 0.361	 AUC on val_dataset: 93.32
+2020-11-26 14:32:40,144 - root - INFO -   Epoch 27/150	 Time: 1.812	 Loss: 1.63588667
+2020-11-26 14:32:40,498 - root - INFO -   Epoch 27/150	 Time: 0.353	 AUC on val_dataset: 93.32
+2020-11-26 14:32:42,321 - root - INFO -   Epoch 28/150	 Time: 1.822	 Loss: 1.54894098
+2020-11-26 14:32:42,673 - root - INFO -   Epoch 28/150	 Time: 0.351	 AUC on val_dataset: 93.16
+2020-11-26 14:32:44,489 - root - INFO -   Epoch 29/150	 Time: 1.815	 Loss: 1.46050042
+2020-11-26 14:32:44,840 - root - INFO -   Epoch 29/150	 Time: 0.350	 AUC on val_dataset: 93.72
+2020-11-26 14:32:46,658 - root - INFO -   Epoch 30/150	 Time: 1.817	 Loss: 1.38506720
+2020-11-26 14:32:47,009 - root - INFO -   Epoch 30/150	 Time: 0.350	 AUC on val_dataset: 93.76
+2020-11-26 14:32:48,821 - root - INFO -   Epoch 31/150	 Time: 1.811	 Loss: 1.32918553
+2020-11-26 14:32:49,174 - root - INFO -   Epoch 31/150	 Time: 0.352	 AUC on val_dataset: 94.16
+2020-11-26 14:32:50,992 - root - INFO -   Epoch 32/150	 Time: 1.817	 Loss: 1.29196419
+2020-11-26 14:32:51,345 - root - INFO -   Epoch 32/150	 Time: 0.352	 AUC on val_dataset: 92.64
+2020-11-26 14:32:53,164 - root - INFO -   Epoch 33/150	 Time: 1.818	 Loss: 1.22638591
+2020-11-26 14:32:53,523 - root - INFO -   Epoch 33/150	 Time: 0.358	 AUC on val_dataset: 93.36
+2020-11-26 14:32:55,344 - root - INFO -   Epoch 34/150	 Time: 1.820	 Loss: 1.20015510
+2020-11-26 14:32:55,701 - root - INFO -   Epoch 34/150	 Time: 0.356	 AUC on val_dataset: 93.20
+2020-11-26 14:32:57,534 - root - INFO -   Epoch 35/150	 Time: 1.832	 Loss: 1.17091588
+2020-11-26 14:32:57,891 - root - INFO -   Epoch 35/150	 Time: 0.356	 AUC on val_dataset: 93.16
+2020-11-26 14:32:59,710 - root - INFO -   Epoch 36/150	 Time: 1.818	 Loss: 1.09031526
+2020-11-26 14:33:00,064 - root - INFO -   Epoch 36/150	 Time: 0.353	 AUC on val_dataset: 93.36
+2020-11-26 14:33:01,881 - root - INFO -   Epoch 37/150	 Time: 1.817	 Loss: 1.04380681
+2020-11-26 14:33:02,232 - root - INFO -   Epoch 37/150	 Time: 0.349	 AUC on val_dataset: 92.80
+2020-11-26 14:33:04,044 - root - INFO -   Epoch 38/150	 Time: 1.812	 Loss: 1.00878778
+2020-11-26 14:33:04,395 - root - INFO -   Epoch 38/150	 Time: 0.350	 AUC on val_dataset: 93.80
+2020-11-26 14:33:06,212 - root - INFO -   Epoch 39/150	 Time: 1.817	 Loss: 1.01407235
+2020-11-26 14:33:06,564 - root - INFO -   Epoch 39/150	 Time: 0.351	 AUC on val_dataset: 93.36
+2020-11-26 14:33:08,390 - root - INFO -   Epoch 40/150	 Time: 1.825	 Loss: 0.97682393
+2020-11-26 14:33:08,744 - root - INFO -   Epoch 40/150	 Time: 0.352	 AUC on val_dataset: 92.40
+2020-11-26 14:33:10,564 - root - INFO -   Epoch 41/150	 Time: 1.819	 Loss: 0.93286219
+2020-11-26 14:33:10,926 - root - INFO -   Epoch 41/150	 Time: 0.361	 AUC on val_dataset: 92.28
+2020-11-26 14:33:12,742 - root - INFO -   Epoch 42/150	 Time: 1.816	 Loss: 0.93979027
+2020-11-26 14:33:13,094 - root - INFO -   Epoch 42/150	 Time: 0.351	 AUC on val_dataset: 91.88
+2020-11-26 14:33:14,910 - root - INFO -   Epoch 43/150	 Time: 1.815	 Loss: 0.91918860
+2020-11-26 14:33:15,262 - root - INFO -   Epoch 43/150	 Time: 0.351	 AUC on val_dataset: 93.36
+2020-11-26 14:33:17,078 - root - INFO -   Epoch 44/150	 Time: 1.815	 Loss: 0.87461164
+2020-11-26 14:33:17,429 - root - INFO -   Epoch 44/150	 Time: 0.351	 AUC on val_dataset: 93.68
+2020-11-26 14:33:19,247 - root - INFO -   Epoch 45/150	 Time: 1.817	 Loss: 0.82246668
+2020-11-26 14:33:19,600 - root - INFO -   Epoch 45/150	 Time: 0.352	 AUC on val_dataset: 92.92
+2020-11-26 14:33:21,419 - root - INFO -   Epoch 46/150	 Time: 1.819	 Loss: 0.81698759
+2020-11-26 14:33:21,773 - root - INFO -   Epoch 46/150	 Time: 0.352	 AUC on val_dataset: 93.76
+2020-11-26 14:33:23,604 - root - INFO -   Epoch 47/150	 Time: 1.830	 Loss: 0.78009975
+2020-11-26 14:33:23,958 - root - INFO -   Epoch 47/150	 Time: 0.353	 AUC on val_dataset: 93.48
+2020-11-26 14:33:25,784 - root - INFO -   Epoch 48/150	 Time: 1.825	 Loss: 0.78056434
+2020-11-26 14:33:26,136 - root - INFO -   Epoch 48/150	 Time: 0.351	 AUC on val_dataset: 93.64
+2020-11-26 14:33:27,954 - root - INFO -   Epoch 49/150	 Time: 1.817	 Loss: 0.76101926
+2020-11-26 14:33:28,308 - root - INFO -   Epoch 49/150	 Time: 0.352	 AUC on val_dataset: 91.04
+2020-11-26 14:33:30,125 - root - INFO -   Epoch 50/150	 Time: 1.817	 Loss: 0.74863846
+2020-11-26 14:33:30,477 - root - INFO -   Epoch 50/150	 Time: 0.351	 AUC on val_dataset: 91.68
+2020-11-26 14:33:30,478 - root - INFO -   LR scheduler: new learning rate is 1e-06
+2020-11-26 14:33:32,364 - root - INFO -   Epoch 51/150	 Time: 1.886	 Loss: 0.67950851
+2020-11-26 14:33:32,715 - root - INFO -   Epoch 51/150	 Time: 0.350	 AUC on val_dataset: 92.96
+2020-11-26 14:33:34,530 - root - INFO -   Epoch 52/150	 Time: 1.815	 Loss: 0.63337357
+2020-11-26 14:33:34,881 - root - INFO -   Epoch 52/150	 Time: 0.350	 AUC on val_dataset: 93.00
+2020-11-26 14:33:36,697 - root - INFO -   Epoch 53/150	 Time: 1.815	 Loss: 0.62106913
+2020-11-26 14:33:37,048 - root - INFO -   Epoch 53/150	 Time: 0.350	 AUC on val_dataset: 92.48
+2020-11-26 14:33:38,866 - root - INFO -   Epoch 54/150	 Time: 1.817	 Loss: 0.61355307
+2020-11-26 14:33:39,218 - root - INFO -   Epoch 54/150	 Time: 0.351	 AUC on val_dataset: 92.48
+2020-11-26 14:33:41,034 - root - INFO -   Epoch 55/150	 Time: 1.816	 Loss: 0.60683588
+2020-11-26 14:33:41,387 - root - INFO -   Epoch 55/150	 Time: 0.351	 AUC on val_dataset: 92.48
+2020-11-26 14:33:43,203 - root - INFO -   Epoch 56/150	 Time: 1.816	 Loss: 0.60550864
+2020-11-26 14:33:43,557 - root - INFO -   Epoch 56/150	 Time: 0.353	 AUC on val_dataset: 92.56
+2020-11-26 14:33:45,375 - root - INFO -   Epoch 57/150	 Time: 1.816	 Loss: 0.60415907
+2020-11-26 14:33:45,731 - root - INFO -   Epoch 57/150	 Time: 0.355	 AUC on val_dataset: 92.52
+2020-11-26 14:33:47,545 - root - INFO -   Epoch 58/150	 Time: 1.814	 Loss: 0.59981376
+2020-11-26 14:33:47,911 - root - INFO -   Epoch 58/150	 Time: 0.365	 AUC on val_dataset: 92.48
+2020-11-26 14:33:49,736 - root - INFO -   Epoch 59/150	 Time: 1.824	 Loss: 0.60074356
+2020-11-26 14:33:50,091 - root - INFO -   Epoch 59/150	 Time: 0.354	 AUC on val_dataset: 92.36
+2020-11-26 14:33:51,908 - root - INFO -   Epoch 60/150	 Time: 1.816	 Loss: 0.60279682
+2020-11-26 14:33:52,262 - root - INFO -   Epoch 60/150	 Time: 0.352	 AUC on val_dataset: 92.52
+2020-11-26 14:33:54,111 - root - INFO -   Epoch 61/150	 Time: 1.848	 Loss: 0.60585922
+2020-11-26 14:33:54,494 - root - INFO -   Epoch 61/150	 Time: 0.382	 AUC on val_dataset: 92.48
+2020-11-26 14:33:56,311 - root - INFO -   Epoch 62/150	 Time: 1.816	 Loss: 0.59818043
+2020-11-26 14:33:56,664 - root - INFO -   Epoch 62/150	 Time: 0.352	 AUC on val_dataset: 92.56
+2020-11-26 14:33:58,483 - root - INFO -   Epoch 63/150	 Time: 1.818	 Loss: 0.59182384
+2020-11-26 14:33:58,838 - root - INFO -   Epoch 63/150	 Time: 0.353	 AUC on val_dataset: 92.48
+2020-11-26 14:34:00,660 - root - INFO -   Epoch 64/150	 Time: 1.822	 Loss: 0.59162552
+2020-11-26 14:34:01,017 - root - INFO -   Epoch 64/150	 Time: 0.355	 AUC on val_dataset: 92.72
+2020-11-26 14:34:02,836 - root - INFO -   Epoch 65/150	 Time: 1.818	 Loss: 0.58827254
+2020-11-26 14:34:03,192 - root - INFO -   Epoch 65/150	 Time: 0.355	 AUC on val_dataset: 92.16
+2020-11-26 14:34:05,010 - root - INFO -   Epoch 66/150	 Time: 1.817	 Loss: 0.58382222
+2020-11-26 14:34:05,367 - root - INFO -   Epoch 66/150	 Time: 0.355	 AUC on val_dataset: 92.64
+2020-11-26 14:34:07,243 - root - INFO -   Epoch 67/150	 Time: 1.876	 Loss: 0.58444487
+2020-11-26 14:34:07,607 - root - INFO -   Epoch 67/150	 Time: 0.363	 AUC on val_dataset: 92.56
+2020-11-26 14:34:09,429 - root - INFO -   Epoch 68/150	 Time: 1.822	 Loss: 0.59935182
+2020-11-26 14:34:09,817 - root - INFO -   Epoch 68/150	 Time: 0.386	 AUC on val_dataset: 92.44
+2020-11-26 14:34:11,674 - root - INFO -   Epoch 69/150	 Time: 1.857	 Loss: 0.58678189
+2020-11-26 14:34:12,086 - root - INFO -   Epoch 69/150	 Time: 0.411	 AUC on val_dataset: 92.64
+2020-11-26 14:34:13,904 - root - INFO -   Epoch 70/150	 Time: 1.817	 Loss: 0.58425593
+2020-11-26 14:34:14,285 - root - INFO -   Epoch 70/150	 Time: 0.380	 AUC on val_dataset: 92.48
+2020-11-26 14:34:16,106 - root - INFO -   Epoch 71/150	 Time: 1.821	 Loss: 0.57954995
+2020-11-26 14:34:16,459 - root - INFO -   Epoch 71/150	 Time: 0.352	 AUC on val_dataset: 92.52
+2020-11-26 14:34:18,286 - root - INFO -   Epoch 72/150	 Time: 1.826	 Loss: 0.57959402
+2020-11-26 14:34:18,642 - root - INFO -   Epoch 72/150	 Time: 0.354	 AUC on val_dataset: 92.56
+2020-11-26 14:34:20,523 - root - INFO -   Epoch 73/150	 Time: 1.881	 Loss: 0.57294084
+2020-11-26 14:34:20,905 - root - INFO -   Epoch 73/150	 Time: 0.381	 AUC on val_dataset: 92.60
+2020-11-26 14:34:22,720 - root - INFO -   Epoch 74/150	 Time: 1.815	 Loss: 0.57566763
+2020-11-26 14:34:23,073 - root - INFO -   Epoch 74/150	 Time: 0.351	 AUC on val_dataset: 92.48
+2020-11-26 14:34:24,893 - root - INFO -   Epoch 75/150	 Time: 1.819	 Loss: 0.56966675
+2020-11-26 14:34:25,247 - root - INFO -   Epoch 75/150	 Time: 0.353	 AUC on val_dataset: 92.60
+2020-11-26 14:34:27,128 - root - INFO -   Epoch 76/150	 Time: 1.880	 Loss: 0.56983178
+2020-11-26 14:34:27,485 - root - INFO -   Epoch 76/150	 Time: 0.356	 AUC on val_dataset: 92.60
+2020-11-26 14:34:29,298 - root - INFO -   Epoch 77/150	 Time: 1.812	 Loss: 0.56651240
+2020-11-26 14:34:29,660 - root - INFO -   Epoch 77/150	 Time: 0.361	 AUC on val_dataset: 92.56
+2020-11-26 14:34:31,476 - root - INFO -   Epoch 78/150	 Time: 1.816	 Loss: 0.56561742
+2020-11-26 14:34:31,840 - root - INFO -   Epoch 78/150	 Time: 0.362	 AUC on val_dataset: 92.64
+2020-11-26 14:34:33,660 - root - INFO -   Epoch 79/150	 Time: 1.820	 Loss: 0.56364332
+2020-11-26 14:34:34,015 - root - INFO -   Epoch 79/150	 Time: 0.354	 AUC on val_dataset: 92.64
+2020-11-26 14:34:35,836 - root - INFO -   Epoch 80/150	 Time: 1.820	 Loss: 0.56091339
+2020-11-26 14:34:36,188 - root - INFO -   Epoch 80/150	 Time: 0.351	 AUC on val_dataset: 92.60
+2020-11-26 14:34:38,019 - root - INFO -   Epoch 81/150	 Time: 1.830	 Loss: 0.55907959
+2020-11-26 14:34:38,372 - root - INFO -   Epoch 81/150	 Time: 0.352	 AUC on val_dataset: 92.56
+2020-11-26 14:34:40,188 - root - INFO -   Epoch 82/150	 Time: 1.815	 Loss: 0.56390854
+2020-11-26 14:34:40,540 - root - INFO -   Epoch 82/150	 Time: 0.351	 AUC on val_dataset: 92.72
+2020-11-26 14:34:42,358 - root - INFO -   Epoch 83/150	 Time: 1.817	 Loss: 0.55930296
+2020-11-26 14:34:42,710 - root - INFO -   Epoch 83/150	 Time: 0.351	 AUC on val_dataset: 92.60
+2020-11-26 14:34:44,533 - root - INFO -   Epoch 84/150	 Time: 1.822	 Loss: 0.55844364
+2020-11-26 14:34:44,885 - root - INFO -   Epoch 84/150	 Time: 0.350	 AUC on val_dataset: 92.52
+2020-11-26 14:34:46,701 - root - INFO -   Epoch 85/150	 Time: 1.816	 Loss: 0.54913883
+2020-11-26 14:34:47,063 - root - INFO -   Epoch 85/150	 Time: 0.360	 AUC on val_dataset: 92.64
+2020-11-26 14:34:48,881 - root - INFO -   Epoch 86/150	 Time: 1.817	 Loss: 0.54944193
+2020-11-26 14:34:49,233 - root - INFO -   Epoch 86/150	 Time: 0.351	 AUC on val_dataset: 92.56
+2020-11-26 14:34:51,051 - root - INFO -   Epoch 87/150	 Time: 1.817	 Loss: 0.55343762
+2020-11-26 14:34:51,406 - root - INFO -   Epoch 87/150	 Time: 0.354	 AUC on val_dataset: 92.68
+2020-11-26 14:34:53,221 - root - INFO -   Epoch 88/150	 Time: 1.814	 Loss: 0.54944143
+2020-11-26 14:34:53,576 - root - INFO -   Epoch 88/150	 Time: 0.354	 AUC on val_dataset: 92.36
+2020-11-26 14:34:55,394 - root - INFO -   Epoch 89/150	 Time: 1.817	 Loss: 0.54555272
+2020-11-26 14:34:55,750 - root - INFO -   Epoch 89/150	 Time: 0.355	 AUC on val_dataset: 92.76
+2020-11-26 14:34:57,564 - root - INFO -   Epoch 90/150	 Time: 1.813	 Loss: 0.54415503
+2020-11-26 14:34:57,923 - root - INFO -   Epoch 90/150	 Time: 0.359	 AUC on val_dataset: 92.60
+2020-11-26 14:34:59,741 - root - INFO -   Epoch 91/150	 Time: 1.817	 Loss: 0.54727051
+2020-11-26 14:35:00,098 - root - INFO -   Epoch 91/150	 Time: 0.356	 AUC on val_dataset: 92.32
+2020-11-26 14:35:01,914 - root - INFO -   Epoch 92/150	 Time: 1.815	 Loss: 0.53947532
+2020-11-26 14:35:02,266 - root - INFO -   Epoch 92/150	 Time: 0.351	 AUC on val_dataset: 92.80
+2020-11-26 14:35:04,083 - root - INFO -   Epoch 93/150	 Time: 1.817	 Loss: 0.53739782
+2020-11-26 14:35:04,438 - root - INFO -   Epoch 93/150	 Time: 0.354	 AUC on val_dataset: 92.52
+2020-11-26 14:35:06,252 - root - INFO -   Epoch 94/150	 Time: 1.813	 Loss: 0.53764668
+2020-11-26 14:35:06,627 - root - INFO -   Epoch 94/150	 Time: 0.373	 AUC on val_dataset: 92.64
+2020-11-26 14:35:08,458 - root - INFO -   Epoch 95/150	 Time: 1.830	 Loss: 0.54319716
+2020-11-26 14:35:08,816 - root - INFO -   Epoch 95/150	 Time: 0.357	 AUC on val_dataset: 92.52
+2020-11-26 14:35:10,652 - root - INFO -   Epoch 96/150	 Time: 1.835	 Loss: 0.53396065
+2020-11-26 14:35:11,011 - root - INFO -   Epoch 96/150	 Time: 0.358	 AUC on val_dataset: 92.52
+2020-11-26 14:35:12,839 - root - INFO -   Epoch 97/150	 Time: 1.828	 Loss: 0.53194172
+2020-11-26 14:35:13,194 - root - INFO -   Epoch 97/150	 Time: 0.353	 AUC on val_dataset: 92.68
+2020-11-26 14:35:15,024 - root - INFO -   Epoch 98/150	 Time: 1.829	 Loss: 0.53016855
+2020-11-26 14:35:15,390 - root - INFO -   Epoch 98/150	 Time: 0.365	 AUC on val_dataset: 92.64
+2020-11-26 14:35:17,223 - root - INFO -   Epoch 99/150	 Time: 1.833	 Loss: 0.52945315
+2020-11-26 14:35:17,592 - root - INFO -   Epoch 99/150	 Time: 0.367	 AUC on val_dataset: 92.60
+2020-11-26 14:35:19,433 - root - INFO -   Epoch 100/150	 Time: 1.841	 Loss: 0.52519382
+2020-11-26 14:35:19,793 - root - INFO -   Epoch 100/150	 Time: 0.358	 AUC on val_dataset: 92.32
+2020-11-26 14:35:21,688 - root - INFO -   Epoch 101/150	 Time: 1.895	 Loss: 0.52556120
+2020-11-26 14:35:22,044 - root - INFO -   Epoch 101/150	 Time: 0.355	 AUC on val_dataset: 92.60
+2020-11-26 14:35:23,866 - root - INFO -   Epoch 102/150	 Time: 1.821	 Loss: 0.52401678
+2020-11-26 14:35:24,221 - root - INFO -   Epoch 102/150	 Time: 0.353	 AUC on val_dataset: 92.60
+2020-11-26 14:35:26,060 - root - INFO -   Epoch 103/150	 Time: 1.839	 Loss: 0.52152174
+2020-11-26 14:35:26,415 - root - INFO -   Epoch 103/150	 Time: 0.354	 AUC on val_dataset: 92.56
+2020-11-26 14:35:28,266 - root - INFO -   Epoch 104/150	 Time: 1.850	 Loss: 0.51700225
+2020-11-26 14:35:28,620 - root - INFO -   Epoch 104/150	 Time: 0.353	 AUC on val_dataset: 92.80
+2020-11-26 14:35:30,447 - root - INFO -   Epoch 105/150	 Time: 1.826	 Loss: 0.51964321
+2020-11-26 14:35:30,800 - root - INFO -   Epoch 105/150	 Time: 0.352	 AUC on val_dataset: 92.44
+2020-11-26 14:35:32,626 - root - INFO -   Epoch 106/150	 Time: 1.825	 Loss: 0.52423513
+2020-11-26 14:35:32,985 - root - INFO -   Epoch 106/150	 Time: 0.357	 AUC on val_dataset: 92.80
+2020-11-26 14:35:34,815 - root - INFO -   Epoch 107/150	 Time: 1.830	 Loss: 0.51596410
+2020-11-26 14:35:35,174 - root - INFO -   Epoch 107/150	 Time: 0.357	 AUC on val_dataset: 92.08
+2020-11-26 14:35:36,996 - root - INFO -   Epoch 108/150	 Time: 1.822	 Loss: 0.51223862
+2020-11-26 14:35:37,351 - root - INFO -   Epoch 108/150	 Time: 0.354	 AUC on val_dataset: 92.60
+2020-11-26 14:35:39,178 - root - INFO -   Epoch 109/150	 Time: 1.826	 Loss: 0.51145564
+2020-11-26 14:35:39,535 - root - INFO -   Epoch 109/150	 Time: 0.355	 AUC on val_dataset: 92.56
+2020-11-26 14:35:41,364 - root - INFO -   Epoch 110/150	 Time: 1.828	 Loss: 0.51147086
+2020-11-26 14:35:41,721 - root - INFO -   Epoch 110/150	 Time: 0.355	 AUC on val_dataset: 92.60
+2020-11-26 14:35:43,550 - root - INFO -   Epoch 111/150	 Time: 1.829	 Loss: 0.51556030
+2020-11-26 14:35:43,913 - root - INFO -   Epoch 111/150	 Time: 0.362	 AUC on val_dataset: 92.52
+2020-11-26 14:35:45,740 - root - INFO -   Epoch 112/150	 Time: 1.826	 Loss: 0.50605738
+2020-11-26 14:35:46,101 - root - INFO -   Epoch 112/150	 Time: 0.360	 AUC on val_dataset: 92.72
+2020-11-26 14:35:47,935 - root - INFO -   Epoch 113/150	 Time: 1.833	 Loss: 0.50521129
+2020-11-26 14:35:48,293 - root - INFO -   Epoch 113/150	 Time: 0.357	 AUC on val_dataset: 92.36
+2020-11-26 14:35:50,128 - root - INFO -   Epoch 114/150	 Time: 1.835	 Loss: 0.50491826
+2020-11-26 14:35:50,487 - root - INFO -   Epoch 114/150	 Time: 0.358	 AUC on val_dataset: 92.52
+2020-11-26 14:35:52,317 - root - INFO -   Epoch 115/150	 Time: 1.828	 Loss: 0.50831949
+2020-11-26 14:35:52,673 - root - INFO -   Epoch 115/150	 Time: 0.355	 AUC on val_dataset: 92.56
+2020-11-26 14:35:54,503 - root - INFO -   Epoch 116/150	 Time: 1.829	 Loss: 0.50790693
+2020-11-26 14:35:54,857 - root - INFO -   Epoch 116/150	 Time: 0.353	 AUC on val_dataset: 92.76
+2020-11-26 14:35:56,687 - root - INFO -   Epoch 117/150	 Time: 1.830	 Loss: 0.50037409
+2020-11-26 14:35:57,045 - root - INFO -   Epoch 117/150	 Time: 0.357	 AUC on val_dataset: 92.16
+2020-11-26 14:35:58,878 - root - INFO -   Epoch 118/150	 Time: 1.832	 Loss: 0.49866943
+2020-11-26 14:35:59,238 - root - INFO -   Epoch 118/150	 Time: 0.359	 AUC on val_dataset: 92.68
+2020-11-26 14:36:01,075 - root - INFO -   Epoch 119/150	 Time: 1.836	 Loss: 0.49767996
+2020-11-26 14:36:01,432 - root - INFO -   Epoch 119/150	 Time: 0.356	 AUC on val_dataset: 92.48
+2020-11-26 14:36:03,279 - root - INFO -   Epoch 120/150	 Time: 1.846	 Loss: 0.48671905
+2020-11-26 14:36:03,639 - root - INFO -   Epoch 120/150	 Time: 0.360	 AUC on val_dataset: 92.60
+2020-11-26 14:36:05,497 - root - INFO -   Epoch 121/150	 Time: 1.857	 Loss: 0.49134752
+2020-11-26 14:36:05,857 - root - INFO -   Epoch 121/150	 Time: 0.359	 AUC on val_dataset: 92.52
+2020-11-26 14:36:07,696 - root - INFO -   Epoch 122/150	 Time: 1.839	 Loss: 0.48629449
+2020-11-26 14:36:08,060 - root - INFO -   Epoch 122/150	 Time: 0.363	 AUC on val_dataset: 92.36
+2020-11-26 14:36:09,917 - root - INFO -   Epoch 123/150	 Time: 1.856	 Loss: 0.49543798
+2020-11-26 14:36:10,282 - root - INFO -   Epoch 123/150	 Time: 0.363	 AUC on val_dataset: 92.84
+2020-11-26 14:36:12,125 - root - INFO -   Epoch 124/150	 Time: 1.842	 Loss: 0.49889875
+2020-11-26 14:36:12,484 - root - INFO -   Epoch 124/150	 Time: 0.358	 AUC on val_dataset: 92.44
+2020-11-26 14:36:14,341 - root - INFO -   Epoch 125/150	 Time: 1.856	 Loss: 0.49148767
+2020-11-26 14:36:14,703 - root - INFO -   Epoch 125/150	 Time: 0.360	 AUC on val_dataset: 92.68
+2020-11-26 14:36:16,536 - root - INFO -   Epoch 126/150	 Time: 1.833	 Loss: 0.48387123
+2020-11-26 14:36:16,898 - root - INFO -   Epoch 126/150	 Time: 0.361	 AUC on val_dataset: 92.24
+2020-11-26 14:36:18,745 - root - INFO -   Epoch 127/150	 Time: 1.847	 Loss: 0.47780667
+2020-11-26 14:36:19,112 - root - INFO -   Epoch 127/150	 Time: 0.365	 AUC on val_dataset: 92.48
+2020-11-26 14:36:20,938 - root - INFO -   Epoch 128/150	 Time: 1.825	 Loss: 0.47812673
+2020-11-26 14:36:21,294 - root - INFO -   Epoch 128/150	 Time: 0.355	 AUC on val_dataset: 92.80
+2020-11-26 14:36:23,145 - root - INFO -   Epoch 129/150	 Time: 1.851	 Loss: 0.47278722
+2020-11-26 14:36:23,508 - root - INFO -   Epoch 129/150	 Time: 0.362	 AUC on val_dataset: 92.08
+2020-11-26 14:36:25,346 - root - INFO -   Epoch 130/150	 Time: 1.838	 Loss: 0.47889505
+2020-11-26 14:36:25,703 - root - INFO -   Epoch 130/150	 Time: 0.355	 AUC on val_dataset: 92.76
+2020-11-26 14:36:27,549 - root - INFO -   Epoch 131/150	 Time: 1.846	 Loss: 0.46804402
+2020-11-26 14:36:27,905 - root - INFO -   Epoch 131/150	 Time: 0.354	 AUC on val_dataset: 92.28
+2020-11-26 14:36:29,979 - root - INFO -   Epoch 132/150	 Time: 2.074	 Loss: 0.47071829
+2020-11-26 14:36:30,454 - root - INFO -   Epoch 132/150	 Time: 0.473	 AUC on val_dataset: 92.40
+2020-11-26 14:36:32,507 - root - INFO -   Epoch 133/150	 Time: 2.053	 Loss: 0.46868387
+2020-11-26 14:36:32,916 - root - INFO -   Epoch 133/150	 Time: 0.409	 AUC on val_dataset: 92.64
+2020-11-26 14:36:34,807 - root - INFO -   Epoch 134/150	 Time: 1.890	 Loss: 0.46366242
+2020-11-26 14:36:35,160 - root - INFO -   Epoch 134/150	 Time: 0.351	 AUC on val_dataset: 92.60
+2020-11-26 14:36:36,978 - root - INFO -   Epoch 135/150	 Time: 1.817	 Loss: 0.46466997
+2020-11-26 14:36:37,329 - root - INFO -   Epoch 135/150	 Time: 0.350	 AUC on val_dataset: 92.48
+2020-11-26 14:36:39,226 - root - INFO -   Epoch 136/150	 Time: 1.896	 Loss: 0.45955110
+2020-11-26 14:36:39,583 - root - INFO -   Epoch 136/150	 Time: 0.356	 AUC on val_dataset: 92.48
+2020-11-26 14:36:41,573 - root - INFO -   Epoch 137/150	 Time: 1.989	 Loss: 0.45850987
+2020-11-26 14:36:42,043 - root - INFO -   Epoch 137/150	 Time: 0.468	 AUC on val_dataset: 92.48
+2020-11-26 14:36:44,037 - root - INFO -   Epoch 138/150	 Time: 1.993	 Loss: 0.46045140
+2020-11-26 14:36:44,489 - root - INFO -   Epoch 138/150	 Time: 0.447	 AUC on val_dataset: 92.48
+2020-11-26 14:36:46,369 - root - INFO -   Epoch 139/150	 Time: 1.879	 Loss: 0.45807478
+2020-11-26 14:36:46,768 - root - INFO -   Epoch 139/150	 Time: 0.398	 AUC on val_dataset: 92.48
+2020-11-26 14:36:48,587 - root - INFO -   Epoch 140/150	 Time: 1.818	 Loss: 0.45885803
+2020-11-26 14:36:48,975 - root - INFO -   Epoch 140/150	 Time: 0.386	 AUC on val_dataset: 92.04
+2020-11-26 14:36:50,793 - root - INFO -   Epoch 141/150	 Time: 1.818	 Loss: 0.45408033
+2020-11-26 14:36:51,147 - root - INFO -   Epoch 141/150	 Time: 0.353	 AUC on val_dataset: 92.72
+2020-11-26 14:36:53,021 - root - INFO -   Epoch 142/150	 Time: 1.873	 Loss: 0.45267671
+2020-11-26 14:36:53,376 - root - INFO -   Epoch 142/150	 Time: 0.354	 AUC on val_dataset: 92.28
+2020-11-26 14:36:55,194 - root - INFO -   Epoch 143/150	 Time: 1.817	 Loss: 0.45527293
+2020-11-26 14:36:55,555 - root - INFO -   Epoch 143/150	 Time: 0.360	 AUC on val_dataset: 92.12
+2020-11-26 14:36:57,370 - root - INFO -   Epoch 144/150	 Time: 1.815	 Loss: 0.45039322
+2020-11-26 14:36:57,726 - root - INFO -   Epoch 144/150	 Time: 0.354	 AUC on val_dataset: 92.52
+2020-11-26 14:36:59,864 - root - INFO -   Epoch 145/150	 Time: 2.137	 Loss: 0.44758481
+2020-11-26 14:37:00,407 - root - INFO -   Epoch 145/150	 Time: 0.536	 AUC on val_dataset: 92.80
+2020-11-26 14:37:02,526 - root - INFO -   Epoch 146/150	 Time: 2.119	 Loss: 0.44581230
+2020-11-26 14:37:02,887 - root - INFO -   Epoch 146/150	 Time: 0.359	 AUC on val_dataset: 92.20
+2020-11-26 14:37:05,117 - root - INFO -   Epoch 147/150	 Time: 2.230	 Loss: 0.44475822
+2020-11-26 14:37:05,486 - root - INFO -   Epoch 147/150	 Time: 0.368	 AUC on val_dataset: 92.48
+2020-11-26 14:37:07,637 - root - INFO -   Epoch 148/150	 Time: 2.150	 Loss: 0.44080504
+2020-11-26 14:37:08,015 - root - INFO -   Epoch 148/150	 Time: 0.376	 AUC on val_dataset: 92.48
+2020-11-26 14:37:10,033 - root - INFO -   Epoch 149/150	 Time: 2.017	 Loss: 0.44069520
+2020-11-26 14:37:10,468 - root - INFO -   Epoch 149/150	 Time: 0.434	 AUC on val_dataset: 92.20
+2020-11-26 14:37:12,592 - root - INFO -   Epoch 150/150	 Time: 2.122	 Loss: 0.44244866
+2020-11-26 14:37:13,158 - root - INFO -   Epoch 150/150	 Time: 0.565	 AUC on val_dataset: 92.64
+2020-11-26 14:37:13,158 - root - INFO - Training time: 335.059
+2020-11-26 14:37:13,159 - root - INFO - Finished training.
+2020-11-26 14:37:13,163 - root - INFO - Starting testing...
+2020-11-26 14:37:17,368 - root - INFO - Testing time: 4.204
+2020-11-26 14:37:17,370 - root - INFO - Test set AUC: 98.29%
+2020-11-26 14:37:17,370 - root - INFO - Finished testing.

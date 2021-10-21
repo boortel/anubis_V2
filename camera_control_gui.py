@@ -16,6 +16,7 @@ class Camera_control_gui(QtWidgets.QWidget):
 
         self.scrollArea_1 = QtWidgets.QScrollArea(self)
         self.scrollArea_1.installEventFilter(self)
+        self.scrollArea_1.setWidgetResizable(True)
         
         self.camera_preview_1 = QtWidgets.QLabel(self.scrollArea_1)
         self.camera_preview_1.setAutoFillBackground(False)
