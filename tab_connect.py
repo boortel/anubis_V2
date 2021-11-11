@@ -154,7 +154,7 @@ class Tab_connect(QtWidgets.QWidget):
         #entry in the list.
         self.detected = global_camera.cams.search_for_cameras()
         for device in self.detected:
-            output = device['mechanism'] + ': ' + device['model']
+            output = device['mechanism'] + ': ' + device['model'] + device['id_']
 #in  the future maybe add icon based on interface type
             self.list_detected_cameras.addItem(output)
     

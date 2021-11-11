@@ -74,9 +74,9 @@ class Tab_camera(QtWidgets.QWidget):
         self.resize_signal = QtWidgets.QLineEdit()
         self.resize_signal.textChanged.connect(self.update_img)
 
-        self.save_location = ""
-        self.save_filename = ""
-        self.sequence_duration = ""
+        self.save_location = "C:/Users/PC_Bilik/Desktop/test"
+        self.save_filename = "img"
+        self.sequence_duration = 0
 
         ##Holds current frame displayed in the GUI
         self.image_pixmap = None
@@ -393,7 +393,7 @@ class Tab_camera(QtWidgets.QWidget):
                 
                 #If automatic sequence duration is set, create thread that will
                 #automatically terminate the recording
-                if(self.sequence_duration > 0):
+                if(True):#self.sequence_duration.value > 0):
                     self.interrupt_flag.clear()
                     self.seq_duration_thread = threading.Thread(target=self.seq_duration_wait)
                     self.seq_duration_thread.daemon = True

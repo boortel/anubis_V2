@@ -133,10 +133,10 @@ class DeepSVDD(object):
                     'net_dict': net_dict,
                     'ae_net_dict': ae_net_dict}, export_model)
 
-    def load_model(self, model_path, load_ae=False):
+    def load_model(self, model_path, load_ae=False, device=torch.device('cuda')):
         """Load Deep SVDD model from model_path."""
 
-        model_dict = torch.load(model_path)
+        model_dict = torch.load(model_path, device)
 
         self.R = model_dict['R']
         self.c = model_dict['c']

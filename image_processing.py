@@ -6,10 +6,11 @@ import sys
 import os
 sys.path.append("./svdd_anubis/")
 from PIL import Image, ImageDraw
-from svdd_anubis.utils.config import Config
-from svdd_anubis import DeepSVDD
+from deepSVDD import DeepSVDD
+from utils.config import Config
 from datasets.preprocessing import global_contrast_normalization
 import torchvision.transforms as transforms
+import torch
 
 def processImage_main(image_in):
     """!@brief Function is used to process the input image and for 
@@ -39,6 +40,13 @@ def anomally_detect(image):
     model_dir_path="./svdd_anubis/model"
     load_config=os.path.join(model_dir_path,"config.json")
     load_model=os.path.join(model_dir_path,"model.tar")
+
+    useCUDA = torch.cuda.is_available()
+
+    if useCUDA:
+        dev = torch.device('cuda')
+    else:
+        dev = torch.device('cpu')
     
     # Get configuration
     cfg = Config(locals().copy())
@@ -57,12 +65,12 @@ def anomally_detect(image):
     
     deep_SVDD = DeepSVDD(cfg.settings['objective'], cfg.settings['nu'])
     deep_SVDD.set_network(cfg.settings['net_name'])
-    deep_SVDD.load_model(model_path=load_model, load_ae=False)
+    deep_SVDD.load_model(model_path=load_model, load_ae=False, device = dev)
     
     img = np.repeat(image[0],3, axis=-1)
     im = Image.fromarray(img,'RGB')
     img = trans(im) #np.squeeze(image[0], axis=-1)
-    scores = deep_SVDD.test_image(img, cfg.settings['device'])
+    scores = deep_SVDD.test_image(img, dev)
          
     #print(scores)
     draw = ImageDraw.Draw(im)
