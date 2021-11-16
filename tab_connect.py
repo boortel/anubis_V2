@@ -184,7 +184,7 @@ class Tab_connect(QtWidgets.QWidget):
             self.send_status_msg.emit("Camera connected", 0)
             
             #Set up the status bar
-            self.conntabList[self.combo_tab_selector.currentIndex()] == 1
+            self.conntabList[self.combo_tab_selector.currentIndex()] = 1
             self.connection_update.emit(True, 1, self.detected[index]['model'], self.combo_tab_selector.currentIndex())
     
     def disconnect_camera(self):

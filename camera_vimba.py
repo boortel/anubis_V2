@@ -42,7 +42,7 @@ class Camera_vimba(Camera_template):
                     self.active_camera = index
                     self.selected_active_camera = camera.get_id()
                     self.cam = camera
-        print("H")
+                    
         #cams = self.vimba.get_all_cameras()
         #self.cam = cams[self.active_camera]
         #self.cam._open()

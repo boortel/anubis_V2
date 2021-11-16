@@ -48,6 +48,7 @@ class Camera_control_gui(QtWidgets.QWidget):
 
         self.scrollArea_2 = QtWidgets.QScrollArea(self)
         self.scrollArea_2.installEventFilter(self)
+        self.scrollArea_2.setWidgetResizable(True)
         
         self.camera_preview_2 = QtWidgets.QLabel(self.scrollArea_2)
         self.camera_preview_2.setAutoFillBackground(False)
@@ -59,25 +60,11 @@ class Camera_control_gui(QtWidgets.QWidget):
         self.camera_preview_2.setObjectName("camera_preview_1")
         self.scrollArea_2.setWidget(self.camera_preview_2)
 
-        #self.scrollArea_2 = QtWidgets.QScrollArea(self)
-        #self.scrollArea_2.setObjectName(u"scrollArea_2")
-        #self.scrollArea_2.setWidgetResizable(True)
-        #self.scrollAreaWidgetContents_2 = QtWidgets.QWidget()
-        #self.scrollAreaWidgetContents_2.setObjectName(u"scrollAreaWidgetContents_2")
-        #self.scrollAreaWidgetContents_2.setGeometry(QRect(0, 0, 281, 352))
-        #self.camera_preview_2 = QtWidgets.QLabel(self.scrollAreaWidgetContents_2)
-        #self.camera_preview_2.setObjectName(u"camera_preview_2")
-        #self.camera_preview_2.setGeometry(QRect(10, 10, 261, 331))
-        #self.camera_preview_2.setAutoFillBackground(False)
-        #self.camera_preview_2.setPixmap(QPixmap(u"default_preview.png"))
-        #self.camera_preview_2.setScaledContents(False)
-        #self.camera_preview_2.setIndent(-1)
-        #self.scrollArea_2.setWidget(self.scrollAreaWidgetContents_2)
-
         self.gridLayout_2.addWidget(self.scrollArea_2, 0, 1, 1, 1)
 
         self.scrollArea_3 = QtWidgets.QScrollArea(self)
         self.scrollArea_3.installEventFilter(self)
+        self.scrollArea_3.setWidgetResizable(True)
         
         self.camera_preview_3 = QtWidgets.QLabel(self.scrollArea_3)
         self.camera_preview_3.setAutoFillBackground(False)
@@ -89,25 +76,11 @@ class Camera_control_gui(QtWidgets.QWidget):
         self.camera_preview_3.setObjectName("camera_preview_1")
         self.scrollArea_3.setWidget(self.camera_preview_3)
 
-        #self.scrollArea_3 = QtWidgets.QScrollArea(self)
-        #self.scrollArea_3.setObjectName(u"scrollArea_3")
-        #self.scrollArea_3.setWidgetResizable(True)
-        #self.scrollAreaWidgetContents_3 = QtWidgets.QWidget()
-        #self.scrollAreaWidgetContents_3.setObjectName(u"scrollAreaWidgetContents_3")
-        #self.scrollAreaWidgetContents_3.setGeometry(QRect(0, 0, 282, 351))
-        #self.camera_preview_3 = QtWidgets.QLabel(self.scrollAreaWidgetContents_3)
-        #self.camera_preview_3.setObjectName(u"camera_preview_3")
-        #self.camera_preview_3.setGeometry(QRect(10, 10, 261, 331))
-        #self.camera_preview_3.setAutoFillBackground(False)
-        #self.camera_preview_3.setPixmap(QPixmap(u"default_preview.png"))
-        #self.camera_preview_3.setScaledContents(False)
-        #self.camera_preview_3.setIndent(-1)
-        #self.scrollArea_3.setWidget(self.scrollAreaWidgetContents_3)
-
         self.gridLayout_2.addWidget(self.scrollArea_3, 1, 0, 1, 1)
 
         self.scrollArea_4 = QtWidgets.QScrollArea(self)
         self.scrollArea_4.installEventFilter(self)
+        self.scrollArea_4.setWidgetResizable(True)
         
         self.camera_preview_4 = QtWidgets.QLabel(self.scrollArea_4)
         self.camera_preview_4.setAutoFillBackground(False)
@@ -118,21 +91,6 @@ class Camera_control_gui(QtWidgets.QWidget):
         self.camera_preview_4.setIndent(-1)
         self.camera_preview_4.setObjectName("camera_preview_1")
         self.scrollArea_4.setWidget(self.camera_preview_4)
-
-        #self.scrollArea_4 = QtWidgets.QScrollArea(self)
-        #self.scrollArea_4.setObjectName(u"scrollArea_4")
-        #self.scrollArea_4.setWidgetResizable(True)
-        #self.scrollAreaWidgetContents_4 = QtWidgets.QWidget()
-        #self.scrollAreaWidgetContents_4.setObjectName(u"scrollAreaWidgetContents_4")
-        #self.scrollAreaWidgetContents_4.setGeometry(QRect(0, 0, 281, 351))
-        #self.camera_preview_4 = QtWidgets.QLabel(self.scrollAreaWidgetContents_4)
-        #self.camera_preview_4.setObjectName(u"camera_preview_4")
-        #self.camera_preview_4.setGeometry(QRect(10, 10, 261, 331))
-        #self.camera_preview_4.setAutoFillBackground(False)
-        #self.camera_preview_4.setPixmap(QPixmap(u"default_preview.png"))
-        #self.camera_preview_4.setScaledContents(False)
-        #self.camera_preview_4.setIndent(-1)
-        #self.scrollArea_4.setWidget(self.scrollAreaWidgetContents_4)
 
         self.gridLayout_2.addWidget(self.scrollArea_4, 1, 1, 1, 1)
    
