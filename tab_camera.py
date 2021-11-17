@@ -277,8 +277,6 @@ class Tab_camera(QtWidgets.QWidget):
         self.btn_save_config.clicked.connect(self.save_cam_config)
         self.btn_load_config.clicked.connect(self.load_cam_config)
 
-        # TODO: zeptat se na lambda
-
         # Recording
         self.line_edit_save_location.textChanged.connect(self.send_conf_update)
         self.line_edit_sequence_duration.valueChanged.connect(self.send_conf_update)
@@ -293,9 +291,9 @@ class Tab_camera(QtWidgets.QWidget):
         self.btn_zoom_in.clicked.connect(lambda: self.set_zoom(1))
         self.btn_zoom_100.clicked.connect(lambda: self.set_zoom(100))
         self.btn_single_frame.clicked.connect(self.single_frame)
-        self.btn_start_preview.clicked.connect(self.preview)
+        self.btn_start_preview.clicked.connect(lambda: self.preview(False))
         self.btn_start_recording.clicked.connect(self.record)
-        self.btn_start_process.clicked.connect(self.process)
+        self.btn_start_process.clicked.connect(lambda: self.preview(True))
 
     def set_texts(self):
 
@@ -333,40 +331,6 @@ class Tab_camera(QtWidgets.QWidget):
     # ==============================================
     # Camera control
     # ==============================================
-    
-    def process(self):
-        """!@brief Starts custom image processing
-        @details Is called by process button, takes the input image
-        and process it in the desired manner.
-        """
-        #continue only if camera is connected
-        if self.connected:
-            if(not self.in_process):
-                #Set status message and icon
-                print(self.camIndex)
-                self.connection_update.emit(True, 2, "-1", self.camIndex)
-                self.send_status_msg.emit("Starting processing", 1500, self.camIndex)
-                
-                self.preview_update.emit(True, self.camIndex)
-                self.in_process = True
-                
-                #Start camera frame acquisition (not recording)
-                global_camera.cams.active_devices[global_camera.active_cam[self.camIndex]].start_acquisition()
-                
-                #Create and run thread to draw frames to gui
-                self.show_preview_thread = threading.Thread(target=self.show_process)
-                self.show_preview_thread.daemon = True
-                self.show_preview_thread.start()
-            else:
-                #Reset status icon and print message
-                self.connection_update.emit(True, 1, "-1", self.camIndex)
-                self.send_status_msg.emit("Stopping processing", 1500, self.camIndex)
-                
-                #Stop receiving frames
-                global_camera.cams.active_devices[global_camera.active_cam[self.camIndex]].stop_acquisition()
-                
-                self.in_process = False
-                self.preview_update.emit(False, self.camIndex)
 
     def record(self):
         """!@brief Starts and stops recording
@@ -440,39 +404,47 @@ class Tab_camera(QtWidgets.QWidget):
         if(self.recording):
             self.record()
     
-    def preview(self):
+    def preview(self, process):
         """!@brief Starts live preview
         @details Unlike recording method, this method does not save frames to a
         drive. Preview picture is rendered in separate thread.
         """
         #continue only if camera is connected
         if self.connected:
-            if(not self.preview_live):
+            if((not self.preview_live) and (not self.in_process)):
                 #Set status message and icon
-                self.connection_update.emit(True, 2, "-1", self.camIndex)
-                self.send_status_msg.emit("Starting preview", 1500, self.camIndex)
-                
-                
+                self.connection_update.emit(True, 2, "-1", self.camIndex)             
                 self.preview_update.emit(True, self.camIndex)
-                self.preview_live = True
                 
                 #Start camera frame acquisition (not recording)
                 global_camera.cams.active_devices[global_camera.active_cam[self.camIndex]].start_acquisition()
                 
-                
                 #Create and run thread to draw frames to gui
-                self.show_preview_thread = threading.Thread(target=self.show_preview)
+                if process:
+                    self.send_status_msg.emit("Starting processing", 1500, self.camIndex)
+                    self.show_preview_thread = threading.Thread(target=self.show_preview, args = [process])
+                    self.in_process = True
+                else:
+                    self.send_status_msg.emit("Starting preview", 1500, self.camIndex)
+                    self.show_preview_thread = threading.Thread(target=self.show_preview, args = [process])
+                    self.preview_live = True
+
                 self.show_preview_thread.daemon = True
                 self.show_preview_thread.start()
             else:
                 #Reset status icon and print message
                 self.connection_update.emit(True, 1, "-1", self.camIndex)
-                self.send_status_msg.emit("Stopping preview", 1500, self.camIndex)
                 
                 #Stop receiving frames
                 global_camera.cams.active_devices[global_camera.active_cam[self.camIndex]].stop_acquisition()
                 
-                self.preview_live = False
+                if (not self.in_process):
+                    self.preview_live = False
+                    self.send_status_msg.emit("Stopping preview", 1500, self.camIndex)
+                else:
+                    self.in_process = False
+                    self.send_status_msg.emit("Stopping processing", 1500, self.camIndex)
+
                 self.preview_update.emit(False, self.camIndex)
                 
     
@@ -495,7 +467,6 @@ class Tab_camera(QtWidgets.QWidget):
             self.preview_zoom += 0.1
         elif(flag == 0):
             self.preview_fit = True
-            print("Zoom to fit called")
         elif(flag == 100):
             self.preview_fit = False
             self.preview_zoom = 1
@@ -545,110 +516,8 @@ class Tab_camera(QtWidgets.QWidget):
             
             #Reset status icon
             self.connection_update.emit(True, 1, "-1", self.camIndex)
-
-    def show_process(self):
-        """!@brief Draws image from camera in real time.
-        @details Acquires images from camera and draws them in real time at 
-        the same rate as is display refresh_rate. If the frames come too fast,
-        only one at the most recent one is drawn and the rest is dumped. During 
-        this method an attempt to classify the image is called using predict method.
-        """
-        #Determine refresh rate of used display. This way the method will not
-        #run too slowly or redundantly fast.
-        #device = win32api.EnumDisplayDevices()
-        #refresh_rate = win32api.EnumDisplaySettings(device.DeviceName, -1).DisplayFrequency
-        refresh_rate = 30
-        
-        #Auxiliary variables for fps calculation
-        frames = 0
-        cycles = 0
-        
-        color_format = QtGui.QImage.Format_Invalid
-        str_color = None
-        time_fps = time.monotonic_ns()
-        #runs as long as the camera is recording or preview is active
-        while self.recording or self.in_process:
-            cycles = cycles + 1
-            
-            #Draw only if there is at least 1 frame to draw
-            if not global_queue.active_frame_queue[global_camera.active_cam[self.camIndex]].qsize() == 0:
-                image = global_queue.active_frame_queue[global_camera.active_cam[self.camIndex]].get_nowait()
-                self.received = self.received + 1
-
-                frames += 1
-                
-                #Dump all remaining frames (If frames are received faster than refresh_rate).
-                while not global_queue.active_frame_queue[global_camera.active_cam[self.camIndex]].qsize() == 0:
-                    frames += 1
-                    self.received = self.received + 1
-                    global_queue.active_frame_queue[global_camera.active_cam[self.camIndex]].get_nowait()
-
-                #Try to run a prediction
-                #self.request_prediction.emit(image[0])
-
-                #Try to process the image
-                image = imp.processImage_main(image)
-                
-                #Set up a new value of received frames in the statusbar
-                self.received_info.emit(self.received, self.camIndex)
-                
-# TODO: Change to time dependency instead of cycle#More cycles -> more exact fps calculation (value is more stable in gui)
-                
-                if cycles > 30:
-                    time_now = time.monotonic_ns()
-                    time_passed = time_now - time_fps
-                    time_fps = time_now
-                    #[frames*Hz/c] -> [frames/s]
-                    self.fps = round(frames/(time_passed/1_000_000_000),1)
-                    self.fps_info.emit(self.fps, self.camIndex)
-                    
-                    cycles = 0
-                    frames = 0
-                
-                #Convert image to proper format for PyQt
-                # TODO: proc zjistujeme ch, kdyz rozmery jsou pouze [h, w]???
-                h, w = image[0].shape
-                ch = 1
-                bytes_per_line = ch * w
-                
-                
-                if(str_color != image[1]):
-                    str_color = image[1]
-                    color_format = self._get_QImage_format(str_color)
-                    
-                if(color_format == QtGui.QImage.Format_Invalid):
-                    self.send_status_msg.emit("Used image format is not supported", 0, self.camIndex)
-                
-                
-                image = QtGui.QImage(image[0].data, w, h, bytes_per_line, color_format)
-
-#TODO Get color format dynamically
-                
-                #get size of preview window if zoom fit is selected
-                if(self.preview_fit == True):
-                    self.w_preview = self.camera_preview.size().width()
-                    self.h_preview = self.camera_preview.size().height()
-                    image_scaled = image.scaled(self.w_preview, 
-                                                self.h_preview, 
-                                                QtCore.Qt.KeepAspectRatio)
-                else:#else use zoom percentage
-                    self.w_preview = w*self.preview_zoom
-                    self.h_preview = w*self.preview_zoom
-                    image_scaled = image.scaled(self.w_preview,
-                                         self.w_preview,
-                                         QtCore.Qt.KeepAspectRatio)
-                
-                self.image_pixmap = QtGui.QPixmap.fromImage(image_scaled)
-                self.preview_callback()
-                #Set image to gui
-            #Wait for next display frame
-            time.sleep(1/refresh_rate)
-        
-        #When recording stops, change fps to 0
-        self.fps = 0.0
-        self.fps_info.emit(self.fps, self.camIndex)
     
-    def show_preview(self):
+    def show_preview(self, process):
         """!@brief Draws image from camera in real time.
         @details Acquires images from camera and draws them in real time at 
         the same rate as is display refresh_rate. If the frames come too fast,
@@ -685,6 +554,19 @@ class Tab_camera(QtWidgets.QWidget):
                     self.received = self.received + 1
                     global_queue.active_frame_queue[global_camera.active_cam[self.camIndex]].get_nowait()
                 
+                if process:
+                    #Try to process the image
+                    image = imp.processImage_main(image)
+
+                    #TODO: zjistit, proc se nevycita ch
+                    h, w = image[0].shape
+                    ch = 1
+                    bytes_per_line = ch * w
+                else:
+                    #Convert image to proper format for PyQt
+                    h, w, ch = image[0].shape
+                    bytes_per_line = ch * w
+
                 #Set up a new value of received frames in the statusbar
                 self.received_info.emit(self.received, self.camIndex)
                 
@@ -700,11 +582,6 @@ class Tab_camera(QtWidgets.QWidget):
                     
                     cycles = 0
                     frames = 0
-                
-                #Convert image to proper format for PyQt
-                h, w, ch = image[0].shape
-                bytes_per_line = ch * w
-                
                 
                 if(str_color != image[1]):
                     str_color = image[1]

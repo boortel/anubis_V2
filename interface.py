@@ -175,87 +175,69 @@ class Ui_MainWindow(QtCore.QObject):
         self.camera1_icon.setObjectName("camera_icon")
         self.camera1_icon.setScaledContents(True)
         self.statusbar.addPermanentWidget(self.camera1_icon)
-        #self.statusGrid.addWidget(self.camera1_icon, 0, 0, 1, 1)
         
         self.camera1_status = QtWidgets.QLabel()
         self.camera1_status.setObjectName("camera_status")
         self.statusbar.addPermanentWidget(self.camera1_status,stretch=20)
-        #self.statusGrid.addWidget(self.camera1_status, 0, 1, 1, 1)
         
         self.fps1_status = QtWidgets.QLabel()
         self.fps1_status.setObjectName("fps_status")
         self.statusbar.addPermanentWidget(self.fps1_status,stretch=8)
-        #self.statusGrid.addWidget(self.fps1_status, 0, 2, 1, 1)
         
         self.receive1_status = QtWidgets.QLabel()
         self.receive1_status.setObjectName("receive_status")
         self.statusbar.addPermanentWidget(self.receive1_status,stretch=15)
-        #self.statusGrid.addWidget(self.fps1_status, 0, 3, 1, 1)
         
         self.camera2_icon = QtWidgets.QLabel()
         self.camera2_icon.setObjectName("camera_icon")
         self.camera2_icon.setScaledContents(True)
         self.statusbar.addPermanentWidget(self.camera2_icon)
-        #self.statusGrid.addWidget(self.camera2_icon, 0, 4, 1, 1)
         
         self.camera2_status = QtWidgets.QLabel()
         self.camera2_status.setObjectName("camera_status")
         self.statusbar.addPermanentWidget(self.camera2_status,stretch=20)
-        #self.statusGrid.addWidget(self.camera2_status, 0, 5, 1, 1)
         
         self.fps2_status = QtWidgets.QLabel()
         self.fps2_status.setObjectName("fps_status")
         self.statusbar.addPermanentWidget(self.fps2_status,stretch=8)
-        #self.statusGrid.addWidget(self.fps2_status, 0, 6, 1, 1)
         
         self.receive2_status = QtWidgets.QLabel()
         self.receive2_status.setObjectName("receive_status")
         self.statusbar.addPermanentWidget(self.receive2_status,stretch=15)
-        #self.statusGrid.addWidget(self.receive2_status, 0, 7, 1, 1)
 
         self.camera3_icon = QtWidgets.QLabel()
         self.camera3_icon.setObjectName("camera_icon")
         self.camera3_icon.setScaledContents(True)
         self.statusbar.addPermanentWidget(self.camera3_icon)
-        #self.statusGrid.addWidget(self.camera3_icon, 0, 8, 1, 1)
         
         self.camera3_status = QtWidgets.QLabel()
         self.camera3_status.setObjectName("camera_status")
         self.statusbar.addPermanentWidget(self.camera3_status,stretch=20)
-        #self.statusGrid.addWidget(self.camera3_status, 0, 9, 1, 1)
         
         self.fps3_status = QtWidgets.QLabel()
         self.fps3_status.setObjectName("fps_status")
         self.statusbar.addPermanentWidget(self.fps3_status,stretch=8)
-        #self.statusGrid.addWidget(self.fps3_status, 0, 10, 1, 1)
         
         self.receive3_status = QtWidgets.QLabel()
         self.receive3_status.setObjectName("receive_status")
         self.statusbar.addPermanentWidget(self.receive3_status,stretch=15)
-        #self.statusGrid.addWidget(self.receive3_status, 0, 11, 1, 1)
 
         self.camera4_icon = QtWidgets.QLabel()
         self.camera4_icon.setObjectName("camera_icon")
         self.camera4_icon.setScaledContents(True)
         self.statusbar.addPermanentWidget(self.camera4_icon)
-        #self.statusGrid.addWidget(self.camera4_icon, 0, 12, 1, 1)
         
         self.camera4_status = QtWidgets.QLabel()
         self.camera4_status.setObjectName("camera_status")
         self.statusbar.addPermanentWidget(self.camera4_status,stretch=20)
-        #self.statusGrid.addWidget(self.camera4_status, 0, 13, 1, 1)
         
         self.fps4_status = QtWidgets.QLabel()
         self.fps4_status.setObjectName("fps_status")
         self.statusbar.addPermanentWidget(self.fps4_status,stretch=8)
-        #self.statusGrid.addWidget(self.fps4_status, 0, 14, 1, 1)
         
         self.receive4_status = QtWidgets.QLabel()
         self.receive4_status.setObjectName("receive_status")
         self.statusbar.addPermanentWidget(self.receive4_status,stretch=15)
-        #self.statusGrid.addWidget(self.receive4_status, 0, 15, 1, 1)
-
-        #self.gridLayout.addWidget(self.statusGrid, 1, 0, 1, 2)
         
         MainWindow.setStatusBar(self.statusbar)
         

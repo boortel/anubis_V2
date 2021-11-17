@@ -1,4 +1,5 @@
 from PyQt5 import QtGui, QtWidgets
+from PyQt5.QtCore import Qt
 
 class Camera_control_gui(QtWidgets.QWidget):
 
@@ -8,7 +9,7 @@ class Camera_control_gui(QtWidgets.QWidget):
         self.add_widgets()
 
     def add_widgets(self):
-        #self.preview_and_control = QtWidgets.QWidget(self)
+
         self.setObjectName(u"preview_and_control")
 
         self.gridLayout_2 = QtWidgets.QGridLayout(self)
@@ -27,22 +28,6 @@ class Camera_control_gui(QtWidgets.QWidget):
         self.camera_preview_1.setIndent(-1)
         self.camera_preview_1.setObjectName("camera_preview_1")
         self.scrollArea_1.setWidget(self.camera_preview_1)
-
-        #self.scrollArea_1 = QtWidgets.QScrollArea(self)
-        #self.scrollArea_1.setObjectName(u"scrollArea_1")
-        #self.scrollArea_1.setWidgetResizable(True)
-        #self.scrollAreaWidgetContents_1 = QtWidgets.QWidget()
-        #self.scrollAreaWidgetContents_1.setObjectName(u"scrollAreaWidgetContents_1")
-        #self.scrollAreaWidgetContents_1.setGeometry(QRect(0, 0, 282, 352))
-
-        #self.camera_preview_1 = QtWidgets.QLabel(self.scrollAreaWidgetContents_1)
-        #self.camera_preview_1.setObjectName(u"camera_preview_1")
-        #self.camera_preview_1.setGeometry(QRect(10, 10, 261, 331))
-        #self.camera_preview_1.setAutoFillBackground(False)
-        #self.camera_preview_1.setPixmap(QPixmap(u"default_preview.png"))
-        #self.camera_preview_1.setScaledContents(False)
-        #self.camera_preview_1.setIndent(-1)
-        #self.scrollArea_1.setWidget(self.scrollAreaWidgetContents_1)
 
         self.gridLayout_2.addWidget(self.scrollArea_1, 0, 0, 1, 1)
 
