@@ -19,6 +19,7 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 from tab_connect import Tab_connect
 from tab_camera import Tab_camera
+from hw_control_gui import HW_Control
 from camera_control_gui import Camera_control_gui
 
 import os
@@ -94,9 +95,8 @@ class Ui_MainWindow(QtCore.QObject):
         self.gridLayout.setObjectName("gridLayout")
         
         self.preview_and_control = Camera_control_gui()
-        
-        self.gridLayout.addWidget(self.preview_and_control, 0, 1)
-        self.gridLayout.setColumnStretch(1, 5)
+
+        self.gridLayout.addWidget(self.preview_and_control, 0, 2, 4, 1)        
 
         #Definition of all the tabs on the left side of the UI
         #--------------------------------------------------------------------
@@ -137,14 +137,17 @@ class Ui_MainWindow(QtCore.QObject):
         self.feat_refresh_timer.setInterval(4000)
         self.feat_refresh_timer.timeout.connect(self.tab_changed)
         self.feat_refresh_timer.start()
-        
-        self.gridLayout.addWidget(self.tabs, 0, 0)
-        self.gridLayout.setColumnStretch(0, 3)
+
+        self.gridLayout.addWidget(self.tabs, 0, 0, 2, 1)        
         
         #methods to call on tab change
         self.tabs.currentChanged.connect(self.tab_changed)
         
-        
+        #HW Control box
+        #--------------------------------------------------------------------
+        self.hw_control = HW_Control()
+        self.gridLayout.addWidget(self.hw_control, 2, 0, 2, 1)
+
         #Menubar buttons
         #-------------------------------------------------------------------
         MainWindow.setCentralWidget(self.centralwidget)
