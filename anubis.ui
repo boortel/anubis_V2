@@ -497,7 +497,67 @@
        <string>HW control</string>
       </property>
       <layout class="QGridLayout" name="gridLayout_HW">
-       <item row="1" column="8">
+       <item row="1" column="1" rowspan="2">
+        <widget class="QDial" name="dial_light_1"/>
+       </item>
+       <item row="0" column="1">
+        <widget class="QLabel" name="label_light_control">
+         <property name="text">
+          <string>Light control</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="10" rowspan="2">
+        <widget class="QDial" name="dial_speed"/>
+       </item>
+       <item row="2" column="11">
+        <widget class="QPushButton" name="btn_toggle_rotation">
+         <property name="text">
+          <string>Toggle Rotation</string>
+         </property>
+        </widget>
+       </item>
+       <item row="4" column="1" rowspan="2">
+        <widget class="QDial" name="dial_light_2"/>
+       </item>
+       <item row="1" column="3">
+        <widget class="QSpinBox" name="spinBox_light_1"/>
+       </item>
+       <item row="4" column="3">
+        <widget class="QSpinBox" name="spinBox_light_2"/>
+       </item>
+       <item row="2" column="12">
+        <widget class="QLabel" name="label_4">
+         <property name="text">
+          <string>REPL_WITH_LED</string>
+         </property>
+        </widget>
+       </item>
+       <item row="5" column="3">
+        <widget class="QPushButton" name="btn_toggle_light_2">
+         <property name="text">
+          <string>Toggle Light 2</string>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="10">
+        <widget class="QLabel" name="label_speed_control">
+         <property name="text">
+          <string>Speed control</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="11">
+        <widget class="QSpinBox" name="spinBox_speed"/>
+       </item>
+       <item row="2" column="3">
+        <widget class="QPushButton" name="btn_toggle_light_1">
+         <property name="text">
+          <string>Toggle Light 1</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="12">
         <spacer name="horizontalSpacer_2">
          <property name="orientation">
           <enum>Qt::Horizontal</enum>
@@ -510,30 +570,10 @@
          </property>
         </spacer>
        </item>
-       <item row="1" column="4">
-        <spacer name="horizontalSpacer">
-         <property name="orientation">
-          <enum>Qt::Horizontal</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>40</width>
-           <height>20</height>
-          </size>
-         </property>
-        </spacer>
-       </item>
-       <item row="2" column="7">
-        <widget class="QPushButton" name="btn_toggle_rotation">
+       <item row="5" column="4">
+        <widget class="QLabel" name="label_5">
          <property name="text">
-          <string>Toggle rotation</string>
-         </property>
-        </widget>
-       </item>
-       <item row="0" column="1">
-        <widget class="QLabel" name="label">
-         <property name="text">
-          <string>Light control</string>
+          <string>REPL_WITH_LED</string>
          </property>
         </widget>
        </item>
@@ -543,39 +583,6 @@
           <string>REPL_WITH_LED</string>
          </property>
         </widget>
-       </item>
-       <item row="1" column="1" rowspan="2">
-        <widget class="QDial" name="dial_light"/>
-       </item>
-       <item row="2" column="3">
-        <widget class="QPushButton" name="btn_toggle_light">
-         <property name="text">
-          <string>Toggle light</string>
-         </property>
-        </widget>
-       </item>
-       <item row="1" column="5" rowspan="2">
-        <widget class="QDial" name="dial_speed"/>
-       </item>
-       <item row="0" column="5">
-        <widget class="QLabel" name="label_2">
-         <property name="text">
-          <string>Speed control</string>
-         </property>
-        </widget>
-       </item>
-       <item row="2" column="8">
-        <widget class="QLabel" name="label_4">
-         <property name="text">
-          <string>REPL_WITH_LED</string>
-         </property>
-        </widget>
-       </item>
-       <item row="1" column="7">
-        <widget class="QSpinBox" name="spinBox_speed"/>
-       </item>
-       <item row="1" column="3">
-        <widget class="QSpinBox" name="spinBox_light"/>
        </item>
       </layout>
      </widget>
