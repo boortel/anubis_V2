@@ -28,7 +28,7 @@
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>282</width>
+            <width>260</width>
             <height>352</height>
            </rect>
           </property>
@@ -70,7 +70,7 @@
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>281</width>
+            <width>260</width>
             <height>352</height>
            </rect>
           </property>
@@ -112,7 +112,7 @@
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>282</width>
+            <width>260</width>
             <height>351</height>
            </rect>
           </property>
@@ -154,7 +154,7 @@
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>281</width>
+            <width>260</width>
             <height>351</height>
            </rect>
           </property>
@@ -581,6 +581,13 @@
         <widget class="QLabel" name="label_3">
          <property name="text">
           <string>REPL_WITH_LED</string>
+         </property>
+        </widget>
+       </item>
+       <item row="4" column="11">
+        <widget class="QPushButton" name="btn_change_direction">
+         <property name="text">
+          <string>Change Direction</string>
          </property>
         </widget>
        </item>

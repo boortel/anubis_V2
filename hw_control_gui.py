@@ -11,6 +11,7 @@ class HW_Control(QtWidgets.QGroupBox):
         self.icon_stop = QtGui.QPixmap("./icons/icon_busy.png")
 
         self.speed = 0
+        self.direction = 0
         self.light1 = 0
         self.light2 = 0
         self.rotation_status = False
@@ -35,6 +36,10 @@ class HW_Control(QtWidgets.QGroupBox):
         self.btn_toggle_rotation = QtWidgets.QPushButton(self)
         self.btn_toggle_rotation.setObjectName("btn_toggle_rotation")
         self.gridLayout_HW.addWidget(self.btn_toggle_rotation, 2, 11, 1, 1)
+
+        self.btn_change_direction = QtWidgets.QPushButton(self)
+        self.btn_change_direction.setObjectName("btn_change_direction")
+        self.gridLayout_HW.addWidget(self.btn_change_direction, 4, 11, 1, 1)
 
         self.label_light_control = QtWidgets.QLabel(self)
         self.label_light_control.setObjectName("label_light_control")
@@ -118,9 +123,12 @@ class HW_Control(QtWidgets.QGroupBox):
         self.dial_speed.valueChanged.connect(lambda: self.update_speed(0))
         self.spinBox_speed.valueChanged.connect(lambda: self.update_speed(1))
 
+        self.btn_change_direction.clicked.connect(self.change_direction)
+
     def set_texts(self):
         self.setTitle("HW control")
         self.btn_toggle_rotation.setText("Toggle Rotation")
+        self.btn_change_direction.setText("Change Direction")
         self.label_light_control.setText("Light Control")
         self.btn_toggle_light_1.setText("Toggle Light 1")
         self.btn_toggle_light_2.setText("Toggle Light 2")
@@ -189,6 +197,15 @@ class HW_Control(QtWidgets.QGroupBox):
         if self.light_status_2:
             pass
 #TODO send_light VAL
+
+    def change_direction(self):
+        if self.direction == 0:
+            self.direction = 1
+#TODO send_direction 1
+        else:
+            self.direction = 1
+#TODO send_direction 0
+
 
     def update_speed(self, source):
         if source == 0:
