@@ -90,16 +90,11 @@ class HW_Control(QtWidgets.QGroupBox):
         self.dial_light_2.setRange(self.light_min, self.light_max)
         self.gridLayout_HW.addWidget(self.dial_light_2, 4, 1, 2, 1)
 
-        spacerItem = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
-        self.gridLayout_HW.addItem(spacerItem, 1, 12, 1, 1)
 
-
-#TODO replace with led
         self.icon_rotation = QtWidgets.QLabel(self)
         self.icon_rotation.setObjectName("icon_rotation")
         self.gridLayout_HW.addWidget(self.icon_rotation, 2, 12, 1, 1)
 
-#TODO replace with led
         self.icon_light_1 = QtWidgets.QLabel(self)
         self.icon_light_1.setObjectName("icon_light_1")
         self.gridLayout_HW.addWidget(self.icon_light_1, 2, 4, 1, 1)
@@ -109,7 +104,6 @@ class HW_Control(QtWidgets.QGroupBox):
         self.gridLayout_HW.addWidget(self.icon_light_2, 5, 4, 1, 1)
 
     def connect_actions(self):
-#TODO
         self.btn_toggle_light_1.clicked.connect(self.toggle_light_1)
         self.btn_toggle_light_2.clicked.connect(self.toggle_light_2)
         self.btn_toggle_rotation.clicked.connect(self.toggle_rotation)
