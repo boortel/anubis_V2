@@ -110,16 +110,24 @@ class Ui_MainWindow(QtCore.QObject):
         self.tabs.addTab(self.tab_connect, "")
 
         #Tab - Camera control
-        self.tab_camera_cfg1 = Tab_camera(0, self.preview_and_control.camera_preview_1)
+        self.tab_camera_cfg1 = Tab_camera(0, 
+                                    self.preview_and_control.camera_preview_1, 
+                                    self.preview_and_control.preview_widgets[0].label_preview)
         self.tabs.addTab(self.tab_camera_cfg1, "")
 
-        self.tab_camera_cfg2 = Tab_camera(1, self.preview_and_control.camera_preview_2)
+        self.tab_camera_cfg2 = Tab_camera(1, 
+                                    self.preview_and_control.camera_preview_2,
+                                    self.preview_and_control.preview_widgets[1].label_preview)
         self.tabs.addTab(self.tab_camera_cfg2, "")
 
-        self.tab_camera_cfg3 = Tab_camera(2, self.preview_and_control.camera_preview_3)
+        self.tab_camera_cfg3 = Tab_camera(2, 
+                                    self.preview_and_control.camera_preview_3,
+                                    self.preview_and_control.preview_widgets[2].label_preview)
         self.tabs.addTab(self.tab_camera_cfg3, "")
 
-        self.tab_camera_cfg4 = Tab_camera(3, self.preview_and_control.camera_preview_4)
+        self.tab_camera_cfg4 = Tab_camera(3, 
+                                    self.preview_and_control.camera_preview_4,
+                                    self.preview_and_control.preview_widgets[3].label_preview)
         self.tabs.addTab(self.tab_camera_cfg4, "")
         
         # Initial refresh of the camera parameters
