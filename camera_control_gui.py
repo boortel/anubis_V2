@@ -1,11 +1,18 @@
 from PyQt5 import QtGui, QtWidgets
 from PyQt5.QtCore import Qt
+from preview_window import Preview_widget
 
 class Camera_control_gui(QtWidgets.QWidget):
 
     def __init__(self):
         super(Camera_control_gui, self).__init__()
 
+        self.preview_windows = [QtWidgets.QDialog(),QtWidgets.QDialog(),QtWidgets.QDialog(),QtWidgets.QDialog()]
+        self.preview_widgets = [Preview_widget(self.preview_windows[0], "Camera 1"), 
+                                Preview_widget(self.preview_windows[1], "Camera 2"), 
+                                Preview_widget(self.preview_windows[2], "Camera 3"), 
+                                Preview_widget(self.preview_windows[3], "Camera 4")]
+        
         self.add_widgets()
 
     def add_widgets(self):
@@ -42,7 +49,7 @@ class Camera_control_gui(QtWidgets.QWidget):
         self.camera_preview_2.setPixmap(QtGui.QPixmap("default_preview.png"))
         self.camera_preview_2.setScaledContents(False)
         self.camera_preview_2.setIndent(-1)
-        self.camera_preview_2.setObjectName("camera_preview_1")
+        self.camera_preview_2.setObjectName("camera_preview_2")
         self.scrollArea_2.setWidget(self.camera_preview_2)
 
         self.gridLayout_2.addWidget(self.scrollArea_2, 0, 1, 1, 1)
@@ -58,7 +65,7 @@ class Camera_control_gui(QtWidgets.QWidget):
         self.camera_preview_3.setPixmap(QtGui.QPixmap("default_preview.png"))
         self.camera_preview_3.setScaledContents(False)
         self.camera_preview_3.setIndent(-1)
-        self.camera_preview_3.setObjectName("camera_preview_1")
+        self.camera_preview_3.setObjectName("camera_preview_3")
         self.scrollArea_3.setWidget(self.camera_preview_3)
 
         self.gridLayout_2.addWidget(self.scrollArea_3, 1, 0, 1, 1)
@@ -74,11 +81,23 @@ class Camera_control_gui(QtWidgets.QWidget):
         self.camera_preview_4.setPixmap(QtGui.QPixmap("default_preview.png"))
         self.camera_preview_4.setScaledContents(False)
         self.camera_preview_4.setIndent(-1)
-        self.camera_preview_4.setObjectName("camera_preview_1")
+        self.camera_preview_4.setObjectName("camera_preview_4")
         self.scrollArea_4.setWidget(self.camera_preview_4)
 
         self.gridLayout_2.addWidget(self.scrollArea_4, 1, 1, 1, 1)
-   
+    
+    def mouseDoubleClickEvent(self, event):
+        widget = self.childAt(event.pos())
+        if widget is not None and widget.objectName():
+            if widget.objectName() == "camera_preview_1":
+                self.preview_windows[0].show()
+            elif widget.objectName() == "camera_preview_2":
+                self.preview_windows[1].show()
+            elif widget.objectName() == "camera_preview_3":
+                self.preview_windows[2].show()
+            elif widget.objectName() == "camera_preview_4":
+                self.preview_windows[3].show()
+
     def update_recording_config(self, name, location, duration):
         """!@brief This method is used to tell the instance of this class current recording configuration
         @param[in] name Template for naming saved files
