@@ -77,9 +77,6 @@ class Tab_camera(QtWidgets.QWidget):
         self.resize_signal = QtWidgets.QLineEdit()
         self.resize_signal.textChanged.connect(self.update_img)
 
-        self.save_location = "C:/Users/PC_Bilik/Desktop/test"
-        self.save_filename = "img"
-        self.sequence_duration = 0
 
         ##Holds current frame displayed in the GUI
         self.image_pixmap = None
@@ -359,14 +356,14 @@ class Tab_camera(QtWidgets.QWidget):
                 self.recording = True
                 
                 #Start new recording with defined name and save path
-                global_camera.cams.active_devices[global_camera.active_cam[self.camIndex]].start_recording(self.save_location,
-                                    self.save_filename,
+                global_camera.cams.active_devices[global_camera.active_cam[self.camIndex]].start_recording(self.line_edit_save_location.text(),
+                                    self.line_edit_sequence_name.text(),
                                     'nothing')
                 
                 
                 #If automatic sequence duration is set, create thread that will
                 #automatically terminate the recording
-                if(True):#self.sequence_duration.value > 0):
+                if(self.line_edit_sequence_duration.value() > 0):
                     self.interrupt_flag.clear()
                     self.seq_duration_thread = threading.Thread(target=self.seq_duration_wait)
                     self.seq_duration_thread.daemon = True
@@ -406,7 +403,7 @@ class Tab_camera(QtWidgets.QWidget):
         self.send_status_msg.emit("Recording for "+self.line_edit_sequence_duration.text()+"s started", 0, self.camIndex)
         
         #wait either for manual recording stop or wait for defined time
-        self.interrupt_flag.wait(float(self.line_edit_sequence_duration.text()))
+        self.interrupt_flag.wait(self.line_edit_sequence_duration.value())
         
         #If the recording is still running (not terminated manually), stop 
         #the recording.
@@ -539,7 +536,7 @@ class Tab_camera(QtWidgets.QWidget):
             #Reset status icon
             self.connection_update.emit(True, 1, "-1", self.camIndex)
     
-    def show_preview(self, process):
+    def show_preview(self, process=True):
         """!@brief Draws image from camera in real time.
         @details Acquires images from camera and draws them in real time at 
         the same rate as is display refresh_rate. If the frames come too fast,
@@ -761,8 +758,6 @@ class Tab_camera(QtWidgets.QWidget):
             if(end_of_rec_conf):
                 for line in file_contents[end_of_rec_conf:]:
                     config.write(line)
-        
-        # TODO: zeptat se
 
         #Fill the Recording tab with updated values
         self.load_config("img(%n)", "Recording", "0")
