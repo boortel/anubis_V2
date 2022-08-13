@@ -55,31 +55,10 @@ class Tab_connect(QtWidgets.QWidget):
         
         self.layout_main.addWidget(self.list_detected_cameras)
         
-        self.frame_cti = QtWidgets.QFrame(self)
-        self.frame_cti.setFrameShape(QtWidgets.QFrame.StyledPanel)
-        self.frame_cti.setFrameShadow(QtWidgets.QFrame.Raised)
-        self.frame_cti.setObjectName("frame_cti")
-        self.layout_cti_settings = QtWidgets.QGridLayout(self.frame_cti)
-        self.layout_cti_settings.setObjectName("gridLayout_7")
-        self.btn_remove_cti = QtWidgets.QPushButton(self.frame_cti)
-        self.btn_remove_cti.setObjectName("btn_remove_cti")
-        self.layout_cti_settings.addWidget(self.btn_remove_cti, 0, 3, 1, 1)
-        self.btn_add_cti = QtWidgets.QPushButton(self.frame_cti)
-        self.btn_add_cti.setObjectName("btn_add_cti")
-        self.layout_cti_settings.addWidget(self.btn_add_cti, 0, 2, 1, 1)
-        self.tip_add_cti = QtWidgets.QLabel(self.frame_cti)
-        self.tip_add_cti.setWordWrap(True)
-        self.tip_add_cti.setObjectName("tip_add_cti")
-        self.layout_cti_settings.addWidget(self.tip_add_cti, 0, 0, 2, 1)
-        self.combo_remove_cti = QtWidgets.QComboBox(self.frame_cti)
-        self.combo_remove_cti.setObjectName("combo_remove_cti")
-        self.layout_cti_settings.addWidget(self.combo_remove_cti, 1, 2, 1, 2)
-        self.layout_main.addWidget(self.frame_cti)
+        
 
     def connect_actions(self):
         self.btn_refresh_cameras.clicked.connect(self.refresh_cameras)
-        self.btn_add_cti.clicked.connect(self.add_cti)
-        self.btn_remove_cti.clicked.connect(self.remove_cti)
         
         self.btn_connect_camera.clicked.connect(
             lambda: self.connect_camera(self.list_detected_cameras.currentRow()))
@@ -95,9 +74,6 @@ class Tab_connect(QtWidgets.QWidget):
         self.btn_connect_camera.setText("Connect")
         self.btn_refresh_cameras.setText("Refresh")
         self.btn_disconnect_camera.setText("Disconnect")
-        self.tip_add_cti.setText("Tip: If you can\'t detect your camera try adding new .cti file from your camera vendor")
-        self.btn_add_cti.setText("Add a new .cti file")
-        self.btn_remove_cti.setText("Remove selected .cti")
 
         self.label_conn_tab.setText("Camera tab")
         self.combo_tab_selector.setItemText(0, "Camera 1")
@@ -106,36 +82,8 @@ class Tab_connect(QtWidgets.QWidget):
         self.combo_tab_selector.setItemText(3, "Camera 4")
         
 
-    def add_cti(self):
-        """!@brief Used to load a new GenTL producer file.
-        @details User can select a new file using file dialog.
-        """
-        path = QtWidgets.QFileDialog.getOpenFileName(self,
-                                                     "Load GenTL producer",
-                                                     filter="CTI files (*.cti)")
-        
-        #If user changes his/her mind and closes the file dialog, don't
-        #add empty producer
-        if(path[0]):
-            cti_files = global_camera.cams.add_gentl_producer(path[0])
-            try:
-                self.combo_remove_cti.clear()
-                self.combo_remove_cti.addItems(cti_files)
-            except:
-                pass
-            
-            self.send_status_msg.emit("File added", 0)
     
-    def remove_cti(self):
-        """!@brief Used to remove selected GenTL producer file.
-        @details User can select file from combo box.
-        """
-        
-        cti_files, removed = global_camera.cams.remove_gentl_producer(self.combo_remove_cti.currentText())
-        if(removed):
-            self.send_status_msg.emit("File removed", 0)
-            self.combo_remove_cti.clear()
-            self.combo_remove_cti.addItems(cti_files)
+    
     
     def refresh_cameras(self):
         """!@brief Calls function to detect connected cameras and prints them

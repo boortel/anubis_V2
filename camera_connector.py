@@ -1,6 +1,5 @@
 
 from camera_vimba import Camera_vimba
-from camera_harvester import Camera_harvester
 
 
 class Camera_connector:
@@ -53,12 +52,7 @@ class Camera_connector:
         @param[in] device_id ID of a camera you want to connect to
         """
         #self.mechanisms[mechanism].select_camera(device_id)
-
-        if(mechanism == "Harvester"):
-            self.active_devices[str(self.active_devices_count)] = Camera_harvester()
-            for path in self.producer_paths:
-                self.active_devices[str(self.active_devices_count)].add_gentl_producer(path)
-        elif(mechanism == "Vimba"):
+        if(mechanism == "Vimba"):
             self.active_devices[str(self.active_devices_count)] = Camera_vimba()
             
         self.active_devices[str(self.active_devices_count)].get_camera_list()
@@ -72,43 +66,3 @@ class Camera_connector:
         """!@brief Disconnect camera removes active camera object"""
         self.active_devices[str(device)].disconnect_camera()
         del self.active_devices[str(device)]
-
-#these are temporary and should be connected to the gui better (probably)
-    def add_gentl_producer(self, producer_path):
-        """!@brief Add a new frame producer to all harvester objects and to harvester mechanism to list cameras
-        @details Adds .cti file specified by producer_path to harvester objects
-        @param[in] producer_path Path to a .cti file
-        @return list of all active producers
-        """
-        #Harvester is currently unused
-        #if(not producer_path in self.producer_paths):
-        #    if(producer_path.endswith(".cti")):
-        #        self.producer_paths.append(producer_path)
-        #        self.mechanisms["Harvester"].add_gentl_producer(producer_path) 
-        #        for cam in self.active_devices:
-        #            try:
-        #                self.active_devices[cam].add_gentl_producer(producer_path)
-        #            except:
-        #                pass
-        return self.producer_paths
-
-
-    def remove_gentl_producer(self, producer_path):
-        """!@brief Remove existing frame producer from all existing harvester objects
-        @details Removes .cti file specified by producer_path
-        @param[in] producer_path Path to a .cti file
-        @return tuple of a list of remaining gentl producers and boolean value signaling whether the removal was succesful
-        """
-        if(producer_path in self.producer_paths):
-            self.producer_paths.remove(producer_path)
-            self.h.remove_file(producer_path)
-            self.mechanisms["Harvester"].remove_gentl_producer(producer_path)
-            for cam in self.active_devices:
-                try:
-                    self.active_devices[cam].remove_gentl_producer(producer_path)
-                except:
-                    pass
-            return (self.producer_paths, True)
-        else:
-            return(None, False)
-       

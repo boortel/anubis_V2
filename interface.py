@@ -254,20 +254,13 @@ class Ui_MainWindow(QtCore.QObject):
         
         #Adding individual items to menus in menubar
         #-------------------------------------------------------------
-        self.actionAdd_Remove_cti_file = QtWidgets.QAction(MainWindow)
-        self.actionAdd_Remove_cti_file.setObjectName("actionAdd_Remove_cti_file")
         
         self.actionOpen_Help = QtWidgets.QAction(MainWindow)
         self.actionOpen_Help.setObjectName("actionOpen_Help")
         
-        self.actionRemove_cti_file = QtWidgets.QAction(MainWindow)
-        self.actionRemove_cti_file.setObjectName("actionRemove_cti_file")
         
         self.action_save_frame = QtWidgets.QAction(MainWindow)
         self.action_save_frame.setObjectName("action_save_frame")
-        
-        self.action_save_settings = QtWidgets.QAction(MainWindow)
-        self.action_save_settings.setObjectName("action_save_settings")
         
         self.actionAbout_Anubis = QtWidgets.QAction(MainWindow)
         self.actionAbout_Anubis.setObjectName("actionAbout_Anubis")
@@ -283,12 +276,9 @@ class Ui_MainWindow(QtCore.QObject):
         
         self.menuFile.addAction(self.actionSave_camera_config)
         self.menuFile.addAction(self.actionLoad_camera_config)
-        self.menuFile.addAction(self.actionAdd_Remove_cti_file)
-        self.menuFile.addAction(self.actionRemove_cti_file)
         
         self.menuFile.addSeparator()
         
-        self.menuFile.addAction(self.action_save_settings)
         self.menuHelp.addAction(self.actionOpen_Help)
         
         self.menuHelp.addSeparator()
@@ -326,12 +316,8 @@ class Ui_MainWindow(QtCore.QObject):
         
         self.menuFile.setTitle(_translate("MainWindow", "File"))
         self.menuHelp.setTitle(_translate("MainWindow", "Help"))
-        self.actionAdd_Remove_cti_file.setText(_translate("MainWindow", "Add .cti file"))
         self.actionOpen_Help.setText(_translate("MainWindow", "Open Help"))
-        self.actionRemove_cti_file.setText(_translate("MainWindow", "Remove .cti file"))
         self.action_save_frame.setText(_translate("MainWindow", "Save frame"))
-        self.action_save_settings.setText(_translate("MainWindow", "Save app state"))
-        self.action_save_settings.setToolTip(_translate("MainWindow", "Save modifications made to application settings"))
         self.actionAbout_Anubis.setText(_translate("MainWindow", "About Anubis"))
         self.actionGit_Repository.setText(_translate("MainWindow", "Git Repository"))
         self.actionSave_camera_config.setText(_translate("MainWindow", "Save camera config"))
@@ -406,9 +392,6 @@ class Ui_MainWindow(QtCore.QObject):
         self.tab_camera_cfg4.fps_info.connect(self.update_fps)
         self.tab_camera_cfg4.received_info.connect(self.update_received_frames)
         
-        self.action_save_settings.triggered.connect(self.save_cti_config)
-        self.actionRemove_cti_file.triggered.connect(self.tab_connect.remove_cti)
-        self.actionAdd_Remove_cti_file.triggered.connect(self.tab_connect.add_cti)
 
         # TODO dokoncit
         #self.actionSave_camera_config.triggered.connect(self.tab_config.save_cam_config)
@@ -498,8 +481,6 @@ class Ui_MainWindow(QtCore.QObject):
         user made to applications default state.                                 
         """
         
-        cti_files = False
-        loaded_cti = None
         filename = None,
         save_location = None,
         sequence_duration = None
@@ -518,55 +499,14 @@ class Ui_MainWindow(QtCore.QObject):
                 elif(line.startswith("sequence_duration=")):
                     sequence_duration = line.replace("sequence_duration=", "", 1)
                     #self.line_edit_sequence_duration.setText(line.replace("sequence_duration=", "", 1))
-                elif(line.startswith("CTI_FILES_PATHS")):
-                    cti_files = True
-                elif(cti_files == True):
-                    loaded_cti = global_camera.cams.add_gentl_producer(line)
-            
+                    
         self.tab_camera_cfg1.load_config(filename, save_location, sequence_duration)
         self.tab_camera_cfg2.load_config(filename, save_location, sequence_duration)
         self.tab_camera_cfg3.load_config(filename, save_location, sequence_duration)
         self.tab_camera_cfg4.load_config(filename, save_location, sequence_duration)
-        #if no cti path is present in the config adding files will be skipped
-        try:
-            self.tab_connect.combo_remove_cti.addItems(loaded_cti)
-        except:
-            pass
-        
+                
         #Set status update
         self.set_status_msg("Configuration loaded",1500)
-    
-    def save_cti_config(self):
-        """!@brief Saves all currently loaded GenTL producers to the config 
-        file.
-        @details When the program starts, the saved producers are loaded 
-        from the config file. Save method overwrites any previous configuration.
-        """
-        paths = global_camera.cams.producer_paths
-        config = []
-        
-        
-        with open("config.ini", 'r') as file:
-            for line in file:
-                config.append(line)
-        
-        with open("config.ini", 'w') as file:
-            for line in config:
-                #reading configuration for recording
-                if(line.startswith("CTI_FILES_PATHS")):
-                    file.write(line)
-                    break
-                else:
-                    file.write(line)
-                    
-            if isinstance(paths, str):
-                file.write(paths + '\n')
-            else:
-                if(paths):
-                    for path in paths:
-                        file.write(path + '\n')
-        
-        self.set_status_msg("Configuration saved")
         
     def about(self):
         """!@brief Shows simple about dialog
