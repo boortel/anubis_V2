@@ -17,6 +17,9 @@ class Tab_camera(QtWidgets.QWidget):
 
     ##Signal configuration change to the GUI
     configuration_update = Signal(str, str, float)#name, location, duration
+    signal_update_parameters = Signal()
+    signal_show_parameters = Signal()
+    signal_clear_parameters = Signal()
 
     ##Camera Control signals
     send_status_msg = Signal(str, int, int)
@@ -115,6 +118,9 @@ class Tab_camera(QtWidgets.QWidget):
         self.add_widgets()
         self.connect_actions()
         self.set_texts()
+
+        self.thread_auto_refresh_params = threading.Thread(target=self.start_refresh_parameters)
+        self.thread_auto_refresh_params.setDaemon(True)
 
     def add_widgets(self):
 
@@ -346,6 +352,10 @@ class Tab_camera(QtWidgets.QWidget):
         """
         if self.connected:
             if(not self.recording):
+                # clear parameters to prevent user from changing them
+                self.signal_clear_parameters.emit()
+#TODO Make showing params faster and remove line above 
+
                 #Change status icon and print status message
                 self.connection_update.emit(True, 2, "-1", self.camIndex)
                 self.send_status_msg.emit("Starting recording", 0, self.camIndex)
@@ -387,6 +397,9 @@ class Tab_camera(QtWidgets.QWidget):
                 self.preview_live = False
                 self.preview_update.emit(False, self.camIndex)
                 self.send_status_msg.emit("Recording stopped", 3500, self.camIndex)
+
+                self.signal_show_parameters.emit()
+#TODO Make showing params faster and remove line above 
     
     def seq_duration_wait(self):
         """!@brief Automatic recording interrupt.
@@ -416,6 +429,10 @@ class Tab_camera(QtWidgets.QWidget):
         #continue only if camera is connected
         if self.connected:
             if((not self.preview_live) and (not self.in_process)):
+                #clears parameters to prevent user from changing them
+                self.signal_clear_parameters.emit()
+#TODO Make showing params faster and remove line above 
+
                 #Set status message and icon
                 self.connection_update.emit(True, 2, "-1", self.camIndex)             
                 self.preview_update.emit(True, self.camIndex)
@@ -450,7 +467,8 @@ class Tab_camera(QtWidgets.QWidget):
                     self.send_status_msg.emit("Stopping processing", 1500, self.camIndex)
 
                 self.preview_update.emit(False, self.camIndex)
-                
+                self.signal_show_parameters.emit()
+#TODO Make showing params faster and remove line above                
     
     def set_zoom(self, flag):
         """!@brief Set the zoom amount of the image previewed
@@ -489,8 +507,9 @@ class Tab_camera(QtWidgets.QWidget):
             self.connection_update.emit(True, 2, "-1", self.camIndex)
             
             #Get image
+            print("before")
             image, pixel_format = global_camera.cams.active_devices[global_camera.active_cam[self.camIndex]].get_single_frame()
-            
+            print("after")
             #Try to run prediction
             self.request_prediction.emit(image)
             
@@ -835,19 +854,7 @@ class Tab_camera(QtWidgets.QWidget):
     # Camera
     # ==============================================
 
-    def show_parameters(self):
-        """!@brief Loads all camera's features and creates dynamic widgets for
-        every feature.
-        @details This method is called when user first enters parameters tab or
-        when the configuration level changes. All the widgets are created dynamically
-        and based on the type of the feature, proper widget type is selected. Also
-        these widgets have method to change their value associated with them
-        when created.
-        """
-        print("in show params")
-        num = 0
-        
-        categories = []
+    def clear_parameters(self):
         self.top_items = {}
         self.children_items = {}
         
@@ -861,6 +868,22 @@ class Tab_camera(QtWidgets.QWidget):
         
         self.feat_widgets.clear()
         self.feat_labels.clear()
+
+    def show_parameters(self):
+        """!@brief Loads all camera's features and creates dynamic widgets for
+        every feature.
+        @details This method is called when user first enters parameters tab or
+        when the configuration level changes. All the widgets are created dynamically
+        and based on the type of the feature, proper widget type is selected. Also
+        these widgets have method to change their value associated with them
+        when created.
+        """
+        num = 0
+        
+        categories = []
+        self.clear_parameters()
+        if self.feat_queue.empty():
+            self.load_parameters()
         
         while not self.feat_queue.empty():
             try:
@@ -1000,15 +1023,19 @@ class Tab_camera(QtWidgets.QWidget):
         called by user but automatically.
         """
         #called every 4 seconds
-        if (self.feat_widgets and self.connected and
-            not(self.preview_live or self.recording) and 
-            not self.param_flag.is_set() and self.update_completed_flag.is_set()):
-            
-            self.update_completed_flag.clear()
-            
-            self.update_thread = threading.Thread(target=self.get_new_val_parameters)
-            self.update_thread.daemon = True
-            self.update_thread.start()
+        while(self.connected):
+            time.sleep(4)
+            print(self.update_completed_flag.is_set())
+            if (self.feat_widgets and self.connected and
+                not(self.preview_live or self.recording) and                 
+#TODO Make showing params faster and remove line above 
+                not self.param_flag.is_set() and self.update_completed_flag.is_set()):
+                
+                self.update_completed_flag.clear()
+                
+                self.update_thread = threading.Thread(target=self.get_new_val_parameters)
+                self.update_thread.daemon = True
+                self.update_thread.start()
     
     def get_new_val_parameters(self):
         """!@brief Check for new parameter value
@@ -1019,7 +1046,6 @@ class Tab_camera(QtWidgets.QWidget):
             self.update_completed_flag.set()
             return
         
-        print(self.parameter_values)
         params = Queue()
         tries = 0
         while(tries <= 10):
@@ -1029,7 +1055,8 @@ class Tab_camera(QtWidgets.QWidget):
                 break
             else:
                 tries += 1
-                
+
+        print(tries)        
         if(tries >= 10):
             self.update_completed_flag.set()
             return
@@ -1037,11 +1064,13 @@ class Tab_camera(QtWidgets.QWidget):
         while(not params.empty()):
             parameter = params.get()
             if(not(self.preview_live or self.recording)):
+#TODO Make showing params faster and remove line above 
                 self.parameter_values[parameter["name"]] = parameter["attr_value"]
             else:
                 self.update_completed_flag.set()
                 return
         self.update_flag.set()
+        self.signal_update_parameters.emit()
     
     def update_parameters(self):
         """!@brief Writes new values of the parameters to the GUI.
@@ -1050,7 +1079,9 @@ class Tab_camera(QtWidgets.QWidget):
         Like start_refresh_parameters, this method is bound to the timer.
         """
         if (self.connected and not self.param_flag.is_set() and 
-            self.update_flag.is_set() and not(self.preview_live or self.recording)):
+            self.update_flag.is_set()
+            and not(self.preview_live or self.recording)):
+#TODO Make showing params faster and remove line above 
             
             self.update_flag.clear()
             

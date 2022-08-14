@@ -391,6 +391,21 @@ class Ui_MainWindow(QtCore.QObject):
         self.tab_camera_cfg4.recording_update.connect(self.update_recording)
         self.tab_camera_cfg4.fps_info.connect(self.update_fps)
         self.tab_camera_cfg4.received_info.connect(self.update_received_frames)
+
+        self.tab_camera_cfg1.signal_update_parameters.connect(self.tab_camera_cfg1.update_parameters)
+        self.tab_camera_cfg2.signal_update_parameters.connect(self.tab_camera_cfg2.update_parameters)
+        self.tab_camera_cfg3.signal_update_parameters.connect(self.tab_camera_cfg3.update_parameters)
+        self.tab_camera_cfg4.signal_update_parameters.connect(self.tab_camera_cfg4.update_parameters)
+        
+        self.tab_camera_cfg1.signal_show_parameters.connect(self.tab_camera_cfg1.show_parameters)
+        self.tab_camera_cfg2.signal_show_parameters.connect(self.tab_camera_cfg2.show_parameters)
+        self.tab_camera_cfg3.signal_show_parameters.connect(self.tab_camera_cfg3.show_parameters)
+        self.tab_camera_cfg4.signal_show_parameters.connect(self.tab_camera_cfg4.show_parameters)
+        
+        self.tab_camera_cfg1.signal_clear_parameters.connect(self.tab_camera_cfg1.clear_parameters)
+        self.tab_camera_cfg2.signal_clear_parameters.connect(self.tab_camera_cfg2.clear_parameters)
+        self.tab_camera_cfg3.signal_clear_parameters.connect(self.tab_camera_cfg3.clear_parameters)
+        self.tab_camera_cfg4.signal_clear_parameters.connect(self.tab_camera_cfg4.clear_parameters)
         
 
         # TODO dokoncit
@@ -424,20 +439,16 @@ class Ui_MainWindow(QtCore.QObject):
             pass
         if index == 1:#Camera 1 tab
             #Request parameters from camera and show them in gui
-            self.tab_camera_cfg1.update_parameters
-            self.tab_camera_cfg1.start_refresh_parameters
+            self.tab_camera_cfg1.update_parameters()
         if index == 2:#Camera 2 tab
             #Request parameters from camera and show them in gui
-            self.tab_camera_cfg2.update_parameters
-            self.tab_camera_cfg2.start_refresh_parameters
+            self.tab_camera_cfg2.update_parameters()
         if index == 3:#Camera 3 tab
             #Request parameters from camera and show them in gui
-            self.tab_camera_cfg3.update_parameters
-            self.tab_camera_cfg3.start_refresh_parameters
+            self.tab_camera_cfg3.update_parameters()
         if index == 4:#Camera 4 tab
             #Request parameters from camera and show them in gui
-            self.tab_camera_cfg4.update_parameters
-            self.tab_camera_cfg4.start_refresh_parameters
+            self.tab_camera_cfg4.update_parameters()
     
     def set_status_msg(self, message, timeout=0):
         """!@brief Shows message in status bar
@@ -532,6 +543,11 @@ class Ui_MainWindow(QtCore.QObject):
         self.connected = connected
 
         if tab == 0:
+            if(self.tab_camera_cfg1.connected == False and connected == True):
+                self.tab_camera_cfg1.connected = connected
+                self.tab_camera_cfg1.load_parameters()
+                self.tab_camera_cfg1.show_parameters()
+                self.tab_camera_cfg1.thread_auto_refresh_params.start()  
             self.tab_camera_cfg1.connected = connected
 
             if name != "-1":
@@ -549,11 +565,14 @@ class Ui_MainWindow(QtCore.QObject):
                 self.update_fps(0, tab)
                 self.update_received_frames(0, tab) 
             
-            print("showing params")
-            self.tab_camera_cfg1.load_parameters()
-            self.tab_camera_cfg1.show_parameters()
+            
 
         elif tab == 1:
+            if(self.tab_camera_cfg2.connected == False and connected == True):
+                self.tab_camera_cfg2.connected = connected
+                self.tab_camera_cfg2.load_parameters()
+                self.tab_camera_cfg2.show_parameters()
+                self.tab_camera_cfg1.thread_auto_refresh_params.start()  
             self.tab_camera_cfg2.connected = connected
 
             if name != "-1":
@@ -571,11 +590,15 @@ class Ui_MainWindow(QtCore.QObject):
                 self.update_fps(0, tab)
                 self.update_received_frames(0, tab) 
             
-            self.tab_camera_cfg2.load_parameters()
-            self.tab_camera_cfg2.show_parameters()
 
         elif tab == 2:
+            if(self.tab_camera_cfg3.connected == False and connected == True):
+                self.tab_camera_cfg3.connected = connected
+                self.tab_camera_cfg3.load_parameters()
+                self.tab_camera_cfg3.show_parameters()
+                self.tab_camera_cfg3.thread_auto_refresh_params.start()  
             self.tab_camera_cfg3.connected = connected
+            
 
             if name != "-1":
                 self.camera3_status.setText("Camera: " + name)
@@ -592,10 +615,13 @@ class Ui_MainWindow(QtCore.QObject):
                 self.update_fps(0, tab)
                 self.update_received_frames(0, tab) 
 
-            self.tab_camera_cfg3.load_parameters()
-            self.tab_camera_cfg3.show_parameters()    
 
         elif tab == 3:
+            if(self.tab_camera_cfg4.connected == False and connected == True): 
+                self.tab_camera_cfg4.connected = connected
+                self.tab_camera_cfg4.load_parameters()
+                self.tab_camera_cfg4.show_parameters()
+                self.tab_camera_cfg4.thread_auto_refresh_params.start()  
             self.tab_camera_cfg4.connected = connected
 
             if name != "-1":
@@ -613,8 +639,6 @@ class Ui_MainWindow(QtCore.QObject):
                 self.update_fps(0, tab)
                 self.update_received_frames(0, tab)  
 
-            self.tab_camera_cfg4.load_parameters()
-            self.tab_camera_cfg4.show_parameters() 
 
     def update_preview(self, state, tab):
 
