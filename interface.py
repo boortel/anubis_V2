@@ -572,7 +572,7 @@ class Ui_MainWindow(QtCore.QObject):
                 self.tab_camera_cfg2.connected = connected
                 self.tab_camera_cfg2.load_parameters()
                 self.tab_camera_cfg2.show_parameters()
-                self.tab_camera_cfg1.thread_auto_refresh_params.start()  
+                self.tab_camera_cfg2.thread_auto_refresh_params.start()  
             self.tab_camera_cfg2.connected = connected
 
             if name != "-1":
