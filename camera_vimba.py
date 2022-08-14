@@ -165,7 +165,6 @@ class Camera_vimba(Camera_template):
         """!@brief Grab single frame from camera
         @return Unmodified frame from camera
         """
-        print("requesting frame")
         self.flag_get_single_frame.clear()
         self.flag_loop.set()
         self.flag_get_single_frame.wait()
@@ -217,21 +216,16 @@ class Camera_vimba(Camera_template):
                 while(not self.flag_disconnect.is_set()):
                     self.flag_loop.wait()
                     self.flag_loop.clear()
-                    print("A1")
+
                     if(not self.flag_get_parameters.is_set()):
-                        print("A2")
                         self._get_parameters()
                     elif(not self.flag_read_param_value.is_set()):
-                        print("A3")
                         self._read_param_value() 
                     elif(not self.flag_set_parameter.is_set()):
-                        print("A4")
                         self._set_parameter() 
                     elif(not self.flag_execute_command.is_set()):
-                        print("A5")
                         self._execute_command()    
                     elif(not self.flag_get_single_frame.is_set()):
-                        print("A6")
                         self._get_single_frame()  
                     elif(not self.flag_load_config.is_set()):
                         self._load_config()  
@@ -392,15 +386,13 @@ class Camera_vimba(Camera_template):
         try:
             self.params_read_param_value["return"] = getattr(self.cam, self.params_read_param_value["param_name"]).get()
             self.flag_read_param_value.set()
-            print("returning ok")
             return
         except:
             self.params_read_param_value["return"] = None
             self.flag_read_param_value.set()
-            print("returning nok")
             return
     
-    def _set_parameter(self,parameter_name, new_value):
+    def _set_parameter(self):
         """!@brief Method for setting camera's parameters
         @details Sets parameter to value defined by new_value
         @param[in] parameter_name A name of the parameter to be changed
@@ -408,7 +400,7 @@ class Camera_vimba(Camera_template):
         @return True if success else returns False
         """
         try:
-            getattr(self.cam, parameter_name).set(new_value)
+            getattr(self.cam, self.params_set_parameter["parameter_name"]).set(self.params_set_parameter["new_value"])
             self.params_set_parameter["return"] = True
         except (AttributeError, VimbaFeatureError):
             self.params_set_parameter["return"] = False
@@ -434,7 +426,6 @@ class Camera_vimba(Camera_template):
         @return Unmodified frame from camera
         """
         while(True):
-            print("getting img")
             try:
                 frame = self.cam.get_frame()
                 pixel_format = str(frame.get_pixel_format())
