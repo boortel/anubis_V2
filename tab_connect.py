@@ -116,6 +116,7 @@ class Tab_connect(QtWidgets.QWidget):
         if index != -1:
 
             #If some camera is connected, disconnect it first
+            print(self.conntabList)
             if self.conntabList[self.combo_tab_selector.currentIndex()] == 1:
                 self.disconnect_camera()
             
@@ -140,6 +141,7 @@ class Tab_connect(QtWidgets.QWidget):
         @details Method disconnects camera and sets all statusbar items to 
         their default state.
         """
+        print("disconnectiong")
         #Disconnect only if already connected
         if self.conntabList[self.combo_tab_selector.currentIndex()] == 1:
             #Get default states
@@ -155,7 +157,7 @@ class Tab_connect(QtWidgets.QWidget):
             self.send_status_msg.emit("Camera disconnected", 0)
 
             #Mark current tab as free
-            self.conntabList[self.combo_tab_selector.currentIndex()] == -1
-            
+            self.conntabList[self.combo_tab_selector.currentIndex()] = -1
+
             #Imidiately search for new cameras
             self.refresh_cameras()

@@ -51,6 +51,9 @@ class Camera_vimba(Camera_template):
         self.params_save_config =      {'path':             "",
                                         'return':           ""}
         self.params_get_single_frame = {'return':           ""}
+
+        
+        self.thread_producer = None
     
     def get_camera_list(self,):
         """!@brief Connected camera discovery
@@ -199,7 +202,7 @@ class Camera_vimba(Camera_template):
         
         
     
-    def frame_producer(self):
+    def _frame_producer(self):
         """!@brief Gets frames from camera while continuous acquisition is active
         @details Loads frames from camera as they come and stores them
             in a frame queue for consumer thread to process. The thread 
@@ -213,7 +216,7 @@ class Camera_vimba(Camera_template):
     def loop(self):
         with global_vimba.v:
             with self.cam:
-                while(not self.flag_disconnect.is_set()):
+                while(not self.flag_disconnect.is_set() or not self.flag_frame_producer.is_set()):
                     self.flag_loop.wait()
                     self.flag_loop.clear()
 
@@ -232,10 +235,9 @@ class Camera_vimba(Camera_template):
                     elif(not self.flag_save_config.is_set()):
                         self._save_config()  
                     elif(not self.flag_frame_producer.is_set()):
-                        self.thread_producer = threading.Thread(target=self._frame_producer)
+                        self.thread_producer = threading.Thread(target=self.__frame_producer)
                         self.thread_producer.setDaemon(True)
-                        self.thread_producer.start() 
-                        
+                        self.thread_producer.start()            
 
     def _frame_handler(self,cam ,frame):
         """!@brief Defines how to process incoming frames
@@ -259,7 +261,14 @@ class Camera_vimba(Camera_template):
     def disconnect_camera(self):
         """!@brief Disconnect camera and restores the object to its initial state"""
         self.flag_disconnect.set()
-        self.stop_recording()
+        self.flag_loop.set()
+        if(self.acquisition_running == True):
+            self.stop_recording()
+            self.thread_producer.join()
+        print("waiting for join1")
+        self.thread_loop.join()
+        print("waiting for join 2")
+        print("removing")
         global_queue.remove_frame_queue(self.cam_id)
         self.__init__()
 
@@ -464,18 +473,17 @@ class Camera_vimba(Camera_template):
         return
         
     
-    def _frame_producer(self):
+    def __frame_producer(self):
         """!@brief Gets frames from camera while continuous acquisition is active
         @details Loads frames from camera as they come and stores them
             in a frame queue for consumer thread to process. The thread 
             runs until stream_stop_switch is set
         """
-        while(True):
-            try:    
-                self.cam.start_streaming(handler=self._frame_handler)
-                self._stream_stop_switch.wait()
-            finally:
-                self.cam.stop_streaming()
-                self.flag_frame_producer.set()
-                return
+        
+        self.flag_frame_producer.set()    
+        self.cam.start_streaming(handler=self._frame_handler)
+        self._stream_stop_switch.wait()
+    
+        self.cam.stop_streaming()
+        return
         

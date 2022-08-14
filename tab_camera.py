@@ -338,6 +338,35 @@ class Tab_camera(QtWidgets.QWidget):
         self.btn_zoom_fit.setText("Fit to window")
         self.btn_zoom_100.setText("Zoom to 100%")
 
+    def reset(self):
+        self.preview_live = False
+        self.recording = False
+        self.param_flag.clear()
+        self.update_flag.clear()
+        self.update_completed_flag.set()
+        self.clear_parameters()
+        self.connected = False
+        self.image_pixmap = None
+        self.w_preview = 0
+        self.h_preview = 0
+        self.image_pixmap_window = None
+        self.w_preview_window = 0
+        self.h_preview_window = 0
+        self.interrupt_flag.clear()
+        self.fps = 0.0
+        self.received = 0
+        self.move_x_prev = 0
+        self.move_y_prev = 0
+        self.preview_zoom = 1
+        self.preview_fit = True
+        self.connected = False
+        self.preview_live = False
+        self.recording = False
+        self.in_process = False
+
+        self.thread_auto_refresh_params = threading.Thread(target=self.start_refresh_parameters)
+        self.thread_auto_refresh_params.setDaemon(True)
+
     # ==============================================
     # Camera control
     # ==============================================
@@ -709,6 +738,9 @@ class Tab_camera(QtWidgets.QWidget):
         @details This method must run in the main thread as it modifies frontend
         data of the gui.
         """
+        if type(self.image_pixmap) == type(None) or type(self.image_pixmap_window) == type(None):
+            return
+
         #Resize preview label if preview window size changed
         if(self.w_preview != self.camera_preview.size().width() or
                    self.h_preview != self.camera_preview.size().height()):
