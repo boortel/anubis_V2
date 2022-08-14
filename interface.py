@@ -527,6 +527,7 @@ class Ui_MainWindow(QtCore.QObject):
         @param[in] state Numeric state of the camera (0=disconnected, 1=standby, 2=busy)
         @param[in] name Connected camera name. If the camera is being disconnected
         the name is "Not connected", if name shouldn't be updated, pass in "-1"
+        @param[in] tab index of connected camera (0 - 3)
         """
         self.connected = connected
 
@@ -547,6 +548,10 @@ class Ui_MainWindow(QtCore.QObject):
                 self.update_recording(False, tab)
                 self.update_fps(0, tab)
                 self.update_received_frames(0, tab) 
+            
+            print("showing params")
+            self.tab_camera_cfg1.load_parameters()
+            self.tab_camera_cfg1.show_parameters()
 
         elif tab == 1:
             self.tab_camera_cfg2.connected = connected
@@ -565,6 +570,9 @@ class Ui_MainWindow(QtCore.QObject):
                 self.update_recording(False, tab)
                 self.update_fps(0, tab)
                 self.update_received_frames(0, tab) 
+            
+            self.tab_camera_cfg2.load_parameters()
+            self.tab_camera_cfg2.show_parameters()
 
         elif tab == 2:
             self.tab_camera_cfg3.connected = connected
@@ -584,6 +592,9 @@ class Ui_MainWindow(QtCore.QObject):
                 self.update_fps(0, tab)
                 self.update_received_frames(0, tab) 
 
+            self.tab_camera_cfg3.load_parameters()
+            self.tab_camera_cfg3.show_parameters()    
+
         elif tab == 3:
             self.tab_camera_cfg4.connected = connected
 
@@ -600,7 +611,10 @@ class Ui_MainWindow(QtCore.QObject):
                 self.update_preview(False, tab)
                 self.update_recording(False, tab)
                 self.update_fps(0, tab)
-                self.update_received_frames(0, tab)   
+                self.update_received_frames(0, tab)  
+
+            self.tab_camera_cfg4.load_parameters()
+            self.tab_camera_cfg4.show_parameters() 
 
     def update_preview(self, state, tab):
 

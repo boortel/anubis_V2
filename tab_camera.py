@@ -48,8 +48,6 @@ class Tab_camera(QtWidgets.QWidget):
 
         ##Used to store values of parameters when automatically refreshing them
         self.parameter_values = {}
-
-        self.tab_index = 0
         
         ##Contains all dynamically created widgets for parameters
         self.feat_widgets = {}
@@ -846,6 +844,7 @@ class Tab_camera(QtWidgets.QWidget):
         these widgets have method to change their value associated with them
         when created.
         """
+        print("in show params")
         num = 0
         
         categories = []
@@ -1001,7 +1000,7 @@ class Tab_camera(QtWidgets.QWidget):
         called by user but automatically.
         """
         #called every 4 seconds
-        if (self.feat_widgets and self.connected and self.tab_index == 1 and
+        if (self.feat_widgets and self.connected and
             not(self.preview_live or self.recording) and 
             not self.param_flag.is_set() and self.update_completed_flag.is_set()):
             
@@ -1020,6 +1019,7 @@ class Tab_camera(QtWidgets.QWidget):
             self.update_completed_flag.set()
             return
         
+        print(self.parameter_values)
         params = Queue()
         tries = 0
         while(tries <= 10):
@@ -1036,8 +1036,7 @@ class Tab_camera(QtWidgets.QWidget):
         
         while(not params.empty()):
             parameter = params.get()
-            if(not(self.preview_live or self.recording) and 
-               self.tab_index == 1):
+            if(not(self.preview_live or self.recording)):
                 self.parameter_values[parameter["name"]] = parameter["attr_value"]
             else:
                 self.update_completed_flag.set()
@@ -1051,7 +1050,6 @@ class Tab_camera(QtWidgets.QWidget):
         Like start_refresh_parameters, this method is bound to the timer.
         """
         if (self.connected and not self.param_flag.is_set() and 
-            self.tab_index == 1 and
             self.update_flag.is_set() and not(self.preview_live or self.recording)):
             
             self.update_flag.clear()
