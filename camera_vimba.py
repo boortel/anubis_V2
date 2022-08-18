@@ -265,10 +265,7 @@ class Camera_vimba(Camera_template):
         if(self.acquisition_running == True):
             self.stop_recording()
             self.thread_producer.join()
-        print("waiting for join1")
         self.thread_loop.join()
-        print("waiting for join 2")
-        print("removing")
         global_queue.remove_frame_queue(self.cam_id)
         self.__init__()
 

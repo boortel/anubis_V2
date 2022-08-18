@@ -550,8 +550,7 @@ class Ui_MainWindow(QtCore.QObject):
                 self.tab_camera_cfg1.thread_auto_refresh_params.start()  
             elif(self.tab_camera_cfg1.connected == True and connected == False):
                 self.tab_camera_cfg1.connected = connected
-                self.tab_camera_cfg1.thread_auto_refresh_params.join()
-                self.tab_camera_cfg1.reset()
+                self.tab_camera_cfg1.thread_reset.start()
 
             self.tab_camera_cfg1.connected = connected
 
@@ -580,8 +579,7 @@ class Ui_MainWindow(QtCore.QObject):
                 self.tab_camera_cfg2.thread_auto_refresh_params.start() 
             elif(self.tab_camera_cfg2.connected == True and connected == False):
                 self.tab_camera_cfg2.connected = connected
-                self.tab_camera_cfg2.thread_auto_refresh_params.join()
-                self.tab_camera_cfg2.reset()
+                self.tab_camera_cfg2.thread_reset.start()
 
             self.tab_camera_cfg2.connected = connected
 
@@ -609,8 +607,7 @@ class Ui_MainWindow(QtCore.QObject):
                 self.tab_camera_cfg3.thread_auto_refresh_params.start()  
             elif(self.tab_camera_cfg3.connected == True and connected == False):
                 self.tab_camera_cfg3.connected = connected
-                self.tab_camera_cfg3.thread_auto_refresh_params.join()
-                self.tab_camera_cfg3.reset()
+                self.tab_camera_cfg3.thread_reset.start()
             self.tab_camera_cfg3.connected = connected
             
 
@@ -638,8 +635,7 @@ class Ui_MainWindow(QtCore.QObject):
                 self.tab_camera_cfg4.thread_auto_refresh_params.start()  
             elif(self.tab_camera_cfg4.connected == True and connected == False):
                 self.tab_camera_cfg4.connected = connected
-                self.tab_camera_cfg4.thread_auto_refresh_params.join()
-                self.tab_camera_cfg4.reset()
+                self.tab_camera_cfg4.thread_reset.start()
             self.tab_camera_cfg4.connected = connected
 
             if name != "-1":

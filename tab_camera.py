@@ -122,6 +122,9 @@ class Tab_camera(QtWidgets.QWidget):
         self.thread_auto_refresh_params = threading.Thread(target=self.start_refresh_parameters)
         self.thread_auto_refresh_params.setDaemon(True)
 
+        self.thread_reset = threading.Thread(target=self.reset)
+        self.thread_reset.setDaemon(True)
+
     def add_widgets(self):
 
         self.setObjectName(u"tab_camera_1")
@@ -339,6 +342,8 @@ class Tab_camera(QtWidgets.QWidget):
         self.btn_zoom_100.setText("Zoom to 100%")
 
     def reset(self):
+        
+        self.thread_auto_refresh_params.join()
         self.preview_live = False
         self.recording = False
         self.param_flag.clear()
@@ -366,6 +371,9 @@ class Tab_camera(QtWidgets.QWidget):
 
         self.thread_auto_refresh_params = threading.Thread(target=self.start_refresh_parameters)
         self.thread_auto_refresh_params.setDaemon(True)
+
+        self.thread_reset = threading.Thread(target=self.reset)
+        self.thread_reset.setDaemon(True)
 
     # ==============================================
     # Camera control
@@ -536,9 +544,7 @@ class Tab_camera(QtWidgets.QWidget):
             self.connection_update.emit(True, 2, "-1", self.camIndex)
             
             #Get image
-            print("before")
             image, pixel_format = global_camera.cams.active_devices[global_camera.active_cam[self.camIndex]].get_single_frame()
-            print("after")
             #Try to run prediction
             self.request_prediction.emit(image)
             
@@ -1057,7 +1063,6 @@ class Tab_camera(QtWidgets.QWidget):
         #called every 4 seconds
         while(self.connected):
             time.sleep(4)
-            print(self.update_completed_flag.is_set())
             if (self.feat_widgets and self.connected and
                 not(self.preview_live or self.recording) and                 
 #TODO Make showing params faster and remove line above 
@@ -1087,8 +1092,7 @@ class Tab_camera(QtWidgets.QWidget):
                 break
             else:
                 tries += 1
-
-        print(tries)        
+       
         if(tries >= 10):
             self.update_completed_flag.set()
             return
