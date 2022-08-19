@@ -348,7 +348,6 @@ class Tab_camera(QtWidgets.QWidget):
 
     def start_auto_refresh(self):
         self.thread_reset_flag.wait()
-        print("Starting autorefresh")
         self.thread_auto_refresh_params.start()
 
     def reset(self):
@@ -385,7 +384,6 @@ class Tab_camera(QtWidgets.QWidget):
 
         self.thread_reset = threading.Thread(target=self.reset)
         self.thread_reset.setDaemon(True)
-        print("restart completed")
         self.thread_reset_flag.set()
 
     # ==============================================

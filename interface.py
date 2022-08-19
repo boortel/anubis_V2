@@ -51,8 +51,6 @@ class Ui_MainWindow(QtCore.QObject):
  
         ##List of detected cameras
         self.detected = []
-        ##Is camera connected
-        self.connected = False
   
         ##State of recording
         self.recording1 = False
@@ -129,6 +127,11 @@ class Ui_MainWindow(QtCore.QObject):
                                     self.preview_and_control.camera_preview_4,
                                     self.preview_and_control.preview_widgets[3].label_preview)
         self.tabs.addTab(self.tab_camera_cfg4, "")
+
+        self.tabs.setTabEnabled(1, False)
+        self.tabs.setTabEnabled(2, False)
+        self.tabs.setTabEnabled(3, False)
+        self.tabs.setTabEnabled(4, False)
         
         self.gridLayout.addWidget(self.tabs, 0, 0, 2, 1)        
         
@@ -524,8 +527,7 @@ class Ui_MainWindow(QtCore.QObject):
         the name is "Not connected", if name shouldn't be updated, pass in "-1"
         @param[in] tab index of connected camera (0 - 3)
         """
-        self.connected = connected
-
+        self.tabs.setTabEnabled(tab+1, connected)
         if tab == 0:
             if(self.tab_camera_cfg1.connected == False and connected == True):
                 self.tab_camera_cfg1.connected = connected
