@@ -481,7 +481,7 @@ class Camera_vimba(Camera_template):
             self._stream_stop_switch.wait()
         
             self.cam.stop_streaming()
-        except vimba.error.VimbaCameraError as e:
+        except:
             pass
         return
         

@@ -1,6 +1,6 @@
 
 from camera_vimba import Camera_vimba
-
+import time
 
 class Camera_connector:
     """!@brief This class is used to offer a bridge between a user interface and implemented
@@ -54,15 +54,17 @@ class Camera_connector:
         #self.mechanisms[mechanism].select_camera(device_id)
         if(mechanism == "Vimba"):
             self.active_devices[str(self.active_devices_count)] = Camera_vimba()
-            
+
+        
+        self.active_devices[str(self.active_devices_count)].create_queues(str(self.active_devices_count))    
         self.active_devices[str(self.active_devices_count)].get_camera_list()
         self.active_devices[str(self.active_devices_count)].select_camera(device_id)
-        self.active_devices[str(self.active_devices_count)].create_queues(str(self.active_devices_count))
         self.active_devices_count += 1
 
         return str(self.active_devices_count - 1)
 
     def disconnect_camera(self, device):
         """!@brief Disconnect camera removes active camera object"""
-        self.active_devices[str(device)].disconnect_camera()
-        del self.active_devices[str(device)]
+        if device in self.active_devices.keys():
+            self.active_devices[str(device)].disconnect_camera()
+            self.active_devices.pop(str(device))

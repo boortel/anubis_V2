@@ -529,7 +529,7 @@ class Ui_MainWindow(QtCore.QObject):
         if tab == 0:
             if(self.tab_camera_cfg1.connected == False and connected == True):
                 self.tab_camera_cfg1.connected = connected
-                self.tab_camera_cfg1.thread_auto_refresh_params.start()  
+                self.tab_camera_cfg1.start_auto_refresh()  
             elif(self.tab_camera_cfg1.connected == True and connected == False):
                 self.tab_camera_cfg1.connected = connected
                 self.tab_camera_cfg1.thread_reset.start()
@@ -549,15 +549,12 @@ class Ui_MainWindow(QtCore.QObject):
                 self.update_preview(False, tab)
                 self.update_recording(False, tab)
                 self.update_fps(0, tab)
-                self.update_received_frames(0, tab) 
-            
-            
+                self.update_received_frames(0, tab)             
 
         elif tab == 1:
             if(self.tab_camera_cfg2.connected == False and connected == True):
                 self.tab_camera_cfg2.connected = connected
-                self.tab_camera_cfg2.show_parameters()
-                self.tab_camera_cfg2.thread_auto_refresh_params.start() 
+                self.tab_camera_cfg2.start_auto_refresh() 
             elif(self.tab_camera_cfg2.connected == True and connected == False):
                 self.tab_camera_cfg2.connected = connected
                 self.tab_camera_cfg2.thread_reset.start()
@@ -583,8 +580,7 @@ class Ui_MainWindow(QtCore.QObject):
         elif tab == 2:
             if(self.tab_camera_cfg3.connected == False and connected == True):
                 self.tab_camera_cfg3.connected = connected
-                self.tab_camera_cfg3.show_parameters()
-                self.tab_camera_cfg3.thread_auto_refresh_params.start()  
+                self.tab_camera_cfg3.start_auto_refresh()  
             elif(self.tab_camera_cfg3.connected == True and connected == False):
                 self.tab_camera_cfg3.connected = connected
                 self.tab_camera_cfg3.thread_reset.start()
@@ -610,8 +606,7 @@ class Ui_MainWindow(QtCore.QObject):
         elif tab == 3:
             if(self.tab_camera_cfg4.connected == False and connected == True): 
                 self.tab_camera_cfg4.connected = connected
-                self.tab_camera_cfg4.show_parameters()
-                self.tab_camera_cfg4.thread_auto_refresh_params.start()  
+                self.tab_camera_cfg4.start_auto_refresh()  
             elif(self.tab_camera_cfg4.connected == True and connected == False):
                 self.tab_camera_cfg4.connected = connected
                 self.tab_camera_cfg4.thread_reset.start()

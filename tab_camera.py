@@ -125,6 +125,10 @@ class Tab_camera(QtWidgets.QWidget):
         self.thread_reset = threading.Thread(target=self.reset)
         self.thread_reset.setDaemon(True)
 
+        self.thread_reset_flag = threading.Event()
+        self.thread_reset_flag.set()
+
+
     def add_widgets(self):
 
         self.setObjectName(u"tab_camera_1")
@@ -341,8 +345,16 @@ class Tab_camera(QtWidgets.QWidget):
         self.btn_zoom_fit.setText("Fit to window")
         self.btn_zoom_100.setText("Zoom to 100%")
 
+
+    def start_auto_refresh(self):
+        self.thread_reset_flag.wait()
+        print("Starting autorefresh")
+        self.thread_auto_refresh_params.start()
+
     def reset(self):
+        self.thread_reset_flag.clear()
         
+        self.connected = False
         self.thread_auto_refresh_params.join()
         self.preview_live = False
         self.recording = False
@@ -350,7 +362,6 @@ class Tab_camera(QtWidgets.QWidget):
         self.update_flag.clear()
         self.update_completed_flag.set()
         self.clear_parameters()
-        self.connected = False
         self.image_pixmap = None
         self.w_preview = 0
         self.h_preview = 0
@@ -374,6 +385,8 @@ class Tab_camera(QtWidgets.QWidget):
 
         self.thread_reset = threading.Thread(target=self.reset)
         self.thread_reset.setDaemon(True)
+        print("restart completed")
+        self.thread_reset_flag.set()
 
     # ==============================================
     # Camera control
@@ -1060,9 +1073,9 @@ class Tab_camera(QtWidgets.QWidget):
         @details used to start a thread to refresh parameters values. Not
         called by user but automatically.
         """
-        #called every 4 seconds
+        #called every 2 seconds
         while(self.connected):
-            time.sleep(4)
+            time.sleep(2)
             if (self.feat_widgets and self.connected and
                 not(self.preview_live or self.recording) and                 
 #TODO Make showing params faster and remove line above 
