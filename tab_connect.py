@@ -181,12 +181,16 @@ class Tab_connect(QtWidgets.QWidget):
 
             #Remove cam from list of connected cameras
             self.connected_cams_names[str(self.combo_tab_selector.currentIndex())] = ""
-            #Imidiately search for new cameras
-            self.signal_update_detected.emit()
+            
 
-            time.sleep(3)
-            if(toggle_controls):
+            if(toggle_controls):    
+                #Imidiately search for new cameras 
+                self.signal_update_detected.emit()    
+                time.sleep(3)
                 self.signal_toggle_controls.emit(False)
+            else:
+                time.sleep(3)
+
 
     def toggle_controls(self, disabled):
         self.btn_connect_camera.setDisabled(disabled)     
