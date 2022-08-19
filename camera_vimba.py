@@ -209,8 +209,7 @@ class Camera_vimba(Camera_template):
         """
         self.flag_frame_producer.clear()
         self.flag_loop.set()
-        self.flag_frame_producer.wait()
-       
+        self.flag_frame_producer.wait()       
                     
     def loop(self):
         
@@ -259,11 +258,12 @@ class Camera_vimba(Camera_template):
 
     def disconnect_camera(self):
         """!@brief Disconnect camera and restores the object to its initial state"""
-        self.flag_disconnect.set()
-        self.flag_loop.set()
         if(self.acquisition_running == True):
             self.stop_recording()
             self.thread_producer.join()
+
+        self.flag_disconnect.set()
+        self.flag_loop.set()
         self.thread_loop.join()
         global_queue.remove_frame_queue(self.cam_id)
         self.__init__()
@@ -475,13 +475,16 @@ class Camera_vimba(Camera_template):
             in a frame queue for consumer thread to process. The thread 
             runs until stream_stop_switch is set
         """
-        try:
-            self.flag_frame_producer.set()    
-            self.cam.start_streaming(handler=self._frame_handler)
-            self._stream_stop_switch.wait()
         
-            self.cam.stop_streaming()
-        except:
-            pass
-        return
+        self.flag_frame_producer.set()    
+        self.cam.start_streaming(handler=self._frame_handler)
+        
+        self._stream_stop_switch.wait()
+        
+        while(True):
+            try:
+                self.cam.stop_streaming()
+                return
+            except VimbaCameraError as e:
+                pass
         

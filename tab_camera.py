@@ -619,7 +619,7 @@ class Tab_camera(QtWidgets.QWidget):
         str_color = None
         time_fps = time.monotonic_ns()
         #runs as long as the camera is recording or preview is active
-        while self.recording or self.preview_live:
+        while (self.recording or self.preview_live) and (global_camera.active_cam[self.camIndex] in global_queue.active_frame_queue.keys()):
             cycles = cycles + 1
             
             #Draw only if thre is at least 1 frame to draw

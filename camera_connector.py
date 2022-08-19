@@ -65,6 +65,6 @@ class Camera_connector:
 
     def disconnect_camera(self, device):
         """!@brief Disconnect camera removes active camera object"""
-        if device in self.active_devices.keys():
+        if str(device) in self.active_devices.keys():
             self.active_devices[str(device)].disconnect_camera()
             self.active_devices.pop(str(device))
