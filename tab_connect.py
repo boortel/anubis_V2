@@ -69,7 +69,6 @@ class Tab_connect(QtWidgets.QWidget):
         self.btn_refresh_cameras.clicked.connect(self.refresh_cameras)
         
         self.btn_connect_camera.clicked.connect(self.create_connect_thread)
-        #print(self.list_detected_cameras.currentRow())
         
         self.list_detected_cameras.itemDoubleClicked.connect(self.create_connect_thread)
         #možná lambda s indexem itemu
@@ -87,7 +86,6 @@ class Tab_connect(QtWidgets.QWidget):
         self.thread_disconn = threading.Thread(target=self.disconnect_camera)
         self.thread_disconn.setDaemon(True)
         self.thread_disconn.start()
-        print("S")
 
     def set_texts(self):
         self.btn_connect_camera.setText("Connect")
@@ -108,7 +106,6 @@ class Tab_connect(QtWidgets.QWidget):
         are printed.
         """
         #set status message
-        print("DJ")
         self.send_status_msg.emit("Searching for cameras", 1500)
         
         #clear the list so the cameras won't appear twice or more
@@ -150,9 +147,6 @@ class Tab_connect(QtWidgets.QWidget):
             #Connect camera
             global_camera.change_active_cam(global_camera.cams.select_camera(self.detected[index]['mechanism'], self.detected[index]['id_']), self.combo_tab_selector.currentIndex())
 
-            
-
-            #print(global_camera.active_cam)
             self.send_status_msg.emit("Camera connected", 0)
 
             #Set up the status bar

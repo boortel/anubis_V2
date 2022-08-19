@@ -6,6 +6,7 @@ import copy
 import global_vimba
 import time
 import threading
+import vimba
 
 class Camera_vimba(Camera_template):
 
@@ -61,44 +62,42 @@ class Camera_vimba(Camera_template):
         @return List of Dictionaries cantaining informations about cameras
         """
         self.devices_info.clear()
-        with global_vimba.v as vimba:
-            cams = vimba.get_all_cameras()
+        cams = global_vimba.v.get_all_cameras()
 
-            for index, camera in enumerate(cams):
-                d = {   'id_': camera.get_id(),
-                        'model': camera.get_model()
-                        }
-                self.devices_info.append(d)
-            return self.devices_info
+        for index, camera in enumerate(cams):
+            d = {   'id_': camera.get_id(),
+                    'model': camera.get_model()
+                    }
+            self.devices_info.append(d)
+        return self.devices_info
      
     def select_camera(self,selected_device):
         """!@brief choose camera to connect to
         @details Select camera you will be using and set Camera object accordingly
         @param[in] selected_device ID of a camera you want to connect to
         """
-        with global_vimba.v as vimba:
-            cams = vimba.get_all_cameras()
-            for index, camera in enumerate(cams):
-                if(selected_device == camera.get_id()):
-                    self.active_camera = index
-                    self.selected_active_camera = camera.get_id()
-                    self.cam = camera
+        cams = global_vimba.v.get_all_cameras()
+        for index, camera in enumerate(cams):
+            if(selected_device == camera.get_id()):
+                self.active_camera = index
+                self.selected_active_camera = camera.get_id()
+                self.cam = camera
                     
         #cams = self.vimba.get_all_cameras()
         #self.cam = cams[self.active_camera]
         #self.cam._open()
         #with global_vimba.v as vimba:
         #    self.cam = vimba.get_camera_by_id(self.selected_active_camera)
-        with global_vimba.v:
-            with self.cam:
-                try:
-                #Makes sure that the camera won't send packets larger 
-                #than the destination pc can raceive.
-                    self.cam.GVSPAdjustPacketSize.run()
-                    while not self.cam.GVSPAdjustPacketSize.is_done():
-                        pass
-                except (AttributeError, VimbaFeatureError):
-                        pass
+        
+        with self.cam:
+            try:
+            #Makes sure that the camera won't send packets larger 
+            #than the destination pc can raceive.
+                self.cam.GVSPAdjustPacketSize.run()
+                while not self.cam.GVSPAdjustPacketSize.is_done():
+                    pass
+            except (AttributeError, VimbaFeatureError):
+                    pass
 
         self.thread_loop = threading.Thread(target=self.loop)
         self.thread_loop.setDaemon(True)
@@ -214,30 +213,30 @@ class Camera_vimba(Camera_template):
        
                     
     def loop(self):
-        with global_vimba.v:
-            with self.cam:
-                while(not self.flag_disconnect.is_set() or not self.flag_frame_producer.is_set()):
-                    self.flag_loop.wait()
-                    self.flag_loop.clear()
+        
+        with self.cam:
+            while(not self.flag_disconnect.is_set() or not self.flag_frame_producer.is_set()):
+                self.flag_loop.wait()
+                self.flag_loop.clear()
 
-                    if(not self.flag_get_parameters.is_set()):
-                        self._get_parameters()
-                    elif(not self.flag_read_param_value.is_set()):
-                        self._read_param_value() 
-                    elif(not self.flag_set_parameter.is_set()):
-                        self._set_parameter() 
-                    elif(not self.flag_execute_command.is_set()):
-                        self._execute_command()    
-                    elif(not self.flag_get_single_frame.is_set()):
-                        self._get_single_frame()  
-                    elif(not self.flag_load_config.is_set()):
-                        self._load_config()  
-                    elif(not self.flag_save_config.is_set()):
-                        self._save_config()  
-                    elif(not self.flag_frame_producer.is_set()):
-                        self.thread_producer = threading.Thread(target=self.__frame_producer)
-                        self.thread_producer.setDaemon(True)
-                        self.thread_producer.start()            
+                if(not self.flag_get_parameters.is_set()):
+                    self._get_parameters()
+                elif(not self.flag_read_param_value.is_set()):
+                    self._read_param_value() 
+                elif(not self.flag_set_parameter.is_set()):
+                    self._set_parameter() 
+                elif(not self.flag_execute_command.is_set()):
+                    self._execute_command()    
+                elif(not self.flag_get_single_frame.is_set()):
+                    self._get_single_frame()  
+                elif(not self.flag_load_config.is_set()):
+                    self._load_config()  
+                elif(not self.flag_save_config.is_set()):
+                    self._save_config()  
+                elif(not self.flag_frame_producer.is_set()):
+                    self.thread_producer = threading.Thread(target=self.__frame_producer)
+                    self.thread_producer.setDaemon(True)
+                    self.thread_producer.start()            
 
     def _frame_handler(self,cam ,frame):
         """!@brief Defines how to process incoming frames
@@ -476,11 +475,13 @@ class Camera_vimba(Camera_template):
             in a frame queue for consumer thread to process. The thread 
             runs until stream_stop_switch is set
         """
+        try:
+            self.flag_frame_producer.set()    
+            self.cam.start_streaming(handler=self._frame_handler)
+            self._stream_stop_switch.wait()
         
-        self.flag_frame_producer.set()    
-        self.cam.start_streaming(handler=self._frame_handler)
-        self._stream_stop_switch.wait()
-    
-        self.cam.stop_streaming()
+            self.cam.stop_streaming()
+        except vimba.error.VimbaCameraError as e:
+            pass
         return
         
