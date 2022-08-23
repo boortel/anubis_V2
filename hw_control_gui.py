@@ -145,6 +145,7 @@ class HW_Control(QtWidgets.QGroupBox):
         else:
             self.light_status_2 = True
             self.icon_light_2.setPixmap(self.icon_run)
+            self.update_light_2(0)
 #TODO send_toggle_light ON
 
     def toggle_light_1(self):
@@ -155,17 +156,19 @@ class HW_Control(QtWidgets.QGroupBox):
         else:
             self.light_status_1 = True
             self.icon_light_1.setPixmap(self.icon_run)
+            self.update_light_1(0)
 #TODO send_toggle_light ON
 
     def toggle_rotation(self):
         if self.rotation_status:
             self.rotation_status = False
             self.icon_rotation.setPixmap(self.icon_stop)
-#TODO send_toggle_light OFF
+#TODO send_toggle_rotation OFF
         else:
             self.rotation_status = True
             self.icon_rotation.setPixmap(self.icon_run)
-#TODO send_toggle_light ON
+            self.update_speed(0)
+#TODO send_toggle_rotation ON
 
     def update_light_1(self, source):
         if source == 0:
@@ -174,7 +177,7 @@ class HW_Control(QtWidgets.QGroupBox):
         elif source == 1:
             self.light1 = self.spinBox_light_1.value()
             self.dial_light_1.setValue(self.light1)
-#Maybe set new light level only when the spin box is not clicked
+
         if self.light_status_1:
             pass
 #TODO send_light VAL
@@ -187,7 +190,6 @@ class HW_Control(QtWidgets.QGroupBox):
             self.light2 = self.spinBox_light_2.value()
             self.dial_light_2.setValue(self.light2)
 
-#Maybe set new light level only when the spin box is not clicked
         if self.light_status_2:
             pass
 #TODO send_light VAL
@@ -208,8 +210,7 @@ class HW_Control(QtWidgets.QGroupBox):
         elif source == 1:
             self.speed = self.spinBox_speed.value()
             self.dial_speed.setValue(self.speed)
-
-#Maybe set new speed only when the spin box is not clicked
+            
         if self.rotation_status:
             pass
 #TODO send_speed VAL
