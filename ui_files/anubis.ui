@@ -189,6 +189,126 @@
       </layout>
      </widget>
     </item>
+    <item row="2" column="0">
+     <widget class="QGroupBox" name="groupBox_hw_control">
+      <property name="title">
+       <string>HW control</string>
+      </property>
+      <layout class="QGridLayout" name="gridLayout_HW">
+       <item row="1" column="1" rowspan="2">
+        <widget class="QDial" name="dial_light_1"/>
+       </item>
+       <item row="0" column="1">
+        <widget class="QLabel" name="label_light_control">
+         <property name="text">
+          <string>Light control</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="10" rowspan="2">
+        <widget class="QDial" name="dial_speed"/>
+       </item>
+       <item row="2" column="11">
+        <widget class="QPushButton" name="btn_toggle_rotation">
+         <property name="text">
+          <string>Toggle Rotation</string>
+         </property>
+        </widget>
+       </item>
+       <item row="4" column="1" rowspan="2">
+        <widget class="QDial" name="dial_light_2"/>
+       </item>
+       <item row="1" column="3">
+        <widget class="QSpinBox" name="spinBox_light_1"/>
+       </item>
+       <item row="4" column="3">
+        <widget class="QSpinBox" name="spinBox_light_2"/>
+       </item>
+       <item row="2" column="12">
+        <widget class="QLabel" name="label_4">
+         <property name="text">
+          <string>REPL_WITH_LED</string>
+         </property>
+        </widget>
+       </item>
+       <item row="5" column="3">
+        <widget class="QPushButton" name="btn_toggle_light_2">
+         <property name="text">
+          <string>Toggle Light 2</string>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="10">
+        <widget class="QLabel" name="label_speed_control">
+         <property name="text">
+          <string>Speed control</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="11">
+        <widget class="QSpinBox" name="spinBox_speed"/>
+       </item>
+       <item row="2" column="3">
+        <widget class="QPushButton" name="btn_toggle_light_1">
+         <property name="text">
+          <string>Toggle Light 1</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="12">
+        <spacer name="horizontalSpacer_2">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>40</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item row="5" column="4">
+        <widget class="QLabel" name="label_5">
+         <property name="text">
+          <string>REPL_WITH_LED</string>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="4">
+        <widget class="QLabel" name="label_3">
+         <property name="text">
+          <string>REPL_WITH_LED</string>
+         </property>
+        </widget>
+       </item>
+       <item row="4" column="11">
+        <widget class="QPushButton" name="btn_change_direction">
+         <property name="text">
+          <string>Change Direction</string>
+         </property>
+        </widget>
+       </item>
+       <item row="5" column="11">
+        <widget class="QComboBox" name="comboBox_com_ports"/>
+       </item>
+       <item row="5" column="10">
+        <widget class="QLabel" name="label_prompt_port">
+         <property name="text">
+          <string>Selected COM</string>
+         </property>
+        </widget>
+       </item>
+       <item row="5" column="12">
+        <widget class="QPushButton" name="btn_refresh_com_ports">
+         <property name="text">
+          <string>Refresh</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+    </item>
     <item row="0" column="0" rowspan="2">
      <widget class="QTabWidget" name="tabs">
       <property name="accessibleName">
@@ -198,7 +318,7 @@
        <string/>
       </property>
       <property name="currentIndex">
-       <number>1</number>
+       <number>2</number>
       </property>
       <widget class="QWidget" name="tab_connect">
        <attribute name="title">
@@ -489,126 +609,136 @@
         </item>
        </layout>
       </widget>
-     </widget>
-    </item>
-    <item row="2" column="0">
-     <widget class="QGroupBox" name="groupBox_hw_control">
-      <property name="title">
-       <string>HW control</string>
-      </property>
-      <layout class="QGridLayout" name="gridLayout_HW">
-       <item row="1" column="1" rowspan="2">
-        <widget class="QDial" name="dial_light_1"/>
-       </item>
-       <item row="0" column="1">
-        <widget class="QLabel" name="label_light_control">
-         <property name="text">
-          <string>Light control</string>
-         </property>
-        </widget>
-       </item>
-       <item row="1" column="10" rowspan="2">
-        <widget class="QDial" name="dial_speed"/>
-       </item>
-       <item row="2" column="11">
-        <widget class="QPushButton" name="btn_toggle_rotation">
-         <property name="text">
-          <string>Toggle Rotation</string>
-         </property>
-        </widget>
-       </item>
-       <item row="4" column="1" rowspan="2">
-        <widget class="QDial" name="dial_light_2"/>
-       </item>
-       <item row="1" column="3">
-        <widget class="QSpinBox" name="spinBox_light_1"/>
-       </item>
-       <item row="4" column="3">
-        <widget class="QSpinBox" name="spinBox_light_2"/>
-       </item>
-       <item row="2" column="12">
-        <widget class="QLabel" name="label_4">
-         <property name="text">
-          <string>REPL_WITH_LED</string>
-         </property>
-        </widget>
-       </item>
-       <item row="5" column="3">
-        <widget class="QPushButton" name="btn_toggle_light_2">
-         <property name="text">
-          <string>Toggle Light 2</string>
-         </property>
-        </widget>
-       </item>
-       <item row="0" column="10">
-        <widget class="QLabel" name="label_speed_control">
-         <property name="text">
-          <string>Speed control</string>
-         </property>
-        </widget>
-       </item>
-       <item row="1" column="11">
-        <widget class="QSpinBox" name="spinBox_speed"/>
-       </item>
-       <item row="2" column="3">
-        <widget class="QPushButton" name="btn_toggle_light_1">
-         <property name="text">
-          <string>Toggle Light 1</string>
-         </property>
-        </widget>
-       </item>
-       <item row="1" column="12">
-        <spacer name="horizontalSpacer_2">
-         <property name="orientation">
-          <enum>Qt::Horizontal</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>40</width>
-           <height>20</height>
-          </size>
-         </property>
-        </spacer>
-       </item>
-       <item row="5" column="4">
-        <widget class="QLabel" name="label_5">
-         <property name="text">
-          <string>REPL_WITH_LED</string>
-         </property>
-        </widget>
-       </item>
-       <item row="2" column="4">
-        <widget class="QLabel" name="label_3">
-         <property name="text">
-          <string>REPL_WITH_LED</string>
-         </property>
-        </widget>
-       </item>
-       <item row="4" column="11">
-        <widget class="QPushButton" name="btn_change_direction">
-         <property name="text">
-          <string>Change Direction</string>
-         </property>
-        </widget>
-       </item>
-       <item row="5" column="11">
-        <widget class="QComboBox" name="comboBox_com_ports"/>
-       </item>
-       <item row="5" column="10">
-        <widget class="QLabel" name="label_prompt_port">
-         <property name="text">
-          <string>Selected COM</string>
-         </property>
-        </widget>
-       </item>
-       <item row="5" column="12">
-        <widget class="QPushButton" name="btn_refresh_com_ports">
-         <property name="text">
-          <string>Refresh</string>
-         </property>
-        </widget>
-       </item>
-      </layout>
+      <widget class="QWidget" name="tab_dataset">
+       <attribute name="title">
+        <string>Page</string>
+       </attribute>
+       <layout class="QGridLayout" name="gridLayout_4">
+        <item row="5" column="2">
+         <widget class="QCheckBox" name="checkBox_camera2">
+          <property name="text">
+           <string>Camera 2</string>
+          </property>
+         </widget>
+        </item>
+        <item row="11" column="0">
+         <widget class="QRadioButton" name="radioButton_group0_3">
+          <property name="text">
+           <string>Fixed images mode</string>
+          </property>
+         </widget>
+        </item>
+        <item row="3" column="2" colspan="2">
+         <widget class="QLineEdit" name="lineEdit_save_location"/>
+        </item>
+        <item row="2" column="2" colspan="2">
+         <widget class="QLineEdit" name="lineEdit_naming_cheme"/>
+        </item>
+        <item row="6" column="2">
+         <widget class="QCheckBox" name="checkBox_camera3">
+          <property name="text">
+           <string>Camera 3</string>
+          </property>
+         </widget>
+        </item>
+        <item row="11" column="3">
+         <widget class="QSpinBox" name="spinBox_num_imgs"/>
+        </item>
+        <item row="12" column="0">
+         <spacer name="verticalSpacer">
+          <property name="orientation">
+           <enum>Qt::Vertical</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>20</width>
+            <height>40</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+        <item row="3" column="0">
+         <widget class="QPushButton" name="btn_save_location">
+          <property name="text">
+           <string>Save location</string>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="0">
+         <widget class="QLabel" name="label_prompt_naming_scheme">
+          <property name="text">
+           <string>Naming scheme</string>
+          </property>
+         </widget>
+        </item>
+        <item row="4" column="2">
+         <widget class="QCheckBox" name="checkBox_camera1">
+          <property name="text">
+           <string>Camera 1</string>
+          </property>
+         </widget>
+        </item>
+        <item row="8" column="0">
+         <widget class="QRadioButton" name="radioButton_group0_0">
+          <property name="text">
+           <string>Manual mode</string>
+          </property>
+         </widget>
+        </item>
+        <item row="9" column="0">
+         <widget class="QRadioButton" name="radioButton_group0_1">
+          <property name="text">
+           <string>Manual mode with trigger</string>
+          </property>
+         </widget>
+        </item>
+        <item row="11" column="2">
+         <widget class="QLabel" name="label_prompt_num_images">
+          <property name="text">
+           <string>Number of images per camera</string>
+          </property>
+         </widget>
+        </item>
+        <item row="10" column="3">
+         <widget class="QDoubleSpinBox" name="doubleSpinBox_recording_time"/>
+        </item>
+        <item row="14" column="2">
+         <widget class="QPushButton" name="btn_stop">
+          <property name="text">
+           <string>Stop</string>
+          </property>
+         </widget>
+        </item>
+        <item row="7" column="2">
+         <widget class="QCheckBox" name="checkBox_camera4">
+          <property name="text">
+           <string>Camera 4</string>
+          </property>
+         </widget>
+        </item>
+        <item row="10" column="0">
+         <widget class="QRadioButton" name="radioButton_group0_2">
+          <property name="text">
+           <string>Timed mode</string>
+          </property>
+         </widget>
+        </item>
+        <item row="14" column="0">
+         <widget class="QPushButton" name="btn_start">
+          <property name="text">
+           <string>Start</string>
+          </property>
+         </widget>
+        </item>
+        <item row="10" column="2">
+         <widget class="QLabel" name="label_prompt_recording_time">
+          <property name="text">
+           <string>Recording time</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </widget>
      </widget>
     </item>
    </layout>

@@ -19,6 +19,7 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 from src.tab_connect import Tab_connect
 from src.tab_camera import Tab_camera
+from src.tab_dataset import Tab_dataset
 from src.hw_control_gui import HW_Control
 from src.camera_control_gui import Camera_control_gui
 
@@ -135,6 +136,11 @@ class Ui_MainWindow(QtCore.QObject):
         
         self.gridLayout.addWidget(self.tabs, 0, 0, 2, 1)        
         
+        #Tab - Dataset
+        self.tab_dataset = Tab_dataset()
+        self.tabs.addTab(self.tab_dataset, "")
+
+
         #methods to call on tab change
         self.tabs.currentChanged.connect(self.tab_changed)
         
@@ -300,6 +306,7 @@ class Ui_MainWindow(QtCore.QObject):
         self.tabs.setTabText(self.tabs.indexOf(self.tab_camera_cfg2), _translate("MainWindow", "Camera 2"))
         self.tabs.setTabText(self.tabs.indexOf(self.tab_camera_cfg3), _translate("MainWindow", "Camera 3"))
         self.tabs.setTabText(self.tabs.indexOf(self.tab_camera_cfg4), _translate("MainWindow", "Camera 4"))
+        self.tabs.setTabText(self.tabs.indexOf(self.tab_dataset), _translate("MainWindow", "Dataset"))
         
         self.menuFile.setTitle(_translate("MainWindow", "File"))
         self.menuHelp.setTitle(_translate("MainWindow", "Help"))
@@ -393,12 +400,10 @@ class Ui_MainWindow(QtCore.QObject):
         self.tab_camera_cfg2.signal_clear_parameters.connect(self.tab_camera_cfg2.clear_parameters)
         self.tab_camera_cfg3.signal_clear_parameters.connect(self.tab_camera_cfg3.clear_parameters)
         self.tab_camera_cfg4.signal_clear_parameters.connect(self.tab_camera_cfg4.clear_parameters)
-        
+    
+        #DATASET TAB
 
-        # TODO dokoncit
-        #self.actionSave_camera_config.triggered.connect(self.tab_config.save_cam_config)
-        #self.actionLoad_camera_config.triggered.connect(self.tab_config.load_cam_config)
-
+        #MENU ACTIONS
         self.actionOpen_Help.triggered.connect(lambda: 
                             webbrowser.open(
                                 os.path.dirname(os.path.realpath(__file__)) + 
