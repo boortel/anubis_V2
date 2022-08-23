@@ -21,7 +21,7 @@ import cv2
 import os #for working with save path
 from datetime import datetime
 
-import src.global_queue
+import src.global_queue as global_queue
 
 from src.config_level import Config_level
 

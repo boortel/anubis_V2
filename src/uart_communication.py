@@ -1,5 +1,5 @@
-import serial
-import serial.tools.list_ports
+#import serial
+#import serial.tools.list_ports
 
 def set_light(intensity, lightID, comport):
     with serial.Serial(comport, 
@@ -48,3 +48,6 @@ def toggle_light(state, lightID, comport):
     
 def get_com_ports():
     return([dev[0] for dev in serial.tools.list_ports.comports()])
+
+
+    

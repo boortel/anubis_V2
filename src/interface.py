@@ -26,7 +26,7 @@ import os
 import webbrowser
 
 
-import src.global_camera 
+import src.global_camera as global_camera
 
 
 class Ui_MainWindow(QtCore.QObject):

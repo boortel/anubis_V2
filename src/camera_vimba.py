@@ -1,9 +1,9 @@
 from src.camera_template import Camera_template
 from src.config_level import Config_level
 from vimba import *
-import src.global_queue
+import src.global_queue as global_queue
 import copy
-import src.global_vimba
+import src.global_vimba as global_vimba
 import time
 import threading
 import vimba

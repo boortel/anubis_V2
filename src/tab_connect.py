@@ -1,5 +1,5 @@
 from PyQt5 import QtGui, QtWidgets 
-import src.global_camera
+import src.global_camera as global_camera
 from PyQt5.QtCore import pyqtSignal as Signal
 import threading
 import time
@@ -131,8 +131,8 @@ class Tab_connect(QtWidgets.QWidget):
         list or by pressing connect button
         @param[in] index index of selected camera in the list
         """
-        #Something must be selected
-        if index != -1 and self.list_detected_cameras.currentItem().text() not in self.connected_cams_names:
+        #Something must be selected and the selected cam must not be already connected
+        if index != -1 and self.list_detected_cameras.currentItem().text() not in self.connected_cams_names.values():
             self.signal_toggle_controls.emit(True)
             #If some camera is connected, disconnect it first
             if self.conntabList[self.combo_tab_selector.currentIndex()] == 1:
