@@ -111,8 +111,6 @@ class Tab_camera(QtWidgets.QWidget):
         self.preview_fit = True
 
         self.connected = False
-        self.preview_live = False
-        self.recording = False
         self.in_process = False
 
         self.add_widgets()
@@ -345,7 +343,6 @@ class Tab_camera(QtWidgets.QWidget):
         self.btn_zoom_fit.setText("Fit to window")
         self.btn_zoom_100.setText("Zoom to 100%")
 
-
     def start_auto_refresh(self):
         self.thread_reset_flag.wait()
         self.thread_auto_refresh_params.start()
@@ -357,6 +354,8 @@ class Tab_camera(QtWidgets.QWidget):
         self.thread_auto_refresh_params.join()
         self.preview_live = False
         self.recording = False
+        self.btn_load_config.setDisabled(False)
+        self.btn_save_config.setDisabled(False)
         self.param_flag.clear()
         self.update_flag.clear()
         self.update_completed_flag.set()
@@ -375,8 +374,6 @@ class Tab_camera(QtWidgets.QWidget):
         self.preview_zoom = 1
         self.preview_fit = True
         self.connected = False
-        self.preview_live = False
-        self.recording = False
         self.in_process = False
 
         self.thread_auto_refresh_params = threading.Thread(target=self.start_refresh_parameters)
@@ -410,6 +407,8 @@ class Tab_camera(QtWidgets.QWidget):
                 
                 self.recording_update.emit(True, self.camIndex)
                 self.recording = True
+                self.btn_load_config.setDisabled(True)
+                self.btn_save_config.setDisabled(True)
                 
                 #Start new recording with defined name and save path
                 global_camera.cams.active_devices[global_camera.active_cam[self.camIndex]].start_recording(self.line_edit_save_location.text(),
@@ -443,6 +442,9 @@ class Tab_camera(QtWidgets.QWidget):
                 self.recording_update.emit(False, self.camIndex)
                 self.recording = False
                 self.preview_live = False
+                
+                self.btn_load_config.setDisabled(False)
+                self.btn_save_config.setDisabled(False)
                 self.preview_update.emit(False, self.camIndex)
                 self.send_status_msg.emit("Recording stopped", 3500, self.camIndex)
 
@@ -1189,7 +1191,7 @@ class Tab_camera(QtWidgets.QWidget):
         class to save the config.
         """
         
-        if(self.connected):
+        if(self.connected and not self.recording and not self.preview_live):
             #Open file dialog for choosing a save location and name
             name = QtWidgets.QFileDialog.getSaveFileName(self,
                                                          "Save Configuration",

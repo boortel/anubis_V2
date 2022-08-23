@@ -456,7 +456,7 @@ class Camera_vimba(Camera_template):
         self.cam.save_settings(self.params_save_config["path"], PersistType.NoLUT)
 
         self.flag_save_config.set()
-        return
+        self.params_save_config["return"] = True
          
     def __frame_producer(self):
         """!@brief Gets frames from camera while continuous acquisition is active
