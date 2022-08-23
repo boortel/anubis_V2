@@ -132,7 +132,7 @@ class Tab_connect(QtWidgets.QWidget):
         @param[in] index index of selected camera in the list
         """
         #Something must be selected
-        if index != -1:
+        if index != -1 and self.list_detected_cameras.currentItem().text() not in self.connected_cams_names:
             self.signal_toggle_controls.emit(True)
             #If some camera is connected, disconnect it first
             if self.conntabList[self.combo_tab_selector.currentIndex()] == 1:
