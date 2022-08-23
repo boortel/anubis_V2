@@ -1,4 +1,5 @@
 from PyQt5 import QtGui, QtWidgets
+import src.uart_communication as uart
 
 class HW_Control(QtWidgets.QGroupBox):
     def __init__(self):
@@ -100,6 +101,16 @@ class HW_Control(QtWidgets.QGroupBox):
         self.icon_light_2.setObjectName("icon_light_2")
         self.gridLayout_HW.addWidget(self.icon_light_2, 5, 4, 1, 1)
 
+        self.comboBox_com_ports = QtWidgets.QComboBox(self)
+        self.comboBox_com_ports.setObjectName("comboBox_com_ports")
+        self.gridLayout_HW.addWidget(self.comboBox_com_ports, 5, 11, 1, 1)
+        self.label_prompt_port = QtWidgets.QLabel(self)
+        self.label_prompt_port.setObjectName("label_prompt_port")
+        self.gridLayout_HW.addWidget(self.label_prompt_port, 5, 10, 1, 1)
+        self.btn_refresh_com_ports = QtWidgets.QPushButton(self)
+        self.btn_refresh_com_ports.setObjectName("btn_refresh_com_ports")
+        self.gridLayout_HW.addWidget(self.btn_refresh_com_ports, 5, 12, 1, 1)
+
     def connect_actions(self):
         self.btn_toggle_light_1.clicked.connect(self.toggle_light_1)
         self.btn_toggle_light_2.clicked.connect(self.toggle_light_2)
@@ -116,6 +127,8 @@ class HW_Control(QtWidgets.QGroupBox):
 
         self.btn_change_direction.clicked.connect(self.change_direction)
 
+        self.btn_refresh_com_ports.clicked.connect(self.refresh_ports)
+
     def set_texts(self):
         self.setTitle("HW control")
         self.btn_toggle_rotation.setText("Toggle Rotation")
@@ -124,6 +137,9 @@ class HW_Control(QtWidgets.QGroupBox):
         self.btn_toggle_light_1.setText("Toggle Light 1")
         self.btn_toggle_light_2.setText("Toggle Light 2")
         self.label_speed_control.setText("Speed Control")
+
+        self.label_prompt_port.setText("Selected COM")
+        self.btn_refresh_com_ports.setText("Refresh")
         
         self.icon_light_1.setPixmap(self.icon_stop)
         self.icon_light_2.setPixmap(self.icon_stop)
@@ -137,34 +153,36 @@ class HW_Control(QtWidgets.QGroupBox):
         if self.light_status_2:
             self.light_status_2 = False
             self.icon_light_2.setPixmap(self.icon_stop)
-#TODO send_toggle_light OFF
         else:
             self.light_status_2 = True
             self.icon_light_2.setPixmap(self.icon_run)
             self.update_light_2(0)
-#TODO send_toggle_light ON
+        
+        uart.toggle_light(self.light_status_2, 1, self.comboBox_com_ports.currentText())
 
     def toggle_light_1(self):
         if self.light_status_1:
             self.light_status_1 = False
             self.icon_light_1.setPixmap(self.icon_stop)
-#TODO send_toggle_light OFF
         else:
             self.light_status_1 = True
             self.icon_light_1.setPixmap(self.icon_run)
             self.update_light_1(0)
-#TODO send_toggle_light ON
+
+        uart.toggle_light(self.light_status_1, 0, self.comboBox_com_ports.currentText())
+
 
     def toggle_rotation(self):
         if self.rotation_status:
             self.rotation_status = False
             self.icon_rotation.setPixmap(self.icon_stop)
-#TODO send_toggle_rotation OFF
         else:
             self.rotation_status = True
             self.icon_rotation.setPixmap(self.icon_run)
             self.update_speed(0)
-#TODO send_toggle_rotation ON
+            
+        uart.toggle_rotation(self.rotation_status, self.comboBox_com_ports.currentText())
+
 
     def update_light_1(self, source):
         if source == 0:
@@ -175,8 +193,8 @@ class HW_Control(QtWidgets.QGroupBox):
             self.dial_light_1.setValue(self.light1)
 
         if self.light_status_1:
-            pass
-#TODO send_light VAL
+            uart.set_light(self.dial_light_1.value(), 0, self.comboBox_com_ports.currentText())
+
 
     def update_light_2(self, source):
         if source == 0:
@@ -187,16 +205,17 @@ class HW_Control(QtWidgets.QGroupBox):
             self.dial_light_2.setValue(self.light2)
 
         if self.light_status_2:
-            pass
-#TODO send_light VAL
+            uart.set_light(self.dial_light_2.value(), 1, self.comboBox_com_ports.currentText())
+
 
     def change_direction(self):
         if self.direction == 0:
             self.direction = 1
-#TODO send_direction 1
         else:
             self.direction = 0
-#TODO send_direction 0
+        
+        uart.change_direction(self.direction, self.comboBox_com_ports.currentText())
+
 
 
     def update_speed(self, source):
@@ -208,8 +227,9 @@ class HW_Control(QtWidgets.QGroupBox):
             self.dial_speed.setValue(self.speed)
             
         if self.rotation_status:
-            pass
-#TODO send_speed VAL
+            uart.set_speed(self.dial_speed.value(), self.comboBox_com_ports.currentText())
 
-
-
+    def refresh_ports(self):
+        ports = uart.get_com_ports()
+        self.comboBox_com_ports.clear()
+        self.comboBox_com_ports.addItems(ports)
