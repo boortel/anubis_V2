@@ -1,16 +1,16 @@
 from PyQt5 import QtCore, QtWidgets, QtGui
-import global_camera
+import src.global_camera
 from PyQt5.QtCore import pyqtSignal as Signal
 import os
 import threading
 from queue import Queue
-from config_level import Config_level
+from src.config_level import Config_level
 
 import numpy as np
-import image_processing as imp
+import src.image_processing as imp
 import time
 #import win32api
-import global_queue
+import src.global_queue
 
 class Tab_camera(QtWidgets.QWidget):
     #signals

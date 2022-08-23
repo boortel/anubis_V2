@@ -17,16 +17,16 @@
 
 
 from PyQt5 import QtCore, QtGui, QtWidgets
-from tab_connect import Tab_connect
-from tab_camera import Tab_camera
-from hw_control_gui import HW_Control
-from camera_control_gui import Camera_control_gui
+from src.tab_connect import Tab_connect
+from src.tab_camera import Tab_camera
+from src.hw_control_gui import HW_Control
+from src.camera_control_gui import Camera_control_gui
 
 import os
 import webbrowser
 
 
-import global_camera 
+import src.global_camera 
 
 
 class Ui_MainWindow(QtCore.QObject):

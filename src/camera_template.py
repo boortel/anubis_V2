@@ -21,9 +21,9 @@ import cv2
 import os #for working with save path
 from datetime import datetime
 
-import global_queue
+import src.global_queue
 
-from config_level import Config_level
+from src.config_level import Config_level
 
 class Camera_template:
     """!@brief This class implements backend for the communication with cameras using

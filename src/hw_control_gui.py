@@ -1,15 +1,15 @@
 from PyQt5 import QtGui, QtWidgets
 
-
 class HW_Control(QtWidgets.QGroupBox):
     def __init__(self):
         super(HW_Control, self).__init__()
 
-        ##Holds image of running state
+        ##Holds image of green icon
         self.icon_run = QtGui.QPixmap("./icons/icon_standby.png")
-        ##Holds image of stopped of a camera
+        ##Holds image of red icon 
         self.icon_stop = QtGui.QPixmap("./icons/icon_busy.png")
 
+        ##State variables for hw
         self.speed = 0
         self.direction = 0
         self.light1 = 0
@@ -18,6 +18,7 @@ class HW_Control(QtWidgets.QGroupBox):
         self.light_status_1 = False
         self.light_status_2 = False
 
+        ##HW variable limits
         self.speed_min = 0
         self.speed_max = 100
         self.light_min = 0
@@ -73,9 +74,6 @@ class HW_Control(QtWidgets.QGroupBox):
         self.spinBox_speed.setRange(self.speed_min, self.speed_max)
         self.gridLayout_HW.addWidget(self.spinBox_speed, 1, 11, 1, 1)
 
-
-        
-
         self.btn_toggle_light_2 = QtWidgets.QPushButton(self)
         self.btn_toggle_light_2.setObjectName("btn_toggle_light_2")
         self.gridLayout_HW.addWidget(self.btn_toggle_light_2, 5, 3, 1, 1)
@@ -89,7 +87,6 @@ class HW_Control(QtWidgets.QGroupBox):
         self.dial_light_2.setObjectName("dial_light_2")
         self.dial_light_2.setRange(self.light_min, self.light_max)
         self.gridLayout_HW.addWidget(self.dial_light_2, 4, 1, 2, 1)
-
 
         self.icon_rotation = QtWidgets.QLabel(self)
         self.icon_rotation.setObjectName("icon_rotation")
@@ -132,7 +129,6 @@ class HW_Control(QtWidgets.QGroupBox):
         self.icon_light_2.setPixmap(self.icon_stop)
         self.icon_rotation.setPixmap(self.icon_stop)
     
-
     # ==============================================
     # Custom methods
     # ==============================================
@@ -199,7 +195,7 @@ class HW_Control(QtWidgets.QGroupBox):
             self.direction = 1
 #TODO send_direction 1
         else:
-            self.direction = 1
+            self.direction = 0
 #TODO send_direction 0
 
 

@@ -18,7 +18,7 @@
 Global camera object
 """
 
-from camera_connector import Camera_connector
+from src.camera_connector import Camera_connector
 import atexit
 
 ##Global camera object

@@ -1,5 +1,5 @@
 
-from camera_vimba import Camera_vimba
+from src.camera_vimba import Camera_vimba
 import time
 
 class Camera_connector:
@@ -41,7 +41,6 @@ class Camera_connector:
             for device in devices:
                 device["mechanism"] = name
                 self.detected_devices.append(device)
-            
             
         return self.detected_devices
 

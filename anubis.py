@@ -19,7 +19,7 @@
 """
 
 from PyQt5 import QtWidgets
-from interface import Ui_MainWindow
+from src.interface import Ui_MainWindow
 
 #Start the app. UI and its behavior is defined in interface.py
 if __name__ == "__main__":

@@ -1,5 +1,5 @@
 from PyQt5 import QtGui, QtWidgets 
-import global_camera
+import src.global_camera
 from PyQt5.QtCore import pyqtSignal as Signal
 import threading
 import time
@@ -118,7 +118,7 @@ class Tab_connect(QtWidgets.QWidget):
         self.detected = global_camera.cams.search_for_cameras()
         for index, device in enumerate(self.detected):
             output = device['mechanism'] + ': ' + device['model'] + device['id_']
-#in  the future maybe add icon based on interface type
+#in the future maybe add icon based on interface type
             self.list_detected_cameras.addItem(output)
             if (device['mechanism'] + ': ' + device['model'] + device['id_']) in self.connected_cams_names.values():
                 self.list_detected_cameras.item(index).setBackground(QtGui.QColor('#70BF4E'))

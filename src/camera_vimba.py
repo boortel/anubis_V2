@@ -1,9 +1,9 @@
-from camera_template import Camera_template
-from config_level import Config_level
+from src.camera_template import Camera_template
+from src.config_level import Config_level
 from vimba import *
-import global_queue
+import src.global_queue
 import copy
-import global_vimba
+import src.global_vimba
 import time
 import threading
 import vimba
@@ -16,6 +16,8 @@ class Camera_vimba(Camera_template):
         self.name = "Vimba"
         self.cam = None
 
+        ##Flags to signalize request for some camera command, 
+        # the request is then transfered to main object thread
         self.flag_get_parameters = threading.Event()
         self.flag_read_param_value = threading.Event()
         self.flag_set_parameter = threading.Event()
@@ -27,6 +29,8 @@ class Camera_vimba(Camera_template):
         self.flag_loop = threading.Event()
         self.flag_disconnect = threading.Event()
 
+        ##Setting all flags apart from loop and disconnect,
+        # reason - they are activated by clearing instead of setting
         self.flag_get_parameters.set() 
         self.flag_read_param_value.set()
         self.flag_set_parameter.set()
@@ -36,6 +40,8 @@ class Camera_vimba(Camera_template):
         self.flag_save_config.set()
         self.flag_frame_producer.set()
 
+        ##Dictionaries holding information for its transfer between cam thread
+        #and requesting thread
         self.params_get_parameters =   {'feature_queue':    "",
                                         'flag':             "",
                                         'visibility':       "",
@@ -53,7 +59,7 @@ class Camera_vimba(Camera_template):
                                         'return':           ""}
         self.params_get_single_frame = {'return':           ""}
 
-        
+        ##Variable that will hold producer thread when the aquisition becomes active
         self.thread_producer = None
     
     def get_camera_list(self,):
@@ -82,12 +88,6 @@ class Camera_vimba(Camera_template):
                 self.active_camera = index
                 self.selected_active_camera = camera.get_id()
                 self.cam = camera
-                    
-        #cams = self.vimba.get_all_cameras()
-        #self.cam = cams[self.active_camera]
-        #self.cam._open()
-        #with global_vimba.v as vimba:
-        #    self.cam = vimba.get_camera_by_id(self.selected_active_camera)
         
         with self.cam:
             try:
@@ -121,8 +121,6 @@ class Camera_vimba(Camera_template):
         self.flag_loop.set()
         self.flag_get_parameters.wait()
         return self.params_get_parameters["return"]
-        
-
     
     def read_param_value(self,param_name):
         """!@brief Used to get value of one parameter based on its name
@@ -161,8 +159,6 @@ class Camera_vimba(Camera_template):
         self.flag_execute_command.wait()
         return self.params_execute_command["return"]
         
-        
-    
     def get_single_frame(self,):
         """!@brief Grab single frame from camera
         @return Unmodified frame from camera
@@ -172,8 +168,6 @@ class Camera_vimba(Camera_template):
         self.flag_get_single_frame.wait()
         return self.params_get_single_frame["return"]
         
-            
-    
     def load_config(self,path):
         """!@brief Load existing camera configuration
         @param[in] path Defines a path and a name of the file containing the
@@ -185,9 +179,7 @@ class Camera_vimba(Camera_template):
         self.flag_loop.set()
         self.flag_load_config.wait()
         return self.params_load_config["return"]
-        
 
-    
     def save_config(self,path):
         """!@brief Saves configuration of a camera to .xml file
         @param[in] path A path where the file will be saved
@@ -198,8 +190,6 @@ class Camera_vimba(Camera_template):
         self.flag_loop.set()
         self.flag_save_config.wait()
         return self.params_save_config["return"]
-        
-        
     
     def _frame_producer(self):
         """!@brief Gets frames from camera while continuous acquisition is active
@@ -211,13 +201,18 @@ class Camera_vimba(Camera_template):
         self.flag_loop.set()
         self.flag_frame_producer.wait()       
                     
-    def loop(self):
-        
+    def loop(self):  
+        """!@brief Main loop for communication with camera object directly
+        @details Only this loop has access to the camera, all user calls are transfered
+        to this loop and handled here. This ensures that no race conditions will appear.
+        """
         with self.cam:
             while(not self.flag_disconnect.is_set() or not self.flag_frame_producer.is_set()):
+                #Wait until user asynchronously calls some camera method
                 self.flag_loop.wait()
                 self.flag_loop.clear()
 
+                #chceck which method was called and handle it in this thread
                 if(not self.flag_get_parameters.is_set()):
                     self._get_parameters()
                 elif(not self.flag_read_param_value.is_set()):
@@ -381,7 +376,6 @@ class Camera_vimba(Camera_template):
             self.params_get_parameters["return"] = False
             self.flag_get_parameters.set()
             return
-
     
     def _read_param_value(self):
         """!@brief Used to get value of one parameter based on its name
@@ -424,7 +418,6 @@ class Camera_vimba(Camera_template):
 
         self.flag_execute_command.set()
         return
-        
     
     def _get_single_frame(self):
         """!@brief Grab single frame from camera
@@ -440,14 +433,12 @@ class Camera_vimba(Camera_template):
             except:
                 pass
             
-    
     def _load_config(self):
         """!@brief Load existing camera configuration
         @param[in] path Defines a path and a name of the file containing the
             configuration of the camera
         @return True if success else False
-        """
-        
+        """  
         try:
             self.cam.load_settings(self.params_load_config["path"], PersistType.NoLUT)
             self.flag_load_config.set()
@@ -457,7 +448,6 @@ class Camera_vimba(Camera_template):
             self.flag_load_config.set()
             self.params_load_config["return"] = False
             return
-
     
     def _save_config(self):
         """!@brief Saves configuration of a camera to .xml file
@@ -467,15 +457,13 @@ class Camera_vimba(Camera_template):
 
         self.flag_save_config.set()
         return
-        
-    
+         
     def __frame_producer(self):
         """!@brief Gets frames from camera while continuous acquisition is active
         @details Loads frames from camera as they come and stores them
             in a frame queue for consumer thread to process. The thread 
             runs until stream_stop_switch is set
         """
-        
         self.flag_frame_producer.set()    
         self.cam.start_streaming(handler=self._frame_handler)
         

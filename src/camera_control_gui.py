@@ -1,6 +1,6 @@
 from PyQt5 import QtGui, QtWidgets
 from PyQt5.QtCore import Qt
-from preview_window import Preview_widget
+from src.preview_window import Preview_widget
 
 class Camera_control_gui(QtWidgets.QWidget):
 
