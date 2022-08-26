@@ -116,6 +116,7 @@ class Tab_camera(QtWidgets.QWidget):
         self.add_widgets()
         self.connect_actions()
         self.set_texts()
+        self.setup_validators()
 
         self.thread_auto_refresh_params = threading.Thread(target=self.start_refresh_parameters)
         self.thread_auto_refresh_params.setDaemon(True)
@@ -789,7 +790,8 @@ class Tab_camera(QtWidgets.QWidget):
         @details if a text widget needs certain input type, the validators are
         set up here. For example setting prohibited characters of the file saved. Not used yet!
         """
-        self.line_edit_sequence_duration.setValidator(QtGui.QDoubleValidator(0,16777216,5))
+        self.line_edit_sequence_duration.setMinimum(0)
+        self.line_edit_sequence_duration.setMaximum(16777216)
         expression = QtCore.QRegExp("^[^\\\\/:*?\"<>|]*$")
         self.line_edit_sequence_name.setValidator(QtGui.QRegExpValidator(expression))
 
