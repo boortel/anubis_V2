@@ -28,8 +28,8 @@
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>248</width>
-            <height>379</height>
+            <width>282</width>
+            <height>388</height>
            </rect>
           </property>
           <widget class="QLabel" name="camera_preview_1">
@@ -70,8 +70,8 @@
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>248</width>
-            <height>379</height>
+            <width>281</width>
+            <height>388</height>
            </rect>
           </property>
           <widget class="QLabel" name="camera_preview_2">
@@ -112,8 +112,8 @@
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>248</width>
-            <height>378</height>
+            <width>282</width>
+            <height>388</height>
            </rect>
           </property>
           <widget class="QLabel" name="camera_preview_3">
@@ -154,8 +154,8 @@
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>248</width>
-            <height>378</height>
+            <width>281</width>
+            <height>388</height>
            </rect>
           </property>
           <widget class="QLabel" name="camera_preview_4">
@@ -737,6 +737,9 @@
           </property>
          </widget>
         </item>
+        <item row="8" column="3">
+         <widget class="QDoubleSpinBox" name="doubleSpinBox_fps"/>
+        </item>
        </layout>
       </widget>
      </widget>
@@ -749,7 +752,7 @@
      <x>0</x>
      <y>0</y>
      <width>1206</width>
-     <height>26</height>
+     <height>21</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">

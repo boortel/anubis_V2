@@ -54,7 +54,6 @@ class Camera_connector:
         if(mechanism == "Vimba"):
             self.active_devices[str(self.active_devices_count)] = Camera_vimba()
 
-        
         self.active_devices[str(self.active_devices_count)].create_queues(str(self.active_devices_count))    
         self.active_devices[str(self.active_devices_count)].get_camera_list()
         self.active_devices[str(self.active_devices_count)].select_camera(device_id)

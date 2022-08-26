@@ -52,7 +52,6 @@ class Computer_vision():
             self.plot.__init__()
             self.__init__(self.plot)
         
-        
         try:
             self.model = keras.models.load_model(path)
             input_dim = list(self.model.get_layer(index=0).input_shape)

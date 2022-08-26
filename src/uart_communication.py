@@ -1,5 +1,5 @@
-#import serial
-#import serial.tools.list_ports
+import serial
+import serial.tools.list_ports
 
 def set_light(intensity, lightID, comport):
     with serial.Serial(comport, 
