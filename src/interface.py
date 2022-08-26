@@ -137,7 +137,10 @@ class Ui_MainWindow(QtCore.QObject):
         self.gridLayout.addWidget(self.tabs, 0, 0, 2, 1)        
         
         #Tab - Dataset
-        self.tab_dataset = Tab_dataset()
+        self.tab_dataset = Tab_dataset([self.tab_camera_cfg1, 
+                                self.tab_camera_cfg2, 
+                                self.tab_camera_cfg3, 
+                                self.tab_camera_cfg4])
         self.tabs.addTab(self.tab_dataset, "")
 
 
