@@ -27,6 +27,10 @@ class Tab_dataset(QtWidgets.QWidget):
         self.btn_start.setDisabled(True)
         self.btn_stop.setDisabled(True)
 
+        self.doubleSpinBox_fps.setDisabled(True)
+        self.doubleSpinBox_recording_time.setDisabled(True)
+        self.spinBox_num_imgs.setDisabled(True)
+
     def add_widgets(self):
         self.tab_dataset = QtWidgets.QWidget()
         self.tab_dataset.setObjectName("tab_dataset")
@@ -39,9 +43,9 @@ class Tab_dataset(QtWidgets.QWidget):
         self.lineEdit_save_location = QtWidgets.QLineEdit(self)
         self.lineEdit_save_location.setObjectName("lineEdit_save_location")
         self.gridLayout_4.addWidget(self.lineEdit_save_location, 3, 2, 1, 2)
-        self.lineEdit_naming_cheme = QtWidgets.QLineEdit(self)
-        self.lineEdit_naming_cheme.setObjectName("lineEdit_naming_cheme")
-        self.gridLayout_4.addWidget(self.lineEdit_naming_cheme, 2, 2, 1, 2)
+        self.lineEdit_naming_scheme = QtWidgets.QLineEdit(self)
+        self.lineEdit_naming_scheme.setObjectName("lineEdit_naming_scheme")
+        self.gridLayout_4.addWidget(self.lineEdit_naming_scheme, 2, 2, 1, 2)
         
         self.spinBox_num_imgs = QtWidgets.QSpinBox(self)
         self.spinBox_num_imgs.setObjectName("spinBox_num_imgs")
@@ -58,10 +62,6 @@ class Tab_dataset(QtWidgets.QWidget):
         self.radioButton_group0_0 = QtWidgets.QRadioButton(self)
         self.radioButton_group0_0.setObjectName("radioButton_group0_0")
         self.gridLayout_4.addWidget(self.radioButton_group0_0, 8, 0, 1, 1)
-
-        self.doubleSpinBox_fps = QtWidgets.QDoubleSpinBox(self)
-        self.doubleSpinBox_fps.setObjectName("doubleSpinBox_fps")
-        self.gridLayout_4.addWidget(self.doubleSpinBox_fps, 8, 1, 1, 1)
 
         self.radioButton_group0_1 = QtWidgets.QRadioButton(self)
         self.radioButton_group0_1.setObjectName("radioButton_group0_1")
@@ -86,7 +86,6 @@ class Tab_dataset(QtWidgets.QWidget):
         self.label_prompt_recording_time.setObjectName("label_prompt_recording_time")
         self.gridLayout_4.addWidget(self.label_prompt_recording_time, 10, 2, 1, 1)
 
-
         self.checkBox_cameras = [None,None,None,None]
 
         self.checkBox_cameras[3] = QtWidgets.QCheckBox(self)
@@ -104,6 +103,18 @@ class Tab_dataset(QtWidgets.QWidget):
         self.checkBox_cameras[1] = QtWidgets.QCheckBox(self)
         self.checkBox_cameras[1].setObjectName("checkBox_camera2")
         self.gridLayout_4.addWidget(self.checkBox_cameras[1], 5, 2, 1, 1)
+
+        self.doubleSpinBox_fps = QtWidgets.QDoubleSpinBox(self)
+        self.doubleSpinBox_fps.setObjectName("doubleSpinBox_fps")
+        self.gridLayout_4.addWidget(self.doubleSpinBox_fps, 9, 3, 1, 1)
+
+        self.label_fps = QtWidgets.QLabel(self)
+        self.label_fps.setObjectName("label_fps")
+        self.gridLayout_4.addWidget(self.label_fps, 9, 2, 1, 1)
+
+        self.label_fps.setAlignment(QtCore.Qt.AlignRight)
+        self.label_prompt_num_images.setAlignment(QtCore.Qt.AlignRight)
+        self.label_prompt_recording_time.setAlignment(QtCore.Qt.AlignRight)
         
     def connect_actions(self):
         self.checkBox_cameras[0].clicked.connect(self.start_enabler)
@@ -113,6 +124,11 @@ class Tab_dataset(QtWidgets.QWidget):
 
         self.btn_start.clicked.connect(self.start)
         self.btn_stop.clicked.connect(self.stop)
+
+        self.radioButton_group0_0.clicked.connect(self.radio_clicked)
+        self.radioButton_group0_1.clicked.connect(self.radio_clicked)
+        self.radioButton_group0_2.clicked.connect(self.radio_clicked)
+        self.radioButton_group0_3.clicked.connect(self.radio_clicked)
 
     def set_texts(self):
         self.checkBox_cameras[1].setText("Camera 2")
@@ -124,6 +140,7 @@ class Tab_dataset(QtWidgets.QWidget):
         self.radioButton_group0_0.setText("Manual mode")
         self.radioButton_group0_1.setText("Triggered mode")
         self.label_prompt_num_images.setText("Number of images per camera")
+        self.label_fps.setText("FPS")
         self.btn_stop.setText("Stop")
         self.checkBox_cameras[3].setText("Camera 4")
         self.radioButton_group0_2.setText("Timed mode")
@@ -131,11 +148,17 @@ class Tab_dataset(QtWidgets.QWidget):
         self.label_prompt_recording_time.setText("Recording time")
 
     def start_enabler(self):
-        if (self.checkBox_cameras[0].isChecked() or
+        if ((self.checkBox_cameras[0].isChecked() or
            self.checkBox_cameras[1].isChecked() or 
            self.checkBox_cameras[2].isChecked() or 
-           self.checkBox_cameras[3].isChecked()):
+           self.checkBox_cameras[3].isChecked()) and
+           (self.radioButton_group0_0.isChecked() or
+           self.radioButton_group0_1.isChecked() or
+           self.radioButton_group0_2.isChecked() or
+           self.radioButton_group0_3.isChecked())):
             self.btn_start.setDisabled(False)
+        else:
+            self.btn_start.setDisabled(True)
 
     def start(self):
         # Prepare to start recording - variables and such
@@ -143,15 +166,12 @@ class Tab_dataset(QtWidgets.QWidget):
             if cam.connected and self.checkBox_cameras[index].isChecked():
                 # If preview or recording running -> stop it first
                 if cam.preview_live:
-                    print("STOPPING PREVIEW")
                     cam.preview(1)
                 if cam.recording:
-                    print("STOPPING RECORDING")
                     cam.record()
 
-                print("WRITING LINE EDITS")
                 # set naming scheme on given tab
-                cam.line_edit_sequence_name.setText(self.lineEdit_naming_cheme.text())
+                cam.line_edit_sequence_name.setText(self.lineEdit_naming_scheme.text())
                 cam.line_edit_save_location.setText(f"{self.lineEdit_save_location.text()}/Cam{index + 1}")
 
                 # Set up acquisition mode
@@ -195,16 +215,13 @@ class Tab_dataset(QtWidgets.QWidget):
             if cam.connected:
                 # If preview or recording running -> stop it first
                 if cam.preview_live:
-                    print("STOPPING PREVIEW")
                     cam.preview(1)
                 if cam.recording:
-                    print("STOPPING RECORDING")
                     cam.record()
         
         self.btn_stop.setDisabled(True)
         self.start_enabler()
 
-#TODO
     def setup_validators(self):
         """!@brief create input constrains for various widgets
         @details if a text widget needs certain input type, the validators are
@@ -216,5 +233,23 @@ class Tab_dataset(QtWidgets.QWidget):
         self.doubleSpinBox_recording_time.setMaximum(16777216)
         self.spinBox_num_imgs.setMaximum(16777216)
         self.spinBox_num_imgs.setMinimum(1)
-        #expression = QtCore.QRegExp("^[^\\\\/:*?\"<>|]*$")
-        #self.line_edit_sequence_name.setValidator(QtGui.QRegExpValidator(expression))
+        expression = QtCore.QRegExp("^[^\\\\/:*?\"<>|]*$")
+        self.lineEdit_naming_scheme.setValidator(QtGui.QRegExpValidator(expression))
+
+    def radio_clicked(self):
+        if self.radioButton_group0_0.isChecked():
+            self.doubleSpinBox_fps.setDisabled(False)
+            self.doubleSpinBox_recording_time.setDisabled(True)
+            self.spinBox_num_imgs.setDisabled(True)
+        elif self.radioButton_group0_1.isChecked():  
+            self.doubleSpinBox_fps.setDisabled(True)
+            self.doubleSpinBox_recording_time.setDisabled(True)
+            self.spinBox_num_imgs.setDisabled(True)
+        elif self.radioButton_group0_2.isChecked():
+            self.doubleSpinBox_fps.setDisabled(False)
+            self.doubleSpinBox_recording_time.setDisabled(False)
+            self.spinBox_num_imgs.setDisabled(True)
+        elif self.radioButton_group0_3.isChecked():
+            self.doubleSpinBox_fps.setDisabled(False)
+            self.doubleSpinBox_recording_time.setDisabled(True)
+            self.spinBox_num_imgs.setDisabled(False)

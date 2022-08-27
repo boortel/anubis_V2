@@ -28,8 +28,8 @@
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>282</width>
-            <height>388</height>
+            <width>236</width>
+            <height>383</height>
            </rect>
           </property>
           <widget class="QLabel" name="camera_preview_1">
@@ -70,8 +70,8 @@
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>281</width>
-            <height>388</height>
+            <width>235</width>
+            <height>383</height>
            </rect>
           </property>
           <widget class="QLabel" name="camera_preview_2">
@@ -112,8 +112,8 @@
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>282</width>
-            <height>388</height>
+            <width>236</width>
+            <height>382</height>
            </rect>
           </property>
           <widget class="QLabel" name="camera_preview_3">
@@ -154,8 +154,8 @@
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>281</width>
-            <height>388</height>
+            <width>235</width>
+            <height>382</height>
            </rect>
           </property>
           <widget class="QLabel" name="camera_preview_4">
@@ -752,7 +752,7 @@
      <x>0</x>
      <y>0</y>
      <width>1206</width>
-     <height>21</height>
+     <height>26</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
