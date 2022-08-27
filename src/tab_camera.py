@@ -190,10 +190,10 @@ class Tab_camera(QtWidgets.QWidget):
 
         self.gridLayout_5.addWidget(self.line_edit_sequence_name, 1, 1, 1, 3)
 
-        self.file_manager_save_location = QtWidgets.QPushButton(self.conf_recording)
-        self.file_manager_save_location.setObjectName(u"file_manager_save_location")
+        self.btn_file_manager_save_location = QtWidgets.QPushButton(self.conf_recording)
+        self.btn_file_manager_save_location.setObjectName(u"btn_file_manager_save_location")
 
-        self.gridLayout_5.addWidget(self.file_manager_save_location, 2, 0, 1, 1)
+        self.gridLayout_5.addWidget(self.btn_file_manager_save_location, 2, 0, 1, 1)
 
         self.line_edit_save_location = QtWidgets.QLineEdit(self.conf_recording)
         self.line_edit_save_location.setObjectName(u"line_edit_save_location")
@@ -297,7 +297,7 @@ class Tab_camera(QtWidgets.QWidget):
         self.line_edit_save_location.textChanged.connect(self.send_conf_update)
         self.line_edit_sequence_duration.valueChanged.connect(self.send_conf_update)
         self.line_edit_sequence_name.textChanged.connect(self.send_conf_update)
-        self.file_manager_save_location.clicked.connect(lambda: self.get_directory(self.line_edit_save_location))
+        self.btn_file_manager_save_location.clicked.connect(lambda: self.get_directory(self.line_edit_save_location))
         self.btn_save_sequence_settings.clicked.connect(self.save_seq_settings)
         self.btn_reset_sequence_settings.clicked.connect(self.reset_seq_settings)
 
@@ -326,7 +326,7 @@ class Tab_camera(QtWidgets.QWidget):
         self.conf_recording.setTitle("Configure Recording")
         self.label_sequence_name.setText("Tip: Use %n for sequence number, %d for date and %t for time stamp ")
         self.label_file_name_recording.setText("File name")
-        self.file_manager_save_location.setText("Save Location")
+        self.btn_file_manager_save_location.setText("Save Location")
         self.label_sequence_duration.setText("Sequence duration [s]")
         self.label_sequence_duration_tip.setText("Tip: Leave empty for manual control using Start/Stop recording buttons")
         self.btn_save_sequence_settings.setText("Save settings")
@@ -440,9 +440,9 @@ class Tab_camera(QtWidgets.QWidget):
                 
                 #End recording
                 global_camera.cams.active_devices[global_camera.active_cam[self.camIndex]].stop_recording()
-                self.recording_update.emit(False, self.camIndex)
                 self.recording = False
                 self.preview_live = False
+                self.recording_update.emit(False, self.camIndex)
                 
                 self.btn_load_config.setDisabled(False)
                 self.btn_save_config.setDisabled(False)
