@@ -536,6 +536,7 @@ class Ui_MainWindow(QtCore.QObject):
         @param[in] tab index of connected camera (0 - 3)
         """
         self.tabs.setTabEnabled(tab+1, connected)
+
         if tab == 0:
             if(self.tab_camera_cfg1.connected == False and connected == True):
                 self.tab_camera_cfg1.connected = connected
@@ -636,7 +637,9 @@ class Ui_MainWindow(QtCore.QObject):
                 self.update_recording(False, tab)
                 self.update_fps(0, tab)
                 self.update_received_frames(0, tab)  
-
+        
+        #Update dataset tab checkboxes
+        self.tab_dataset.checkbox_enabler()
 
     def update_preview(self, state, tab):
 

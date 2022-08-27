@@ -31,6 +31,9 @@ class Tab_dataset(QtWidgets.QWidget):
         self.doubleSpinBox_recording_time.setDisabled(True)
         self.spinBox_num_imgs.setDisabled(True)
 
+        for cam in self.checkBox_cameras:
+            cam.setDisabled(True)
+
     def add_widgets(self):
         self.tab_dataset = QtWidgets.QWidget()
         self.tab_dataset.setObjectName("tab_dataset")
@@ -130,6 +133,16 @@ class Tab_dataset(QtWidgets.QWidget):
         self.radioButton_group0_2.clicked.connect(self.radio_clicked)
         self.radioButton_group0_3.clicked.connect(self.radio_clicked)
 
+        self.camera_tabs[0].recording_update.connect(self.recording_callback)
+        self.camera_tabs[1].recording_update.connect(self.recording_callback)
+        self.camera_tabs[2].recording_update.connect(self.recording_callback)
+        self.camera_tabs[3].recording_update.connect(self.recording_callback)
+
+        self.lineEdit_naming_scheme.textChanged.connect(self.start_enabler)
+        self.lineEdit_save_location.textChanged.connect(self.start_enabler)
+
+        self.btn_save_location.clicked.connect(lambda: self.get_directory(self.lineEdit_save_location))
+
     def set_texts(self):
         self.checkBox_cameras[1].setText("Camera 2")
         self.radioButton_group0_3.setText("Fixed images mode")
@@ -155,7 +168,9 @@ class Tab_dataset(QtWidgets.QWidget):
            (self.radioButton_group0_0.isChecked() or
            self.radioButton_group0_1.isChecked() or
            self.radioButton_group0_2.isChecked() or
-           self.radioButton_group0_3.isChecked())):
+           self.radioButton_group0_3.isChecked()) and
+           self.lineEdit_naming_scheme.text() != "" and
+           self.lineEdit_save_location.text() != ""):
             self.btn_start.setDisabled(False)
         else:
             self.btn_start.setDisabled(True)
@@ -201,8 +216,6 @@ class Tab_dataset(QtWidgets.QWidget):
                     global_camera.cams.active_devices[global_camera.active_cam[cam.camIndex]].set_parameter("ExposureAuto",1)
                     global_camera.cams.active_devices[global_camera.active_cam[cam.camIndex]].set_parameter("ExposureTimeAbs",1/self.doubleSpinBox_fps.value())
                 
-
-                
         # Run recording on all cameras
         for cam in self.camera_tabs:
             cam.record()
@@ -212,7 +225,7 @@ class Tab_dataset(QtWidgets.QWidget):
 
     def stop(self):
         for cam in self.camera_tabs:
-            if cam.connected:
+            if self.checkBox_cameras[cam.camIndex].isChecked and cam.connected:
                 # If preview or recording running -> stop it first
                 if cam.preview_live:
                     cam.preview(1)
@@ -253,3 +266,35 @@ class Tab_dataset(QtWidgets.QWidget):
             self.doubleSpinBox_fps.setDisabled(False)
             self.doubleSpinBox_recording_time.setDisabled(True)
             self.spinBox_num_imgs.setDisabled(False)
+
+        self.start_enabler()
+
+    def recording_callback(self, state, cam_index):
+        print("In recording callback")
+        if self.checkBox_cameras[cam_index].isChecked():
+            if state == False:
+                print("stopping")
+                self.stop()
+
+    def get_directory(self, line_output = None):
+        """!@brief Opens file dialog for user to set path to save frames.
+        @details Method is called by Save Location button. Path is written to 
+        the label next to the button and can be further modified.
+        """
+        #Open file dialog for choosing a folder
+        name = QtWidgets.QFileDialog.getExistingDirectory(self,
+                                                     "Select Folder",
+                                                     )
+        
+        #Set label text to chosen folder path
+        if(line_output):
+            line_output.setText(name)
+        return name
+
+    def checkbox_enabler(self):
+        for index, cam in enumerate(self.camera_tabs):
+            self.checkBox_cameras[index].setDisabled(not cam.connected)
+            if not cam.connected:
+                self.checkBox_cameras[index].setChecked(False)
+        
+        self.start_enabler()
