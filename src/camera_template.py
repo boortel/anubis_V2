@@ -163,12 +163,12 @@ class Camera_template:
         @param[in] folder_path Path where the files will be saved
         @param[in] name_scheme Naming template for saved files
         @param[in] fps recording frame rate
-        """
+        """  
+        self.is_recording = True
         self.start_acquisition()
         self._frame_consumer_thread = threading.Thread(target=self._frame_consumer, args=(folder_path,name_scheme,fps))
         self._frame_consumer_thread.daemon = True
         self._frame_consumer_thread.start()
-        self.is_recording = True
     
     def stop_recording(self,):
         """!@brief Stops continuous acquisition of image frames and closes all files
@@ -206,7 +206,7 @@ class Camera_template:
         if fps > 0: 
             wait_time = 1/fps
             start_time = time.time()
-            while self.acquisition_running:
+            while self.acquisition_running or not global_queue.frame_queue[self.cam_id].empty():
                 if (not global_queue.frame_queue[self.cam_id].empty() and ((start_time + wait_time) < time.time())): 
                     start_time = time.time()
                     
@@ -224,7 +224,7 @@ class Camera_template:
                     #use rather os.path.join method
                     num += 1
         else:
-            while self.acquisition_running:
+            while self.acquisition_running or not global_queue.frame_queue[self.cam_id].empty():
                 if not global_queue.frame_queue[self.cam_id].empty(): 
                     frame = global_queue.frame_queue[self.cam_id].get_nowait()[0]
                     name = name_scheme

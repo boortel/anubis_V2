@@ -209,14 +209,18 @@ class Tab_dataset(QtWidgets.QWidget):
                 
         # Run recording on all cameras
         for cam in self.camera_tabs:
-            cam.record(self.doubleSpinBox_fps.value())
+            if self.checkBox_cameras[cam.camIndex].isChecked() and cam.connected:
+                if self.radioButton_group0_0.isChecked() or self.radioButton_group0_2.isChecked():
+                    cam.record(self.doubleSpinBox_fps.value())
+                else:
+                    cam.record()
 
         self.btn_start.setDisabled(True)
         self.btn_stop.setDisabled(False)
 
     def stop(self):
         for cam in self.camera_tabs:
-            if self.checkBox_cameras[cam.camIndex].isChecked and cam.connected:
+            if self.checkBox_cameras[cam.camIndex].isChecked() and cam.connected:
                 # If preview or recording running -> stop it first
                 if cam.preview_live:
                     cam.preview(1)
@@ -254,7 +258,7 @@ class Tab_dataset(QtWidgets.QWidget):
             self.doubleSpinBox_recording_time.setDisabled(False)
             self.spinBox_num_imgs.setDisabled(True)
         elif self.radioButton_group0_3.isChecked():
-            self.doubleSpinBox_fps.setDisabled(False)
+            self.doubleSpinBox_fps.setDisabled(True)
             self.doubleSpinBox_recording_time.setDisabled(True)
             self.spinBox_num_imgs.setDisabled(False)
 
