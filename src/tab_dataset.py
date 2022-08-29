@@ -193,9 +193,6 @@ class Tab_dataset(QtWidgets.QWidget):
                 if self.radioButton_group0_0.isChecked():
                     cam.line_edit_sequence_duration.setValue(0)
                     global_camera.cams.active_devices[global_camera.active_cam[cam.camIndex]].set_parameter("AcquisitionMode",1)
-                    global_camera.cams.active_devices[global_camera.active_cam[cam.camIndex]].set_parameter("AcquisitionFrameRate",self.doubleSpinBox_fps.value())
-                    global_camera.cams.active_devices[global_camera.active_cam[cam.camIndex]].set_parameter("ExposureAuto",1)
-                    global_camera.cams.active_devices[global_camera.active_cam[cam.camIndex]].set_parameter("ExposureTimeAbs",1/self.doubleSpinBox_fps.value())
                 elif self.radioButton_group0_1.isChecked():
                     cam.line_edit_sequence_duration.setValue(0)
                     global_camera.cams.active_devices[global_camera.active_cam[cam.camIndex]].set_parameter("AcquisitionMode",1)
@@ -205,20 +202,14 @@ class Tab_dataset(QtWidgets.QWidget):
                 if self.radioButton_group0_2.isChecked():
                     cam.line_edit_sequence_duration.setValue(self.doubleSpinBox_recording_time.value())
                     global_camera.cams.active_devices[global_camera.active_cam[cam.camIndex]].set_parameter("AcquisitionMode",1)
-                    global_camera.cams.active_devices[global_camera.active_cam[cam.camIndex]].set_parameter("AcquisitionFrameRate",self.doubleSpinBox_fps.value())
-                    global_camera.cams.active_devices[global_camera.active_cam[cam.camIndex]].set_parameter("ExposureAuto",1)
-                    global_camera.cams.active_devices[global_camera.active_cam[cam.camIndex]].set_parameter("ExposureTimeAbs",(1/self.doubleSpinBox_fps.value())*1_000_000)
                 if self.radioButton_group0_3.isChecked():
                     cam.line_edit_sequence_duration.setValue(0)
                     global_camera.cams.active_devices[global_camera.active_cam[cam.camIndex]].set_parameter("AcquisitionMode",3)
-                    global_camera.cams.active_devices[global_camera.active_cam[cam.camIndex]].set_parameter("AcquisitionFrameRate",self.doubleSpinBox_fps.value())
                     global_camera.cams.active_devices[global_camera.active_cam[cam.camIndex]].set_parameter("AcquisitionFrameCount",self.spinBox_num_imgs.value())
-                    global_camera.cams.active_devices[global_camera.active_cam[cam.camIndex]].set_parameter("ExposureAuto",1)
-                    global_camera.cams.active_devices[global_camera.active_cam[cam.camIndex]].set_parameter("ExposureTimeAbs",1/self.doubleSpinBox_fps.value())
                 
         # Run recording on all cameras
         for cam in self.camera_tabs:
-            cam.record()
+            cam.record(self.doubleSpinBox_fps.value())
 
         self.btn_start.setDisabled(True)
         self.btn_stop.setDisabled(False)

@@ -388,7 +388,7 @@ class Tab_camera(QtWidgets.QWidget):
     # Camera control
     # ==============================================
 
-    def record(self):
+    def record(self, fps = 0):
         """!@brief Starts and stops recording
         @details Is called by start/stop button. Recording is always started 
         manually. Recording ends with another button click or after time set 
@@ -414,7 +414,7 @@ class Tab_camera(QtWidgets.QWidget):
                 #Start new recording with defined name and save path
                 global_camera.cams.active_devices[global_camera.active_cam[self.camIndex]].start_recording(self.line_edit_save_location.text(),
                                     self.line_edit_sequence_name.text(),
-                                    'nothing')
+                                    fps)
                 
                 
                 #If automatic sequence duration is set, create thread that will
