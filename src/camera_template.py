@@ -206,21 +206,13 @@ class Camera_template:
         if fps > 0: 
             wait_time = 1/fps
             start_time = time.time()
-            print(wait_time)
-
             while self.acquisition_running:
                 if (not global_queue.frame_queue[self.cam_id].empty() and ((start_time + wait_time) < time.time())): 
-                    
-                    print("HERE")
                     start_time = time.time()
                     
+                    frame = global_queue.frame_queue[self.cam_id].get_nowait()[0]
                     while not global_queue.frame_queue[self.cam_id].empty():
-                        frame = global_queue.frame_queue[self.cam_id].get_nowait()[0]
-
-                    if global_queue.frame_queue[self.cam_id].empty():
-                        print("PORA")
-                    else:
-                        print(":ILSDJFKL")
+                        global_queue.frame_queue[self.cam_id].get_nowait()
 
                     name = name_scheme
                     name = name.replace("%t", datetime.now().strftime("%H-%M-%S"))
