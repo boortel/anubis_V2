@@ -150,39 +150,35 @@ class HW_Control(QtWidgets.QGroupBox):
     # ==============================================
 
     def toggle_light_2(self):
-        if self.light_status_2:
-            self.light_status_2 = False
-            self.icon_light_2.setPixmap(self.icon_stop)
-        else:
-            self.light_status_2 = True
-            self.icon_light_2.setPixmap(self.icon_run)
-            self.update_light_2(0)
-        
-        uart.toggle_light(self.light_status_2, 1, self.comboBox_com_ports.currentText())
+        if(not uart.toggle_light(self.light_status_2, 1, self.comboBox_com_ports.currentText())):
+            if self.light_status_2:
+                self.light_status_2 = False
+                self.icon_light_2.setPixmap(self.icon_stop)
+            else:
+                self.light_status_2 = True
+                self.icon_light_2.setPixmap(self.icon_run)
+                self.update_light_2(0)
 
     def toggle_light_1(self):
-        if self.light_status_1:
-            self.light_status_1 = False
-            self.icon_light_1.setPixmap(self.icon_stop)
-        else:
-            self.light_status_1 = True
-            self.icon_light_1.setPixmap(self.icon_run)
-            self.update_light_1(0)
-
-        uart.toggle_light(self.light_status_1, 0, self.comboBox_com_ports.currentText())
+        if(not uart.toggle_light((not self.light_status_1), 0, self.comboBox_com_ports.currentText())):
+            if self.light_status_1:
+                self.light_status_1 = False
+                self.icon_light_1.setPixmap(self.icon_stop)
+            else:
+                self.light_status_1 = True
+                self.icon_light_1.setPixmap(self.icon_run)
+                self.update_light_1(0)
 
 
     def toggle_rotation(self):
-        if self.rotation_status:
-            self.rotation_status = False
-            self.icon_rotation.setPixmap(self.icon_stop)
-        else:
-            self.rotation_status = True
-            self.icon_rotation.setPixmap(self.icon_run)
-            self.update_speed(0)
-            
-        uart.toggle_rotation(self.rotation_status, self.comboBox_com_ports.currentText())
-
+        if(not uart.toggle_rotation((not self.rotation_status), self.comboBox_com_ports.currentText())):
+            if self.rotation_status:
+                self.rotation_status = False
+                self.icon_rotation.setPixmap(self.icon_stop)
+            else:
+                self.rotation_status = True
+                self.icon_rotation.setPixmap(self.icon_run)
+                self.update_speed(0)
 
     def update_light_1(self, source):
         if source == 0:
