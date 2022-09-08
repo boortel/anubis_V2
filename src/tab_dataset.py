@@ -180,10 +180,10 @@ class Tab_dataset(QtWidgets.QWidget):
         for index, cam in enumerate(self.camera_tabs):
             if cam.connected and self.checkBox_cameras[index].isChecked():
                 # If preview or recording running -> stop it first
-                if cam.preview_live:
-                    cam.preview(1)
                 if cam.recording:
                     cam.record()
+                if cam.preview_live:
+                    cam.preview(1)
 
                 # set naming scheme on given tab
                 cam.line_edit_sequence_name.setText(self.lineEdit_naming_scheme.text())
