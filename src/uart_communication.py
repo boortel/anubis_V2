@@ -5,6 +5,7 @@ baudrate_sett = 9600
 parity_sett = serial.PARITY_NONE
 bytesize_sett = serial.EIGHTBITS
 stopbits_sett = serial.STOPBITS_ONE
+timeout_sett = 1
 
 
 def set_light(intensity, lightID, comport):
@@ -12,7 +13,8 @@ def set_light(intensity, lightID, comport):
                     baudrate=baudrate_sett, 
                     parity=parity_sett, 
                     bytesize=bytesize_sett, 
-                    stopbits=stopbits_sett) as port:
+                    stopbits=stopbits_sett,
+                    timeout=timeout_sett) as port:
         msg = bytes(f'$set_light;{intensity};{lightID}\n', "utf-8")
         port.write(msg)
 
@@ -21,7 +23,8 @@ def set_speed(intensity, comport):
                     baudrate=baudrate_sett, 
                     parity=parity_sett, 
                     bytesize=bytesize_sett, 
-                    stopbits=stopbits_sett) as port:
+                    stopbits=stopbits_sett,
+                    timeout=timeout_sett) as port:
         msg = bytes(f'$set_speed;{intensity}\n', "utf-8")
         port.write(msg)
 
@@ -30,7 +33,8 @@ def change_direction(direction, comport):
                     baudrate=baudrate_sett, 
                     parity=parity_sett, 
                     bytesize=bytesize_sett, 
-                    stopbits=stopbits_sett) as port:
+                    stopbits=stopbits_sett,
+                    timeout=timeout_sett) as port:
         msg = bytes(f'$change_direction;{direction}\n', "utf-8")
         port.write(msg)
 
@@ -39,7 +43,8 @@ def toggle_rotation(state, comport):
                     baudrate=baudrate_sett, 
                     parity=parity_sett, 
                     bytesize=bytesize_sett, 
-                    stopbits=stopbits_sett) as port:
+                    stopbits=stopbits_sett,
+                    timeout=timeout_sett) as port:
         state = int(state)
         msg = bytes(f'$toggle_rotation;{state}\n', "utf-8")
         port.write(msg)
@@ -49,7 +54,8 @@ def toggle_light(state, lightID, comport):
                     baudrate=baudrate_sett, 
                     parity=parity_sett, 
                     bytesize=bytesize_sett, 
-                    stopbits=stopbits_sett) as port:
+                    stopbits=stopbits_sett,
+                    timeout=timeout_sett) as port:
         state = int(state)
         msg = bytes(f'$toggle_light;{state};{lightID}\n', "utf-8")
         port.write(msg)

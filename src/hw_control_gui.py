@@ -216,8 +216,6 @@ class HW_Control(QtWidgets.QGroupBox):
         
         uart.change_direction(self.direction, self.comboBox_com_ports.currentText())
 
-
-
     def update_speed(self, source):
         if source == 0:
             self.speed = self.dial_speed.value()
