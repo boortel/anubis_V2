@@ -1116,7 +1116,8 @@ class Tab_camera(QtWidgets.QWidget):
             parameter = params.get()
             if(not(self.preview_live or self.recording)):
 #TODO Make showing params faster and remove line above 
-                self.parameter_values[parameter["name"]] = parameter["attr_value"]
+                #self.parameter_values[parameter["name"]] = parameter["attr_value"]
+                pass
             else:
                 self.update_completed_flag.set()
                 return
