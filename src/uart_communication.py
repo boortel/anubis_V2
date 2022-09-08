@@ -40,7 +40,7 @@ def toggle_rotation(state, comport):
                     parity=parity_sett, 
                     bytesize=bytesize_sett, 
                     stopbits=stopbits_sett) as port:
-        state = int(state == 'True')
+        state = int(state)
         msg = bytes(f'$toggle_rotation;{state}\n', "utf-8")
         port.write(msg)
     
@@ -50,7 +50,7 @@ def toggle_light(state, lightID, comport):
                     parity=parity_sett, 
                     bytesize=bytesize_sett, 
                     stopbits=stopbits_sett) as port:
-        state = int(state == 'True')
+        state = int(state)
         msg = bytes(f'$toggle_light;{state};{lightID}\n', "utf-8")
         port.write(msg)
     
