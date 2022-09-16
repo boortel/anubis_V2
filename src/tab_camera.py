@@ -602,7 +602,7 @@ class Tab_camera(QtWidgets.QWidget):
             #Reset status icon
             self.connection_update.emit(True, 1, "-1", self.camIndex)
     
-    def show_preview(self, process=True):
+    def show_preview(self, process=False):
         """!@brief Draws image from camera in real time.
         @details Acquires images from camera and draws them in real time at 
         the same rate as is display refresh_rate. If the frames come too fast,
@@ -1094,30 +1094,24 @@ class Tab_camera(QtWidgets.QWidget):
         @details after camera features are loaded, this method periodically 
         calls for the most recent value of each parameter.
         """
+        
         if(not self.feat_widgets):
             self.update_completed_flag.set()
             return
         
         params = Queue()
-        tries = 0
-        while(tries <= 10):
-            if(global_camera.cams.active_devices[global_camera.active_cam[self.camIndex]].get_parameters(params, 
-                    threading.Event(), 
-                    self.combo_config_level.currentIndex()+1)):
-                break
-            else:
-                tries += 1
-       
-        if(tries >= 10):
-            self.update_completed_flag.set()
-            return
+        for key in self.feat_widgets.keys():
+            value, type = global_camera.cams.active_devices[global_camera.active_cam[self.camIndex]].read_param_value(key)
+            name = key
+            param = {"name": name,
+                    "attr_type": type,
+                    "attr_value": value}
+            params.put_nowait(param)
         
         while(not params.empty()):
             parameter = params.get()
             if(not(self.preview_live or self.recording)):
-#TODO Make showing params faster and remove line above 
-                #self.parameter_values[parameter["name"]] = parameter["attr_value"]
-                pass
+                self.parameter_values[parameter["name"]] = parameter["attr_value"]
             else:
                 self.update_completed_flag.set()
                 return

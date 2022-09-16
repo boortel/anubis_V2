@@ -240,9 +240,10 @@ class Camera_vimba(Camera_template):
         try:
             if not global_queue.frame_queue[self.cam_id].full() and frame.get_status() == FrameStatus.Complete:
                 frame_copy = copy.deepcopy(frame)
+                frame_copy_save = copy.deepcopy(frame)
                 if self.is_recording:
-                    global_queue.frame_queue[self.cam_id].put_nowait([frame_copy.as_opencv_image(),
-                                            str(frame_copy.get_pixel_format())])
+                    global_queue.frame_queue[self.cam_id].put_nowait([frame_copy_save.as_opencv_image(),
+                                            str(frame_copy_save.get_pixel_format())])
                 global_queue.active_frame_queue[self.cam_id].put_nowait([frame_copy.as_opencv_image(),
                                                str(frame_copy.get_pixel_format())])
             else:
@@ -383,11 +384,15 @@ class Camera_vimba(Camera_template):
         @return A value of the selected parameter
         """
         try:
-            self.params_read_param_value["return"] = getattr(self.cam, self.params_read_param_value["param_name"]).get()
+            value = getattr(self.cam, self.params_read_param_value["param_name"]).get()
+            type = str(getattr(self.cam, self.params_read_param_value["param_name"]).get_type())
+            type = type.replace("<class 'vimba.feature.", '')
+            type = type.replace("'>","")
+            self.params_read_param_value["return"] = (value, type)
             self.flag_read_param_value.set()
             return
         except:
-            self.params_read_param_value["return"] = None
+            self.params_read_param_value["return"] = (None, None)
             self.flag_read_param_value.set()
             return
     

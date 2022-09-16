@@ -233,7 +233,7 @@ class Camera_template:
                     name = name.replace("%n", str(num))
                     #tranform image to format for ui show
                     cv2.imwrite(folder_path + name + extension, frame)
-                    #because th __frame_handler saves only image data, I can save frame directly here without conversions
+                    #because the __frame_handler saves only image data, I can save frame directly here without conversions
                     #use rather os.path.join method
                     num += 1
     
