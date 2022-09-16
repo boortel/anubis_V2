@@ -28,6 +28,7 @@ class HW_Control(QtWidgets.QGroupBox):
         self.add_widgets()
         self.connect_actions()
         self.set_texts()
+        uart.get_uart_status()
 
     def add_widgets(self):
         self.setObjectName(u"hw_control")
@@ -150,7 +151,7 @@ class HW_Control(QtWidgets.QGroupBox):
     # ==============================================
 
     def toggle_light_2(self):
-        if(not uart.toggle_light(self.light_status_2, 1, self.comboBox_com_ports.currentText())):
+        if(not uart.toggle_light((not self.light_status_2), 1, self.comboBox_com_ports.currentText())):
             if self.light_status_2:
                 self.light_status_2 = False
                 self.icon_light_2.setPixmap(self.icon_stop)

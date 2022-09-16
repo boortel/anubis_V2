@@ -18,6 +18,7 @@ def set_light(intensity, lightID, comport):
                         write_timeout=timeout_sett) as port:
             msg = bytes(f'$set_light;{intensity};{lightID}\n', "utf-8")
             port.write(msg)
+            print(msg)
             return 0
     except:
         return 1
@@ -76,9 +77,13 @@ def toggle_light(state, lightID, comport):
             state = int(state)
             msg = bytes(f'$toggle_light;{state};{lightID}\n', "utf-8")
             port.write(msg)
+            print(msg)
             return 0
     except:
         return 1
+
+def get_uart_status():
+    pass
     
 def get_com_ports():
     return([dev[0] for dev in serial.tools.list_ports.comports()])
