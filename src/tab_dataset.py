@@ -1,20 +1,7 @@
 from PyQt5 import QtCore, QtWidgets, QtGui
 import src.global_camera as global_camera
-from PyQt5.QtCore import pyqtSignal as Signal
-import os
-import threading
-from queue import Queue
-from src.config_level import Config_level
-
-import numpy as np
-import src.image_processing as imp
-import time
-#import win32api
-import src.global_queue as global_queue
 
 class Tab_dataset(QtWidgets.QWidget):
-    #signals
-
     def __init__(self, camera_tabs = []):
         super(Tab_dataset, self).__init__()
         self.camera_tabs = camera_tabs
@@ -198,7 +185,6 @@ class Tab_dataset(QtWidgets.QWidget):
                     global_camera.cams.active_devices[global_camera.active_cam[cam.camIndex]].set_parameter("AcquisitionMode",1)
                     #Trigger source is line1
                     global_camera.cams.active_devices[global_camera.active_cam[cam.camIndex]].set_parameter("TriggerSource",2)
-    #TODO check if this setting is enough to trigger correctly
                 if self.radioButton_group0_2.isChecked():
                     cam.line_edit_sequence_duration.setValue(self.doubleSpinBox_recording_time.value())
                     global_camera.cams.active_devices[global_camera.active_cam[cam.camIndex]].set_parameter("AcquisitionMode",1)
