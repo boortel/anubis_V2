@@ -1041,7 +1041,7 @@ class Tab_camera(QtWidgets.QWidget):
                     
                     #When different option is selected change the given enum in
                     #the camera
-                    self.feat_widgets[param["name"]].activated.connect(lambda new_val,param=param: global_camera.cams.active_devices[global_camera.active_cam[self.camIndex]].set_parameter(param["name"],new_val+1))
+                    self.feat_widgets[param["name"]].activated.connect(lambda new_val,param=param: global_camera.cams.active_devices[global_camera.active_cam[self.camIndex]].set_parameter(param["name"],new_val))
                 elif param["attr_type"] == "CommandFeature":
                     #If the feature type is not recognized, create a label with 
                     #the text error
@@ -1135,8 +1135,9 @@ class Tab_camera(QtWidgets.QWidget):
                 try:
                     value = self.parameter_values[parameter]
                     widget = self.feat_widgets[parameter]
-                    if(value == None):
+                    if(value == None) or (widget.hasFocus()):
                         continue
+
                     
                     if(type(widget) == QtWidgets.QLineEdit):
                         widget.setText(str(value))

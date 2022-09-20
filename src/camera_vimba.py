@@ -7,6 +7,7 @@ import src.global_vimba as global_vimba
 import time
 import threading
 import vimba
+import cv2
 
 class Camera_vimba(Camera_template):
 
@@ -237,20 +238,32 @@ class Camera_vimba(Camera_template):
         @details Is defined for Vimba and defines how to acquire
             whole frame and put into the frame_queue
         """
-        try:
-            if not global_queue.frame_queue[self.cam_id].full() and frame.get_status() == FrameStatus.Complete:
-                frame_copy = copy.deepcopy(frame)
-                frame_copy_save = copy.deepcopy(frame)
-                if self.is_recording:
-                    global_queue.frame_queue[self.cam_id].put_nowait([frame_copy_save.as_opencv_image(),
-                                            str(frame_copy_save.get_pixel_format())])
-                global_queue.active_frame_queue[self.cam_id].put_nowait([frame_copy.as_opencv_image(),
-                                               str(frame_copy.get_pixel_format())])
+        format = cam.get_pixel_format()
+        frame_copy = None
+        frame_copy_save = None
+
+        #try:
+        if not global_queue.frame_queue[self.cam_id].full() and frame.get_status() == FrameStatus.Complete:
+            if(str(format) == "BayerRG8"):
+                frame_copy = copy.deepcopy(cv2.cvtColor(frame.as_numpy_ndarray(), cv2.COLOR_BAYER_RG2RGB))
+                frame_copy_save = copy.deepcopy(cv2.cvtColor(frame.as_numpy_ndarray(), cv2.COLOR_BAYER_RG2RGB))
+                format = "BGR8"
             else:
-                pass
-            cam.queue_frame(frame)
-        except:
+                frame_copy = copy.deepcopy(frame.as_opencv_image())
+                frame_copy_save = copy.deepcopy(frame.as_opencv_image())
+                format = str(frame.get_pixel_format())
+
+            if self.is_recording:
+                global_queue.frame_queue[self.cam_id].put_nowait([frame_copy_save,
+                                        format])
+            global_queue.active_frame_queue[self.cam_id].put_nowait([frame_copy,
+                                            format])
+            PixelFormat
+        else:
             pass
+        cam.queue_frame(frame)
+        #except:
+        #   print("EXCEPTION")
 
     def disconnect_camera(self):
         """!@brief Disconnect camera and restores the object to its initial state"""
