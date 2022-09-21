@@ -36,7 +36,6 @@ def edge_detect(image):
     return image
     
 def anomally_detect(image):
-    start = time.time()
     model_dir_path="./svdd_anubis/model"
     load_config=os.path.join(model_dir_path,"config.json")
     load_model=os.path.join(model_dir_path,"model.tar")
@@ -72,9 +71,8 @@ def anomally_detect(image):
     im = Image.fromarray(image[0],'RGB')
     img = trans(im) #np.squeeze(image[0], axis=-1)
     scores = deep_SVDD.test_image(img, dev)
-    
-    print(f"{start-time.time()}")     
-    #print(scores)
+      
+    print(scores)
     draw = ImageDraw.Draw(im)
     draw.rectangle([(0,0), im.size], outline='#0000ff' if scores[0]> 1000 else '#00ff00', width=10) #'#ff0000' if scores[0]> 1 else '#00ff00'
     
