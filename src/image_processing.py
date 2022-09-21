@@ -1,14 +1,14 @@
 import cv2
 import numpy as np
-
+import time
 # For anomally detect
 import sys
 import os
 sys.path.append("./svdd_anubis/")
 from PIL import Image, ImageDraw
-from deepSVDD import DeepSVDD
-from utils.config import Config
-from datasets.preprocessing import global_contrast_normalization
+from svdd_anubis.deepSVDD import DeepSVDD
+from svdd_anubis.utils.config import Config
+from svdd_anubis.datasets.preprocessing import global_contrast_normalization
 import torchvision.transforms as transforms
 import torch
 
@@ -36,7 +36,7 @@ def edge_detect(image):
     return image
     
 def anomally_detect(image):
-    
+    start = time.time()
     model_dir_path="./svdd_anubis/model"
     load_config=os.path.join(model_dir_path,"config.json")
     load_model=os.path.join(model_dir_path,"model.tar")
@@ -67,14 +67,16 @@ def anomally_detect(image):
     deep_SVDD.set_network(cfg.settings['net_name'])
     deep_SVDD.load_model(model_path=load_model, load_ae=False, device = dev)
     
-    img = np.repeat(image[0],3, axis=-1)
-    im = Image.fromarray(img,'RGB')
+    #img = np.repeat(image[0],3, axis=-1)
+    
+    im = Image.fromarray(image[0],'RGB')
     img = trans(im) #np.squeeze(image[0], axis=-1)
     scores = deep_SVDD.test_image(img, dev)
-         
+    
+    print(f"{start-time.time()}")     
     #print(scores)
     draw = ImageDraw.Draw(im)
-    draw.rectangle([(0,0), im.size], outline='#ffffff' if scores[0]> 1000 else '#000000', width=10) #'#ff0000' if scores[0]> 1 else '#00ff00'
+    draw.rectangle([(0,0), im.size], outline='#0000ff' if scores[0]> 1000 else '#00ff00', width=10) #'#ff0000' if scores[0]> 1 else '#00ff00'
     
-    image[0] = np.array(im.convert('L'))
+    image[0] = np.array(im)
     return image

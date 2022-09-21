@@ -1,3 +1,4 @@
+from colorsys import rgb_to_hls
 from src.camera_template import Camera_template
 from src.config_level import Config_level
 from vimba import *
@@ -16,6 +17,7 @@ class Camera_vimba(Camera_template):
 
         self.name = "Vimba"
         self.cam = None
+        self.pixel_conversion = None
 
         ##Flags to signalize request for some camera command, 
         # the request is then transfered to main object thread
@@ -233,7 +235,7 @@ class Camera_vimba(Camera_template):
                     self.thread_producer.setDaemon(True)
                     self.thread_producer.start()            
 
-    def _frame_handler(self,cam ,frame):
+    def _frame_handler(self, cam, frame):
         """!@brief Defines how to process incoming frames
         @details Is defined for Vimba and defines how to acquire
             whole frame and put into the frame_queue
@@ -241,13 +243,12 @@ class Camera_vimba(Camera_template):
         format = cam.get_pixel_format()
         frame_copy = None
         frame_copy_save = None
-
         #try:
         if not global_queue.frame_queue[self.cam_id].full() and frame.get_status() == FrameStatus.Complete:
-            if(str(format) == "BayerRG8"):
-                frame_copy = copy.deepcopy(cv2.cvtColor(frame.as_numpy_ndarray(), cv2.COLOR_BAYER_RG2RGB))
-                frame_copy_save = copy.deepcopy(cv2.cvtColor(frame.as_numpy_ndarray(), cv2.COLOR_BAYER_RG2RGB))
-                format = "BGR8"
+            if not self.pixel_conversion[0] == None:
+                frame_copy = copy.deepcopy(cv2.cvtColor(frame.as_numpy_ndarray(), self.pixel_conversion[0]))
+                frame_copy_save = copy.deepcopy(cv2.cvtColor(frame.as_numpy_ndarray(), self.pixel_conversion[0]))
+                format = self.pixel_conversion[1]
             else:
                 frame_copy = copy.deepcopy(frame.as_opencv_image())
                 frame_copy_save = copy.deepcopy(frame.as_opencv_image())
@@ -258,7 +259,7 @@ class Camera_vimba(Camera_template):
                                         format])
             global_queue.active_frame_queue[self.cam_id].put_nowait([frame_copy,
                                             format])
-            PixelFormat
+            
         else:
             pass
         cam.queue_frame(frame)
@@ -482,9 +483,10 @@ class Camera_vimba(Camera_template):
             in a frame queue for consumer thread to process. The thread 
             runs until stream_stop_switch is set
         """
-        self.flag_frame_producer.set()    
+        self.flag_frame_producer.set() 
+        self._set_conversion_format()
         self.cam.start_streaming(handler=self._frame_handler)
-        
+                
         self._stream_stop_switch.wait()
         
         while(True):
@@ -493,4 +495,183 @@ class Camera_vimba(Camera_template):
                 return
             except VimbaCameraError as e:
                 pass
+
+    def _set_conversion_format(self):
+        format = str(self.cam.get_pixel_format())
         
+        if(format == "Mono1p"):
+            pass
+        elif(format == "Mono2p"):
+            pass
+        elif(format == "Mono4p"):
+            pass
+        elif(format == "Mono8"):
+            self.pixel_conversion = [None, None]
+        elif(format == "Mono8s"):
+            self.pixel_conversion = [None, None]
+        elif(format == "Mono10"):
+            pass
+        elif(format == "Mono10p"):
+            pass
+        elif(format == "Mono12"):
+            pass
+        elif(format == "Mono12p"):
+            pass
+        elif(format == "Mono14"):
+            pass
+        elif(format == "Mono12Packed"):
+            pass
+        elif(format == "R8"):
+            pass
+        elif(format == "G8"):
+            pass
+        elif(format == "B8"):
+            pass
+#RGB
+        elif(format == "RGB10p32"):
+            pass
+        elif(format == "RGB8"):
+            self.pixel_conversion = [None, None]
+        elif(format == "RGB10"):
+            self.pixel_conversion = [None, None]
+        elif(format == "RGB12"):
+            self.pixel_conversion = [None, None]
+        elif(format == "RGB16"):
+            self.pixel_conversion = [None, None]
+        elif(format == "BGR8"):
+            self.pixel_conversion = [None, None]
+        elif(format == "RGB12_Planar"):
+            pass
+        elif(format == "RGB16"):
+            self.pixel_conversion = [None, None]
+        elif(format == "RGB16_Planar"):
+            pass
+        elif(format == "RGB565p"):
+            pass
+        elif(format == "BGR10"):
+            self.pixel_conversion = [None, None]
+        elif(format == "BGR12"):
+            self.pixel_conversion = [None, None]
+        elif(format == "BGR16"):
+            self.pixel_conversion = [None, None]
+        elif(format == "BGR565p"):
+            pass
+        elif(format == "RGB10V1Packed"):
+            pass
+        elif(format == "RGB12V1Packed"):
+            pass
+        elif(format == "BGRa8"):
+            pass
+#Bayer
+        if(format == "BayerRG8"):
+            self.pixel_conversion = [cv2.COLOR_BAYER_RG2RGB, "BGR8"]
+        elif(format == "BayerBG10"):
+            pass
+        elif(format == "BayerGB10"):
+            pass
+        elif(format == "BayerGR10"):
+            pass
+        elif(format == "BayerRG10"):
+            pass
+        elif(format == "BayerGB12"):
+            pass
+        elif(format == "BayerBG12"):
+            pass
+        elif(format == "BayerGR12"):
+            pass
+        elif(format == "BayerRG12"):
+            pass
+        elif(format == "BayerBG16"):
+            pass
+        elif(format == "BayerGB16"):
+            pass
+        elif(format == "BayerGR16"):
+            pass
+        elif(format == "BayerRG16"):
+            pass
+        elif(format == "BayerBG8"):
+            pass
+        elif(format == "BayerGB8"):
+            pass
+        elif(format == "BayerGR8"):
+            pass
+        elif(format == "BayerGR10Packed"):
+            pass
+        elif(format == "BayerRG10Packed"):
+            pass
+        elif(format == "BayerGB10Packed"):
+            pass
+        elif(format == "BayerBG10Packed"):
+            pass
+        elif(format == "BayerGR12Packed"):
+            pass
+        elif(format == "BayerRG12Packed"):
+            pass
+        elif(format == "BayerGB12Packed"):
+            pass
+        elif(format == "BayerBG12Packed"):
+            pass
+#YCBCR
+        elif(format == "YUV422_8"):
+            pass
+        elif(format == "YCbCr411_8"):
+            pass
+        elif(format == "YCbCr422_8"):
+            pass
+        elif(format == "YCbCr601_422_8"):
+            pass
+        elif(format == "YCbCr709_422_8"):
+            pass
+        elif(format == "YCbCr8"):
+            pass
+#OTHERS
+        elif(format == "Raw8"):
+            pass
+        elif(format == "Raw16"):
+            pass
+        elif(format == "RGB8_Planar"):
+            pass
+        elif(format == "RGB10_Planar"):
+            pass
+        elif(format == "Coord3D_A8"):
+            pass
+        elif(format == "Coord3D_B8"):
+            pass
+        elif(format == "Coord3D_C8"):
+            pass
+        elif(format == "Coord3D_ABC8"):
+            pass
+        elif(format == "Coord3D_ABC8_Planar"):
+            pass
+        elif(format == "Coord3D_A16"):
+            pass
+        elif(format == "Coord3D_B16"):
+            pass
+        elif(format == "Coord3D_C16"):
+            pass
+        elif(format == "Coord3D_ABC16"):
+            pass
+        elif(format == "Coord3D_ABC16_Planar"):
+            pass
+        elif(format == "Coord3D_A32f"):
+            pass
+        elif(format == "Coord3D_B32f"):
+            pass
+        elif(format == "Coord3D_C32f"):
+            pass
+        elif(format == "Coord3D_ABC32f"):
+            pass
+        elif(format == "Coord3D_ABC32f_Planar"):
+            pass
+        elif(format == "Confidence1"):
+            pass
+        elif(format == "Confidence1p"):
+            pass
+        elif(format == "Confidence8"):
+            pass
+        elif(format == "Confidence16"):
+            pass
+        elif(format == "Confidence32f"):
+            pass
+        else:
+            self.pixel_conversion = [None, None]

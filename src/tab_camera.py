@@ -110,8 +110,10 @@ class Tab_camera(QtWidgets.QWidget):
         ##Resizing image to preview area size instead of using zoom
         self.preview_fit = True
 
+        ##True if the processing is enabled, False otherwise
+        self.processing = False
+
         self.connected = False
-        self.in_process = False
 
         self.add_widgets()
         self.connect_actions()
@@ -307,9 +309,9 @@ class Tab_camera(QtWidgets.QWidget):
         self.btn_zoom_in.clicked.connect(lambda: self.set_zoom(1))
         self.btn_zoom_100.clicked.connect(lambda: self.set_zoom(100))
         self.btn_single_frame.clicked.connect(self.single_frame)
-        self.btn_start_preview.clicked.connect(lambda: self.preview(False))
+        self.btn_start_preview.clicked.connect(self.preview)
         self.btn_start_recording.clicked.connect(self.record)
-        self.btn_start_process.clicked.connect(lambda: self.preview(True))
+        self.btn_start_process.clicked.connect(self.toggle_processing)
 
     def set_texts(self):
 
@@ -375,7 +377,6 @@ class Tab_camera(QtWidgets.QWidget):
         self.preview_zoom = 1
         self.preview_fit = True
         self.connected = False
-        self.in_process = False
 
         self.thread_auto_refresh_params = threading.Thread(target=self.start_refresh_parameters)
         self.thread_auto_refresh_params.setDaemon(True)
@@ -387,6 +388,10 @@ class Tab_camera(QtWidgets.QWidget):
     # ==============================================
     # Camera control
     # ==============================================
+
+    def toggle_processing(self):
+        """just toggle processing of the preview image"""
+        self.processing = not self.processing
 
     def record(self, fps = 0):
         """!@brief Starts and stops recording
@@ -472,14 +477,14 @@ class Tab_camera(QtWidgets.QWidget):
         if(self.recording):
             self.record()
     
-    def preview(self, process):
+    def preview(self):
         """!@brief Starts live preview
         @details Unlike recording method, this method does not save frames to a
         drive. Preview picture is rendered in separate thread.
         """
         #continue only if camera is connected
         if self.connected:
-            if((not self.preview_live) and (not self.in_process)):
+            if(not self.preview_live):
                 #clears parameters to prevent user from changing them
                 self.signal_clear_parameters.emit()
 #TODO Make showing params faster and remove line above 
@@ -492,14 +497,9 @@ class Tab_camera(QtWidgets.QWidget):
                 global_camera.cams.active_devices[global_camera.active_cam[self.camIndex]].start_acquisition()
                 
                 #Create and run thread to draw frames to gui
-                if process:
-                    self.send_status_msg.emit("Starting processing", 1500, self.camIndex)
-                    self.show_preview_thread = threading.Thread(target=self.show_preview, args = [process])
-                    self.in_process = True
-                else:
-                    self.send_status_msg.emit("Starting preview", 1500, self.camIndex)
-                    self.show_preview_thread = threading.Thread(target=self.show_preview, args = [process])
-                    self.preview_live = True
+                self.send_status_msg.emit("Starting preview", 1500, self.camIndex)
+                self.show_preview_thread = threading.Thread(target=self.show_preview)
+                self.preview_live = True
 
                 self.show_preview_thread.daemon = True
                 self.show_preview_thread.start()
@@ -510,13 +510,9 @@ class Tab_camera(QtWidgets.QWidget):
                 #Stop receiving frames
                 global_camera.cams.active_devices[global_camera.active_cam[self.camIndex]].stop_acquisition()
                 
-                if (not self.in_process):
-                    self.preview_live = False
-                    self.send_status_msg.emit("Stopping preview", 1500, self.camIndex)
-                else:
-                    self.in_process = False
-                    self.send_status_msg.emit("Stopping processing", 1500, self.camIndex)
-
+                self.preview_live = False
+                self.send_status_msg.emit("Stopping preview", 1500, self.camIndex)
+                
                 self.preview_update.emit(False, self.camIndex)
                 self.signal_show_parameters.emit()
 #TODO Make showing params faster and remove line above                
@@ -602,7 +598,7 @@ class Tab_camera(QtWidgets.QWidget):
             #Reset status icon
             self.connection_update.emit(True, 1, "-1", self.camIndex)
     
-    def show_preview(self, process=False):
+    def show_preview(self):
         """!@brief Draws image from camera in real time.
         @details Acquires images from camera and draws them in real time at 
         the same rate as is display refresh_rate. If the frames come too fast,
@@ -639,13 +635,12 @@ class Tab_camera(QtWidgets.QWidget):
                     self.received = self.received + 1
                     global_queue.active_frame_queue[global_camera.active_cam[self.camIndex]].get_nowait()
                 
-                if process:
+                if self.processing:
                     #Try to process the image
                     image = imp.processImage_main(image)
-
                     #TODO: zjistit, proc se nevycita ch
-                    h, w = image[0].shape
-                    ch = 1
+                    h, w, ch = image[0].shape
+                    #ch = 3
                     bytes_per_line = ch * w
                 else:
                     #Convert image to proper format for PyQt
