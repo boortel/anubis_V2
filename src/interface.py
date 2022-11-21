@@ -642,15 +642,10 @@ class Ui_MainWindow(QtCore.QObject):
         self.tab_dataset.checkbox_enabler()
 
     def update_preview(self, state, tab):
-
-        # TODO: pouze v pripade aktivni zalozky
-
         """!@brief Method is used to transfer information about preview 
         state to other objects (mostly tabs)
         @param[in] state Tells whether the preview is active or not
         """
-        #self.preview_and_control.preview_live = state
-
         if tab == 0:
             self.tab_camera_cfg1.preview_live = state
             self.preview1_live = state
