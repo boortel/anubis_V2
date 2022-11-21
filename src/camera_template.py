@@ -210,9 +210,8 @@ class Camera_template:
                 if (not global_queue.frame_queue[self.cam_id].empty() and ((start_time + wait_time) < time.time())): 
                     start_time = time.time()
                     
-                    frame = global_queue.frame_queue[self.cam_id].get_nowait()[0]
                     while not global_queue.frame_queue[self.cam_id].empty():
-                        global_queue.frame_queue[self.cam_id].get_nowait()
+                        frame = global_queue.frame_queue[self.cam_id].get_nowait()[0]
 
                     name = name_scheme
                     name = name.replace("%t", datetime.now().strftime("%H-%M-%S"))
@@ -223,6 +222,8 @@ class Camera_template:
                     #because th __frame_handler saves only image data, I can save frame directly here without conversions
                     #use rather os.path.join method
                     num += 1
+                else:
+                    time.sleep(0.002)
         else:
             while self.acquisition_running or not global_queue.frame_queue[self.cam_id].empty():
                 if not global_queue.frame_queue[self.cam_id].empty(): 
