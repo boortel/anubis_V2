@@ -9,6 +9,7 @@ import time
 import threading
 import vimba
 import cv2
+import numpy as np
 
 class Camera_vimba(Camera_template):
 
@@ -244,11 +245,32 @@ class Camera_vimba(Camera_template):
         frame_copy = None
         frame_copy_save = None
         #try:
-        if not global_queue.frame_queue[self.cam_id].full() and frame.get_status() == FrameStatus.Complete:
-            if not self.pixel_conversion[0] == None:
-                frame_copy = copy.deepcopy(cv2.cvtColor(frame.as_numpy_ndarray(), self.pixel_conversion[0]))
-                frame_copy_save = copy.deepcopy(cv2.cvtColor(frame.as_numpy_ndarray(), self.pixel_conversion[0]))
+        if frame.get_status() == FrameStatus.Complete:
+            if global_queue.frame_queue[self.cam_id].full():
+                global_queue.frame_queue[self.cam_id].get_nowait()
+                
+            if not self.pixel_conversion[1] == None:  
+                pixel_format = str(frame.get_pixel_format())
+                
+                frame_np = frame.as_numpy_ndarray()
+                if "16" in pixel_format:
+                    frame_np = frame_np/256
+                elif "14" in pixel_format:
+                    frame_np = frame_np/64
+                elif "12" in pixel_format:
+                    frame_np = frame_np/16
+                elif "10" in pixel_format:
+                    frame_np = frame_np/4
+
+                if not self.pixel_conversion[0] == None:
+                    frame_copy = copy.deepcopy(cv2.cvtColor(frame_np.astype(np.uint8), self.pixel_conversion[0]))
+                    frame_copy_save = copy.deepcopy(cv2.cvtColor(frame.as_numpy_ndarray(), self.pixel_conversion[0]))
+                else:
+                    frame_copy = copy.deepcopy(frame_np.astype(np.uint8))
+                    frame_copy_save = copy.deepcopy(frame.as_numpy_ndarray())
+                
                 format = self.pixel_conversion[1]
+
             else:
                 frame_copy = copy.deepcopy(frame.as_opencv_image())
                 frame_copy_save = copy.deepcopy(frame.as_opencv_image())
@@ -418,9 +440,13 @@ class Camera_vimba(Camera_template):
         @return True if success else returns False
         """
         try:
-            getattr(self.cam, self.params_set_parameter["parameter_name"]).set(self.params_set_parameter["new_value"])
+            if self.params_set_parameter["parameter_name"] == "PixelFormat":
+                self.cam.set_pixel_format(getattr(PixelFormat, self.params_set_parameter["new_value"]))
+            else:
+                getattr(self.cam, self.params_set_parameter["parameter_name"]).set(self.params_set_parameter["new_value"])
             self.params_set_parameter["return"] = True
         except (AttributeError, VimbaFeatureError):
+            print(f"error setting parameter {self.params_set_parameter['parameter_name']}")
             self.params_set_parameter["return"] = False
 
         self.flag_set_parameter.set()
@@ -499,179 +525,143 @@ class Camera_vimba(Camera_template):
     def _set_conversion_format(self):
         format = str(self.cam.get_pixel_format())
         
-        if(format == "Mono1p"):
-            pass
-        elif(format == "Mono2p"):
-            pass
-        elif(format == "Mono4p"):
-            pass
-        elif(format == "Mono8"):
-            self.pixel_conversion = [None, None]
-        elif(format == "Mono8s"):
+        print(format)
+#TODO Many conditions can be merged together 
+        if(format == "Mono8"):
             self.pixel_conversion = [None, None]
         elif(format == "Mono10"):
-            pass
+            self.pixel_conversion = [None, "Mono8"]
         elif(format == "Mono10p"):
-            pass
+            self.pixel_conversion = [None, "Mono8"]
         elif(format == "Mono12"):
-            pass
+            self.pixel_conversion = [None, "Mono8"]
         elif(format == "Mono12p"):
-            pass
+            self.pixel_conversion = [None, "Mono8"]
         elif(format == "Mono14"):
-            pass
+            self.pixel_conversion = [None, "Mono8"]
+        elif(format == "Mono16"):
+            self.pixel_conversion = [None, "Mono8"]
         elif(format == "Mono12Packed"):
-            pass
-        elif(format == "R8"):
-            pass
-        elif(format == "G8"):
-            pass
-        elif(format == "B8"):
-            pass
+            self.pixel_conversion = [None, "Mono8"]
 #RGB
-        elif(format == "RGB10p32"):
-            pass
         elif(format == "RGB8"):
-            self.pixel_conversion = [None, None]
+            self.pixel_conversion = [cv2.COLOR_RGB2BGR, "BGR8"]
         elif(format == "RGB10"):
-            self.pixel_conversion = [None, None]
+            self.pixel_conversion = [cv2.COLOR_RGB2BGR, "BGR8"]
         elif(format == "RGB12"):
-            self.pixel_conversion = [None, None]
+            self.pixel_conversion = [cv2.COLOR_RGB2BGR, "BGR8"]
+        elif(format == "RGB14"):
+            self.pixel_conversion = [cv2.COLOR_RGB2BGR, "BGR8"]
         elif(format == "RGB16"):
-            self.pixel_conversion = [None, None]
+            self.pixel_conversion = [cv2.COLOR_RGB2BGR, "BGR8"]
         elif(format == "BGR8"):
-            self.pixel_conversion = [None, None]
-        elif(format == "RGB12_Planar"):
-            pass
-        elif(format == "RGB16"):
-            self.pixel_conversion = [None, None]
-        elif(format == "RGB16_Planar"):
-            pass
-        elif(format == "RGB565p"):
-            pass
+            self.pixel_conversion = [None, "BGR8"]
         elif(format == "BGR10"):
-            self.pixel_conversion = [None, None]
+            self.pixel_conversion = [None, "BGR8"]
         elif(format == "BGR12"):
-            self.pixel_conversion = [None, None]
+            self.pixel_conversion = [None, "BGR8"]
+        elif(format == "BGR14"):
+            self.pixel_conversion = [None, "BGR8"]
         elif(format == "BGR16"):
-            self.pixel_conversion = [None, None]
-        elif(format == "BGR565p"):
-            pass
-        elif(format == "RGB10V1Packed"):
-            pass
-        elif(format == "RGB12V1Packed"):
-            pass
+            self.pixel_conversion = [None, "BGR8"]
+            
         elif(format == "BGRa8"):
-            pass
+            self.pixel_conversion = [cv2.COLOR_BGRA2RGBA, "RGBa8"]
+        elif(format == "BGRa10"):
+            self.pixel_conversion = [cv2.COLOR_BGRA2RGBA, "RGBa8"]
+        elif(format == "BGRa12"):
+            self.pixel_conversion = [cv2.COLOR_BGRA2RGBA, "RGBa8"]
+        elif(format == "BGRa14"):
+            self.pixel_conversion = [cv2.COLOR_BGRA2RGBA, "RGBa8"]
+        elif(format == "BGRa16"):
+            self.pixel_conversion = [cv2.COLOR_BGRA2RGBA, "RGBa8"]
+         
+        elif(format == "RGBa8"):
+            self.pixel_conversion = [None, "RGBa8"]
+        elif(format == "RGBa10"):
+            self.pixel_conversion = [None, "RGBa8"]
+        elif(format == "RGBa12"):
+            self.pixel_conversion = [None, "RGBa8"]
+        elif(format == "RGBa14"):
+            self.pixel_conversion = [None, "RGBa8"]
+        elif(format == "RGBa16"):
+            self.pixel_conversion = [None, "RGBa8"]
+
+        elif(format == "Argb8"):
+            self.pixel_conversion = [None, "RGBa8"]   
 #Bayer
-        if(format == "BayerRG8"):
+        elif(format == "BayerRG8"):
             self.pixel_conversion = [cv2.COLOR_BAYER_RG2RGB, "BGR8"]
         elif(format == "BayerBG10"):
-            pass
+            self.pixel_conversion = [cv2.COLOR_BAYER_BG2RGB, "BGR8"]
         elif(format == "BayerGB10"):
-            pass
+            self.pixel_conversion = [cv2.COLOR_BAYER_GB2RGB, "BGR8"]
         elif(format == "BayerGR10"):
-            pass
+            self.pixel_conversion = [cv2.COLOR_BAYER_GR2RGB, "BGR8"]
         elif(format == "BayerRG10"):
-            pass
+            self.pixel_conversion = [cv2.COLOR_BAYER_RG2RGB, "BGR8"]
+
+        elif(format == "BayerBG10p"):
+            self.pixel_conversion = [cv2.COLOR_BAYER_BG2RGB, "BGR8"]
+        elif(format == "BayerGB10p"):
+            self.pixel_conversion = [cv2.COLOR_BAYER_GB2RGB, "BGR8"]
+        elif(format == "BayerGR10p"):
+            self.pixel_conversion = [cv2.COLOR_BAYER_GR2RGB, "BGR8"]
+        elif(format == "BayerRG10p"):
+            self.pixel_conversion = [cv2.COLOR_BAYER_RG2RGB, "BGR8"]
+
         elif(format == "BayerGB12"):
-            pass
+            self.pixel_conversion = [cv2.COLOR_BAYER_GB2RGB, "BGR8"]
         elif(format == "BayerBG12"):
-            pass
+            self.pixel_conversion = [cv2.COLOR_BAYER_BG2RGB, "BGR8"]
         elif(format == "BayerGR12"):
-            pass
+            self.pixel_conversion = [cv2.COLOR_BAYER_GR2RGB, "BGR8"]
         elif(format == "BayerRG12"):
-            pass
+            self.pixel_conversion = [cv2.COLOR_BAYER_RG2RGB, "BGR8"]
+        
+        elif(format == "BayerGB12p"):
+            self.pixel_conversion = [cv2.COLOR_BAYER_GB2RGB, "BGR8"]
+        elif(format == "BayerBG12p"):
+            self.pixel_conversion = [cv2.COLOR_BAYER_BG2RGB, "BGR8"]
+        elif(format == "BayerGR12p"):
+            self.pixel_conversion = [cv2.COLOR_BAYER_GR2RGB, "BGR8"]
+        elif(format == "BayerRG12p"):
+            self.pixel_conversion = [cv2.COLOR_BAYER_RG2RGB, "BGR8"]
+        
         elif(format == "BayerBG16"):
-            pass
+            self.pixel_conversion = [cv2.COLOR_BAYER_BG2RGB, "BGR8"]
         elif(format == "BayerGB16"):
-            pass
+            self.pixel_conversion = [cv2.COLOR_BAYER_GB2RGB, "BGR8"]
         elif(format == "BayerGR16"):
-            pass
+            self.pixel_conversion = [cv2.COLOR_BAYER_GR2RGB, "BGR8"]
         elif(format == "BayerRG16"):
-            pass
+            self.pixel_conversion = [cv2.COLOR_BAYER_RG2RGB, "BGR8"]
         elif(format == "BayerBG8"):
-            pass
+            self.pixel_conversion = [cv2.COLOR_BAYER_BG2RGB, "BGR8"]
         elif(format == "BayerGB8"):
-            pass
+            self.pixel_conversion = [cv2.COLOR_BAYER_GB2RGB, "BGR8"]
         elif(format == "BayerGR8"):
-            pass
-        elif(format == "BayerGR10Packed"):
-            pass
-        elif(format == "BayerRG10Packed"):
-            pass
-        elif(format == "BayerGB10Packed"):
-            pass
-        elif(format == "BayerBG10Packed"):
-            pass
+            self.pixel_conversion = [cv2.COLOR_BAYER_GR2RGB, "BGR8"]
         elif(format == "BayerGR12Packed"):
-            pass
+            self.pixel_conversion = [cv2.COLOR_BAYER_GR2RGB, "BGR8"]
         elif(format == "BayerRG12Packed"):
-            pass
+            self.pixel_conversion = [cv2.COLOR_BAYER_RG2RGB, "BGR8"]
         elif(format == "BayerGB12Packed"):
-            pass
+            self.pixel_conversion = [cv2.COLOR_BAYER_GB2RGB, "BGR8"]
         elif(format == "BayerBG12Packed"):
-            pass
+            self.pixel_conversion = [cv2.COLOR_BAYER_BG2RGB, "BGR8"]
 #YCBCR
-        elif(format == "YUV422_8"):
-            pass
-        elif(format == "YCbCr411_8"):
-            pass
-        elif(format == "YCbCr422_8"):
-            pass
-        elif(format == "YCbCr601_422_8"):
-            pass
-        elif(format == "YCbCr709_422_8"):
-            pass
-        elif(format == "YCbCr8"):
-            pass
-#OTHERS
-        elif(format == "Raw8"):
-            pass
-        elif(format == "Raw16"):
-            pass
-        elif(format == "RGB8_Planar"):
-            pass
-        elif(format == "RGB10_Planar"):
-            pass
-        elif(format == "Coord3D_A8"):
-            pass
-        elif(format == "Coord3D_B8"):
-            pass
-        elif(format == "Coord3D_C8"):
-            pass
-        elif(format == "Coord3D_ABC8"):
-            pass
-        elif(format == "Coord3D_ABC8_Planar"):
-            pass
-        elif(format == "Coord3D_A16"):
-            pass
-        elif(format == "Coord3D_B16"):
-            pass
-        elif(format == "Coord3D_C16"):
-            pass
-        elif(format == "Coord3D_ABC16"):
-            pass
-        elif(format == "Coord3D_ABC16_Planar"):
-            pass
-        elif(format == "Coord3D_A32f"):
-            pass
-        elif(format == "Coord3D_B32f"):
-            pass
-        elif(format == "Coord3D_C32f"):
-            pass
-        elif(format == "Coord3D_ABC32f"):
-            pass
-        elif(format == "Coord3D_ABC32f_Planar"):
-            pass
-        elif(format == "Confidence1"):
-            pass
-        elif(format == "Confidence1p"):
-            pass
-        elif(format == "Confidence8"):
-            pass
-        elif(format == "Confidence16"):
-            pass
-        elif(format == "Confidence32f"):
-            pass
+        elif(format == "Yuv422"):
+            self.pixel_conversion = [cv2.COLOR_YUV2RGB_Y422, "RGB8"]
+        elif(format == "Yuv411"):
+            self.pixel_conversion = [cv2.COLOR_YUV2RGB, "BGR8"]
+        elif(format == "Yuv444"):
+            self.pixel_conversion = [cv2.COLOR_YUV2BGR, "BGR8"]
+        elif(format == "YCbCr411_8_CbYYCrYY"):
+            self.pixel_conversion = [cv2.COLOR_YCrCb2RGB, "RGB8"]
+        elif(format == "YCbCr422_8_CbYCrY"):
+            self.pixel_conversion = [cv2.COLOR_YCrCb2RGB, "RGB8"]
+        elif(format == "YCbCr8_CbYCr"):
+            self.pixel_conversion = [cv2.COLOR_YCrCb2RGB, "RGB8"]
         else:
             self.pixel_conversion = [None, None]
