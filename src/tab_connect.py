@@ -152,6 +152,8 @@ class Tab_connect(QtWidgets.QWidget):
             #Set up the status bar
             self.conntabList[self.combo_tab_selector.currentIndex()] = 1
             self.connection_update.emit(True, 1, self.detected[index]['model'], self.combo_tab_selector.currentIndex())
+            #Sleep to give camera time to initialize everything before user can use it
+            time.sleep(1)
             self.signal_toggle_controls.emit(False)
     
     def disconnect_camera(self, toggle_controls=True):
