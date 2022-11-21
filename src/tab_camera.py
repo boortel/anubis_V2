@@ -621,8 +621,8 @@ class Tab_camera(QtWidgets.QWidget):
         while (self.recording or self.preview_live) and (global_camera.active_cam[self.camIndex] in global_queue.active_frame_queue.keys()):
             cycles = cycles + 1
             
-            #Draw only if thre is at least 1 frame to draw
-            if not global_queue.active_frame_queue[global_camera.active_cam[self.camIndex]].qsize() == 0:
+            #Draw only if there is at least 1 frame to draw
+            if not global_queue.active_frame_queue[global_camera.active_cam[self.camIndex]].empty():
                 image = global_queue.active_frame_queue[global_camera.active_cam[self.camIndex]].get_nowait()
                 self.received = self.received + 1
                 
@@ -638,9 +638,7 @@ class Tab_camera(QtWidgets.QWidget):
                 if self.processing:
                     #Try to process the image
                     image = imp.processImage_main(image)
-                    #TODO: zjistit, proc se nevycita ch
                     h, w, ch = image[0].shape
-                    #ch = 3
                     bytes_per_line = ch * w
                 else:
                     #Convert image to proper format for PyQt
@@ -672,7 +670,6 @@ class Tab_camera(QtWidgets.QWidget):
                 
                 
                 image = QtGui.QImage(image[0].data, w, h, bytes_per_line, color_format)
-#TODO Get color format dynamically
                 
                 #get size of preview window if zoom fit is selected
                 if(self.preview_fit == True):
@@ -1036,7 +1033,7 @@ class Tab_camera(QtWidgets.QWidget):
                     
                     #When different option is selected change the given enum in
                     #the camera
-                    self.feat_widgets[param["name"]].activated.connect(lambda new_val,param=param: global_camera.cams.active_devices[global_camera.active_cam[self.camIndex]].set_parameter(param["name"],new_val))
+                    self.feat_widgets[param["name"]].activated.connect(lambda new_val,param=param: global_camera.cams.active_devices[global_camera.active_cam[self.camIndex]].set_parameter(param["name"],self.feat_widgets[param["name"]].itemText(new_val)))
                 elif param["attr_type"] == "CommandFeature":
                     #If the feature type is not recognized, create a label with 
                     #the text error
