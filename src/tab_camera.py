@@ -979,7 +979,7 @@ class Tab_camera(QtWidgets.QWidget):
                     
                     #Call feature change for this feature when enter is pressed in this field.
                     #Text is the value that will be set to the feature.
-                    self.feat_widgets[param["name"]].valueChanged.connect(lambda new_val,param=param: global_camera.cams.active_devices[global_camera.active_cam[self.camIndex]].set_parameter(param["name"],new_val))
+                    self.feat_widgets[param["name"]].editingFinished.connect(lambda widgets=self.feat_widgets,param=param: global_camera.cams.active_devices[global_camera.active_cam[self.camIndex]].set_parameter(param["name"],widgets[param["name"]].value()))
                 elif param["attr_type"] == "FloatFeature":
                     #For float feature a Line edit field is created, but only 
                     #real numbers can be written in.
@@ -994,7 +994,7 @@ class Tab_camera(QtWidgets.QWidget):
                     
                     #Call feature change for this feature when enter is pressed in this field.
                     #Text is the value that will be set to the feature.
-                    self.feat_widgets[param["name"]].valueChanged.connect(lambda new_val,param=param: global_camera.cams.active_devices[global_camera.active_cam[self.camIndex]].set_parameter(param["name"],new_val))
+                    self.feat_widgets[param["name"]].editingFinished.connect(lambda widgets=self.feat_widgets,param=param: global_camera.cams.active_devices[global_camera.active_cam[self.camIndex]].set_parameter(param["name"],widgets[param["name"]].value()))
                 elif param["attr_type"] == "StringFeature":
                     #For string feature a Line edit field is created.
                     self.feat_widgets[param["name"]] = QtWidgets.QLineEdit(self)
@@ -1004,7 +1004,7 @@ class Tab_camera(QtWidgets.QWidget):
                     
                     #Call feature change for this feature when enter is pressed in this field.
                     #Text is the value that will be set to the feature.
-                    self.feat_widgets[param["name"]].returnPressed.connect(lambda new_val,param=param: global_camera.cams.active_devices[global_camera.active_cam[self.camIndex]].set_parameter(param["name"],new_val))            
+                    self.feat_widgets[param["name"]].editingFinished.connect(lambda widgets=self.feat_widgets,param=param: global_camera.cams.active_devices[global_camera.active_cam[self.camIndex]].set_parameter(param["name"],widgets[param["name"]].text()))            
                 elif param["attr_type"] == "BoolFeature":
                     #For bool feature a checkbox is created.
                     self.feat_widgets[param["name"]] = QtWidgets.QCheckBox(self)
