@@ -1189,7 +1189,12 @@ class Tab_camera(QtWidgets.QWidget):
                                                          directory="config.xml")
             
             #Save camera config to path specified in name (0 index)
-            global_camera.cams.active_devices[global_camera.active_cam[self.camIndex]].save_config(name[0])
+
+            if(name[0].endswith(".xml") and not name[0].endswith("/.xml")):
+                global_camera.cams.active_devices[global_camera.active_cam[self.camIndex]].save_config(name[0])
+                self.send_status_msg.emit("Configuration saved", 2500, self.camIndex)
+            else:
+                self.send_status_msg.emit("Incorrect file selected", 0, self.camIndex)
         else:
             self.send_status_msg.emit("Stop recording and preview before saving config", 0, self.camIndex)
 
@@ -1206,15 +1211,17 @@ class Tab_camera(QtWidgets.QWidget):
                                                              filter="XML files (*.xml)")
                
                 #Set label text to chosen folder path
-                if(name[0]):
+                if(name[0].endswith(".xml") and not name[0].endswith("/.xml")):
                     tries = 0
                     while(tries <= 10):
                         if(global_camera.cams.active_devices[global_camera.active_cam[self.camIndex]].load_config(name[0])):
-                            self.send_status_msg.emit("Configuration loaded", 0, self.camIndex)
+                            self.send_status_msg.emit("Configuration loaded", 2500, self.camIndex)
                             return
                         else:
                             tries += 1
                     self.send_status_msg.emit("Loading failed", 2500, self.camIndex)
+                else:
+                    self.send_status_msg.emit("Incorrect file selected", 0, self.camIndex)
             else:
                 self.send_status_msg.emit("Stop recording and preview before loading config", 0, self.camIndex)
         
