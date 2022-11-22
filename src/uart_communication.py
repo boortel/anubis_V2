@@ -5,7 +5,7 @@ baudrate_sett = 9600
 parity_sett = serial.PARITY_NONE
 bytesize_sett = serial.EIGHTBITS
 stopbits_sett = serial.STOPBITS_ONE
-timeout_sett = 0.5
+timeout_sett = 0.1
 
 
 def set_light(intensity, lightID, comport):
