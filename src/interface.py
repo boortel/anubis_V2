@@ -109,25 +109,26 @@ class Ui_MainWindow(QtCore.QObject):
         self.tabs.addTab(self.tab_connect, "")
 
         #Tab - Camera control
-        self.tab_camera_cfg1 = Tab_camera(0, 
+        self.tab_camera_cfg = []
+        self.tab_camera_cfg.append(Tab_camera(0, 
                                     self.preview_and_control.camera_preview_1, 
-                                    self.preview_and_control.preview_widgets[0].label_preview)
-        self.tabs.addTab(self.tab_camera_cfg1, "")
+                                    self.preview_and_control.preview_widgets[0].label_preview))
+        self.tabs.addTab(self.tab_camera_cfg[0], "")
 
-        self.tab_camera_cfg2 = Tab_camera(1, 
+        self.tab_camera_cfg.append(Tab_camera(1, 
                                     self.preview_and_control.camera_preview_2,
-                                    self.preview_and_control.preview_widgets[1].label_preview)
-        self.tabs.addTab(self.tab_camera_cfg2, "")
+                                    self.preview_and_control.preview_widgets[1].label_preview))
+        self.tabs.addTab(self.tab_camera_cfg[1], "")
 
-        self.tab_camera_cfg3 = Tab_camera(2, 
+        self.tab_camera_cfg.append(Tab_camera(2, 
                                     self.preview_and_control.camera_preview_3,
-                                    self.preview_and_control.preview_widgets[2].label_preview)
-        self.tabs.addTab(self.tab_camera_cfg3, "")
+                                    self.preview_and_control.preview_widgets[2].label_preview))
+        self.tabs.addTab(self.tab_camera_cfg[2], "")
 
-        self.tab_camera_cfg4 = Tab_camera(3, 
+        self.tab_camera_cfg.append(Tab_camera(3, 
                                     self.preview_and_control.camera_preview_4,
-                                    self.preview_and_control.preview_widgets[3].label_preview)
-        self.tabs.addTab(self.tab_camera_cfg4, "")
+                                    self.preview_and_control.preview_widgets[3].label_preview))
+        self.tabs.addTab(self.tab_camera_cfg[3], "")
 
         self.tabs.setTabEnabled(1, False)
         self.tabs.setTabEnabled(2, False)
@@ -137,10 +138,10 @@ class Ui_MainWindow(QtCore.QObject):
         self.gridLayout.addWidget(self.tabs, 0, 0, 2, 1)        
         
         #Tab - Dataset
-        self.tab_dataset = Tab_dataset([self.tab_camera_cfg1, 
-                                self.tab_camera_cfg2, 
-                                self.tab_camera_cfg3, 
-                                self.tab_camera_cfg4])
+        self.tab_dataset = Tab_dataset([self.tab_camera_cfg[0], 
+                                self.tab_camera_cfg[1], 
+                                self.tab_camera_cfg[2], 
+                                self.tab_camera_cfg[3]])
         self.tabs.addTab(self.tab_dataset, "")
 
 
@@ -305,10 +306,10 @@ class Ui_MainWindow(QtCore.QObject):
         MainWindow.setWindowTitle(_translate("MainWindow", "Anubis"))
 
         self.tabs.setTabText(self.tabs.indexOf(self.tab_connect), _translate("MainWindow", "Connect Camera"))
-        self.tabs.setTabText(self.tabs.indexOf(self.tab_camera_cfg1), _translate("MainWindow", "Camera 1"))
-        self.tabs.setTabText(self.tabs.indexOf(self.tab_camera_cfg2), _translate("MainWindow", "Camera 2"))
-        self.tabs.setTabText(self.tabs.indexOf(self.tab_camera_cfg3), _translate("MainWindow", "Camera 3"))
-        self.tabs.setTabText(self.tabs.indexOf(self.tab_camera_cfg4), _translate("MainWindow", "Camera 4"))
+        self.tabs.setTabText(self.tabs.indexOf(self.tab_camera_cfg[0]), _translate("MainWindow", "Camera 1"))
+        self.tabs.setTabText(self.tabs.indexOf(self.tab_camera_cfg[1]), _translate("MainWindow", "Camera 2"))
+        self.tabs.setTabText(self.tabs.indexOf(self.tab_camera_cfg[2]), _translate("MainWindow", "Camera 3"))
+        self.tabs.setTabText(self.tabs.indexOf(self.tab_camera_cfg[3]), _translate("MainWindow", "Camera 4"))
         self.tabs.setTabText(self.tabs.indexOf(self.tab_dataset), _translate("MainWindow", "Dataset"))
         
         self.menuFile.setTitle(_translate("MainWindow", "File"))
@@ -356,53 +357,18 @@ class Ui_MainWindow(QtCore.QObject):
         self.status_timer.timeout.connect(self.clear_status)
 
         #CAMERA TAB
-        self.tab_camera_cfg1.send_status_msg.connect(self.set_status_msg)
-        self.tab_camera_cfg2.send_status_msg.connect(self.set_status_msg)
-        self.tab_camera_cfg3.send_status_msg.connect(self.set_status_msg)
-        self.tab_camera_cfg4.send_status_msg.connect(self.set_status_msg)
-
-        self.tab_camera_cfg1.preview_update.connect(self.update_preview)
-        self.tab_camera_cfg1.connection_update.connect(self.update_camera_status)
-        self.tab_camera_cfg1.send_status_msg.connect(self.set_status_msg)
-        self.tab_camera_cfg1.recording_update.connect(self.update_recording)
-        self.tab_camera_cfg1.fps_info.connect(self.update_fps)
-        self.tab_camera_cfg1.received_info.connect(self.update_received_frames)
-
-        self.tab_camera_cfg2.preview_update.connect(self.update_preview)
-        self.tab_camera_cfg2.connection_update.connect(self.update_camera_status)
-        self.tab_camera_cfg2.send_status_msg.connect(self.set_status_msg)
-        self.tab_camera_cfg2.recording_update.connect(self.update_recording)
-        self.tab_camera_cfg2.fps_info.connect(self.update_fps)
-        self.tab_camera_cfg2.received_info.connect(self.update_received_frames)
-
-        self.tab_camera_cfg3.preview_update.connect(self.update_preview)
-        self.tab_camera_cfg3.connection_update.connect(self.update_camera_status)
-        self.tab_camera_cfg3.send_status_msg.connect(self.set_status_msg)
-        self.tab_camera_cfg3.recording_update.connect(self.update_recording)
-        self.tab_camera_cfg3.fps_info.connect(self.update_fps)
-        self.tab_camera_cfg3.received_info.connect(self.update_received_frames)
-
-        self.tab_camera_cfg4.preview_update.connect(self.update_preview)
-        self.tab_camera_cfg4.connection_update.connect(self.update_camera_status)
-        self.tab_camera_cfg4.send_status_msg.connect(self.set_status_msg)
-        self.tab_camera_cfg4.recording_update.connect(self.update_recording)
-        self.tab_camera_cfg4.fps_info.connect(self.update_fps)
-        self.tab_camera_cfg4.received_info.connect(self.update_received_frames)
-
-        self.tab_camera_cfg1.signal_update_parameters.connect(self.tab_camera_cfg1.update_parameters)
-        self.tab_camera_cfg2.signal_update_parameters.connect(self.tab_camera_cfg2.update_parameters)
-        self.tab_camera_cfg3.signal_update_parameters.connect(self.tab_camera_cfg3.update_parameters)
-        self.tab_camera_cfg4.signal_update_parameters.connect(self.tab_camera_cfg4.update_parameters)
+        for tab in range(0,4):
+            self.tab_camera_cfg[tab].send_status_msg.connect(self.set_status_msg)
+            self.tab_camera_cfg[tab].preview_update.connect(self.update_preview)
+            self.tab_camera_cfg[tab].connection_update.connect(self.update_camera_status)
+            self.tab_camera_cfg[tab].send_status_msg.connect(self.set_status_msg)
+            self.tab_camera_cfg[tab].recording_update.connect(self.update_recording)
+            self.tab_camera_cfg[tab].fps_info.connect(self.update_fps)
+            self.tab_camera_cfg[tab].received_info.connect(self.update_received_frames)
+            self.tab_camera_cfg[tab].signal_update_parameters.connect(self.tab_camera_cfg[tab].update_parameters)
         
-        self.tab_camera_cfg1.signal_show_parameters.connect(self.tab_camera_cfg1.show_parameters)
-        self.tab_camera_cfg2.signal_show_parameters.connect(self.tab_camera_cfg2.show_parameters)
-        self.tab_camera_cfg3.signal_show_parameters.connect(self.tab_camera_cfg3.show_parameters)
-        self.tab_camera_cfg4.signal_show_parameters.connect(self.tab_camera_cfg4.show_parameters)
-        
-        self.tab_camera_cfg1.signal_clear_parameters.connect(self.tab_camera_cfg1.clear_parameters)
-        self.tab_camera_cfg2.signal_clear_parameters.connect(self.tab_camera_cfg2.clear_parameters)
-        self.tab_camera_cfg3.signal_clear_parameters.connect(self.tab_camera_cfg3.clear_parameters)
-        self.tab_camera_cfg4.signal_clear_parameters.connect(self.tab_camera_cfg4.clear_parameters)
+            self.tab_camera_cfg[tab].signal_show_parameters.connect(self.tab_camera_cfg[tab].show_parameters)
+            self.tab_camera_cfg[tab].signal_clear_parameters.connect(self.tab_camera_cfg[tab].clear_parameters)
     
         #DATASET TAB
 
@@ -434,16 +400,16 @@ class Ui_MainWindow(QtCore.QObject):
             pass
         if index == 1:#Camera 1 tab
             #Request parameters from camera and show them in gui
-            self.tab_camera_cfg1.show_parameters()
+            self.tab_camera_cfg[0].show_parameters()
         if index == 2:#Camera 2 tab
             #Request parameters from camera and show them in gui
-            self.tab_camera_cfg2.show_parameters()
+            self.tab_camera_cfg[1].show_parameters()
         if index == 3:#Camera 3 tab
             #Request parameters from camera and show them in gui
-            self.tab_camera_cfg3.show_parameters()
+            self.tab_camera_cfg[2].show_parameters()
         if index == 4:#Camera 4 tab
             #Request parameters from camera and show them in gui
-            self.tab_camera_cfg4.show_parameters()
+            self.tab_camera_cfg[3].show_parameters()
     
     def set_status_msg(self, message, timeout=0):
         """!@brief Shows message in status bar
@@ -491,26 +457,23 @@ class Ui_MainWindow(QtCore.QObject):
         save_location = None,
         sequence_duration = None
         
-
-        with open("config.ini", 'r') as config:
-            for line in config:
-                #reading configuration for recording
-                line = line.rstrip('\n')
-                if(line.startswith("filename=")):
-                    filename = line.replace("filename=", "", 1)
-                    #self.line_edit_sequence_name.setText(line.replace("filename=", "", 1))
-                elif(line.startswith("save_location=")):
-                    save_location = line.replace("save_location=", "", 1)
-                    #self.line_edit_save_location.setText(line.replace("save_location=", "", 1))
-                elif(line.startswith("sequence_duration=")):
-                    sequence_duration = line.replace("sequence_duration=", "", 1)
-                    #self.line_edit_sequence_duration.setText(line.replace("sequence_duration=", "", 1))
-                    
-        self.tab_camera_cfg1.load_config(filename, save_location, sequence_duration)
-        self.tab_camera_cfg2.load_config(filename, save_location, sequence_duration)
-        self.tab_camera_cfg3.load_config(filename, save_location, sequence_duration)
-        self.tab_camera_cfg4.load_config(filename, save_location, sequence_duration)
-                
+        for tab_i in range(0,4):
+            with open("config.ini", 'r') as config:
+                for line in config:
+                    #reading configuration for recording
+                    line = line.rstrip('\n')
+                    if(line.startswith(f"filename{tab_i}=")):
+                        filename = line.replace(f"filename{tab_i}=", "", 1)
+                        #self.line_edit_sequence_name.setText(line.replace("filename=", "", 1))
+                    elif(line.startswith(f"save_location{tab_i}=")):
+                        save_location = line.replace(f"save_location{tab_i}=", "", 1)
+                        #self.line_edit_save_location.setText(line.replace("save_location=", "", 1))
+                    elif(line.startswith(f"sequence_duration{tab_i}=")):
+                        sequence_duration = line.replace(f"sequence_duration{tab_i}=", "", 1)
+                        sequence_duration = float(sequence_duration.replace(",","."))
+                        #self.line_edit_sequence_duration.setText(line.replace("sequence_duration=", "", 1))
+            
+            self.tab_camera_cfg[tab_i].load_config(filename, save_location, sequence_duration)        
         #Set status update
         self.set_status_msg("Configuration loaded",1500)
         
@@ -537,106 +500,29 @@ class Ui_MainWindow(QtCore.QObject):
         """
         self.tabs.setTabEnabled(tab+1, connected)
 
-        if tab == 0:
-            if(self.tab_camera_cfg1.connected == False and connected == True):
-                self.tab_camera_cfg1.connected = connected
-                self.tab_camera_cfg1.start_auto_refresh()  
-            elif(self.tab_camera_cfg1.connected == True and connected == False):
-                self.tab_camera_cfg1.connected = connected
-                self.tab_camera_cfg1.thread_reset.start()
+        if(self.tab_camera_cfg[tab].connected == False and connected == True):
+            self.tab_camera_cfg[tab].connected = connected
+            self.tab_camera_cfg[tab].start_auto_refresh()  
+        elif(self.tab_camera_cfg[tab].connected == True and connected == False):
+            self.tab_camera_cfg[tab].connected = connected
+            self.tab_camera_cfg[tab].thread_reset.start()
 
-            self.tab_camera_cfg1.connected = connected
+        self.tab_camera_cfg[tab].connected = connected
 
-            if name != "-1":
-                self.camera1_status.setText("Camera: " + name)
-                
-            if(state == 1):
-                self.camera1_icon.setPixmap(self.icon_standby)
-            elif(state == 2):
-                self.camera1_icon.setPixmap(self.icon_busy)
-            else:
-                self.camera1_icon.setPixmap(self.icon_offline)
-
-                self.update_preview(False, tab)
-                self.update_recording(False, tab)
-                self.update_fps(0, tab)
-                self.update_received_frames(0, tab)             
-
-        elif tab == 1:
-            if(self.tab_camera_cfg2.connected == False and connected == True):
-                self.tab_camera_cfg2.connected = connected
-                self.tab_camera_cfg2.start_auto_refresh() 
-            elif(self.tab_camera_cfg2.connected == True and connected == False):
-                self.tab_camera_cfg2.connected = connected
-                self.tab_camera_cfg2.thread_reset.start()
-
-            self.tab_camera_cfg2.connected = connected
-
-            if name != "-1":
-                self.camera2_status.setText("Camera: " + name)
-                
-            if(state == 1):
-                self.camera2_icon.setPixmap(self.icon_standby)    
-            elif(state == 2):
-                self.camera2_icon.setPixmap(self.icon_busy)
-            else:
-                self.camera2_icon.setPixmap(self.icon_offline)
-
-                self.update_preview(False, tab)
-                self.update_recording(False, tab)
-                self.update_fps(0, tab)
-                self.update_received_frames(0, tab) 
+        if name != "-1":
+            self.camera1_status.setText("Camera: " + name)
             
+        if(state == 1):
+            self.camera1_icon.setPixmap(self.icon_standby)
+        elif(state == 2):
+            self.camera1_icon.setPixmap(self.icon_busy)
+        else:
+            self.camera1_icon.setPixmap(self.icon_offline)
 
-        elif tab == 2:
-            if(self.tab_camera_cfg3.connected == False and connected == True):
-                self.tab_camera_cfg3.connected = connected
-                self.tab_camera_cfg3.start_auto_refresh()  
-            elif(self.tab_camera_cfg3.connected == True and connected == False):
-                self.tab_camera_cfg3.connected = connected
-                self.tab_camera_cfg3.thread_reset.start()
-            self.tab_camera_cfg3.connected = connected
-            
-
-            if name != "-1":
-                self.camera3_status.setText("Camera: " + name)
-                
-            if(state == 1):
-                self.camera3_icon.setPixmap(self.icon_standby)
-            elif(state == 2):
-                self.camera3_icon.setPixmap(self.icon_busy)
-            else:
-                self.camera3_icon.setPixmap(self.icon_offline)
-
-                self.update_preview(False, tab)
-                self.update_recording(False, tab)
-                self.update_fps(0, tab)
-                self.update_received_frames(0, tab) 
-
-
-        elif tab == 3:
-            if(self.tab_camera_cfg4.connected == False and connected == True): 
-                self.tab_camera_cfg4.connected = connected
-                self.tab_camera_cfg4.start_auto_refresh()  
-            elif(self.tab_camera_cfg4.connected == True and connected == False):
-                self.tab_camera_cfg4.connected = connected
-                self.tab_camera_cfg4.thread_reset.start()
-            self.tab_camera_cfg4.connected = connected
-
-            if name != "-1":
-                self.camera4_status.setText("Camera: " + name)
-                
-            if(state == 1):
-                self.camera4_icon.setPixmap(self.icon_standby)
-            elif(state == 2):
-                self.camera4_icon.setPixmap(self.icon_busy)
-            else:
-                self.camera4_icon.setPixmap(self.icon_offline)
-
-                self.update_preview(False, tab)
-                self.update_recording(False, tab)
-                self.update_fps(0, tab)
-                self.update_received_frames(0, tab)  
+            self.update_preview(False, tab)
+            self.update_recording(False, tab)
+            self.update_fps(0, tab)
+            self.update_received_frames(0, tab)              
         
         #Update dataset tab checkboxes
         self.tab_dataset.checkbox_enabler()
@@ -647,16 +533,16 @@ class Ui_MainWindow(QtCore.QObject):
         @param[in] state Tells whether the preview is active or not
         """
         if tab == 0:
-            self.tab_camera_cfg1.preview_live = state
+            self.tab_camera_cfg[0].preview_live = state
             self.preview1_live = state
         elif tab == 1:
-            self.tab_camera_cfg2.preview_live = state
+            self.tab_camera_cfg[1].preview_live = state
             self.preview2_live = state
         elif tab == 2:
-            self.tab_camera_cfg3.preview_live = state
+            self.tab_camera_cfg[2].preview_live = state
             self.preview3_live = state
         elif tab == 3:
-            self.tab_camera_cfg4.preview_live = state
+            self.tab_camera_cfg[3].preview_live = state
             self.preview4_live = state
     
     def update_recording(self, state, tab):
@@ -666,16 +552,16 @@ class Ui_MainWindow(QtCore.QObject):
         """
 
         if tab == 0:
-            self.tab_camera_cfg1.recording = state
+            self.tab_camera_cfg[0].recording = state
             self.recording1 = state
         elif tab == 1:
-            self.tab_camera_cfg2.recording = state
+            self.tab_camera_cfg[1].recording = state
             self.recording2 = state
         elif tab == 2:
-            self.tab_camera_cfg3.recording = state
+            self.tab_camera_cfg[2].recording = state
             self.recording3 = state
         elif tab == 3:
-            self.tab_camera_cfg4.recording = state
+            self.tab_camera_cfg[3].recording = state
             self.recording4 = state
 
     def update_fps(self, fps, tab):

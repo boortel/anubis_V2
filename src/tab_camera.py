@@ -843,12 +843,12 @@ class Tab_camera(QtWidgets.QWidget):
             
             for line in file_contents:
                 #Reading configuration for recording
-                if(line.startswith("filename=")):
-                    config.write("filename=" + self.line_edit_sequence_name.text() + "\n")
-                elif(line.startswith("save_location=")):
-                    config.write("save_location=" + self.line_edit_save_location.text() + "\n")
-                elif(line.startswith("sequence_duration=")):
-                    config.write("sequence_duration=" + self.line_edit_sequence_duration.text() + "\n")
+                if(line.startswith(f"filename{self.camIndex}=")):
+                    config.write(f"filename{self.camIndex}=" + self.line_edit_sequence_name.text() + "\n")
+                elif(line.startswith(f"save_location{self.camIndex}=")):
+                    config.write(f"save_location{self.camIndex}=" + self.line_edit_save_location.text() + "\n")
+                elif(line.startswith(f"sequence_duration{self.camIndex}=")):
+                    config.write(f"sequence_duration{self.camIndex}=" + self.line_edit_sequence_duration.text() + "\n")
                 else:
                     #All content not concerning recording is written back without change
                     config.write(line)
