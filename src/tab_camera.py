@@ -1190,7 +1190,9 @@ class Tab_camera(QtWidgets.QWidget):
             
             #Save camera config to path specified in name (0 index)
             global_camera.cams.active_devices[global_camera.active_cam[self.camIndex]].save_config(name[0])
-    
+        else:
+            self.send_status_msg.emit("Stop recording and preview before saving config", 0, self.camIndex)
+
     def load_cam_config(self):
         """!@brief Allows a user to choose saved xml configuration and load it
         into the camera
