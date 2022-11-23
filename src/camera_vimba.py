@@ -443,8 +443,6 @@ class Camera_vimba(Camera_template):
             if self.params_set_parameter["parameter_name"] == "PixelFormat":
                 self.cam.set_pixel_format(getattr(PixelFormat, self.params_set_parameter["new_value"]))
             else:
-                print(self.params_set_parameter["new_value"])
-                print(type(self.params_set_parameter["new_value"]))
 
                 getattr(self.cam, self.params_set_parameter["parameter_name"]).set(self.params_set_parameter["new_value"])
             self.params_set_parameter["return"] = True
@@ -561,7 +559,6 @@ class Camera_vimba(Camera_template):
     def _set_conversion_format(self):
         format = str(self.cam.get_pixel_format())
         
-        print(format)
 #TODO Many conditions can be merged together 
         if(format == "Mono8"):
             self.pixel_conversion = [None, None]
