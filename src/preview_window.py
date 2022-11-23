@@ -11,7 +11,7 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 
 
-class Preview_widget(object):
+class Preview_widget(QtWidgets.QWidget):
     def __init__(self, dialog, name):
         super(Preview_widget, self).__init__()
         self.name = name
@@ -26,7 +26,10 @@ class Preview_widget(object):
         self.w_preview_window = 0
         self.h_preview_window = 0
 
-        #self.connect_actions()
+        ##Last value of the dragging in the preview area - x axis
+        self.move_x_prev = 0
+        ##Last value of the dragging in the preview area - y axis
+        self.move_y_prev = 0
 
     def setupUi(self, Form):
         Form.setObjectName(self.name)
@@ -81,8 +84,15 @@ class Preview_widget(object):
         self.btn_zoom_fit.clicked.connect(lambda: self.set_zoom(0))
         self.btn_zoom_in.clicked.connect(lambda: self.set_zoom(1))
         self.btn_zoom_100.clicked.connect(lambda: self.set_zoom(100))
+        self.scrollArea.installEventFilter(self)
 
-
+        
+        self.scrollArea.horizontalScrollBar().setMinimum(0)
+        self.scrollArea.horizontalScrollBar().setMaximum(1920)
+        
+        self.scrollArea.verticalScrollBar().setMinimum(0)
+        self.scrollArea.verticalScrollBar().setMaximum(1080)
+        
     def retranslateUi(self, Form):
         _translate = QtCore.QCoreApplication.translate
         Form.setWindowTitle(_translate(self.name, self.name))
@@ -148,3 +158,32 @@ class Preview_widget(object):
         self.preview_zoom = 1
         self.w_preview_window = 0
         self.h_preview_window = 0
+
+    def eventFilter(self, obj, event):
+        """!@brief Implements dragging inside preview area
+        @details whin user cliks and drags inside of a preview area, this 
+        method is called and do the scrolling based on the distance dragged in
+        each direction.
+        """
+        if (obj == self.scrollArea):
+            if(event.type() == QtCore.QEvent.MouseMove ):
+                
+                if self.move_x_prev == 0:
+                    self.move_x_prev = event.pos().x()
+                if self.move_y_prev == 0:
+                    self.move_y_prev = event.pos().y()
+    
+                dist_x = self.move_x_prev - event.pos().x()
+                dist_y = self.move_y_prev - event.pos().y()
+                self.scrollArea.verticalScrollBar().setValue(
+                    self.scrollArea.verticalScrollBar().value() + dist_y)
+                self.scrollArea.horizontalScrollBar().setValue(
+                    self.scrollArea.horizontalScrollBar().value() + dist_x)
+                #self.preview_area.scrollContentsBy(dist_x,dist_y)
+                self.move_x_prev = event.pos().x()
+                self.move_y_prev = event.pos().y()
+
+            elif event.type() == QtCore.QEvent.MouseButtonRelease:
+                self.move_x_prev = 0
+                self.move_y_prev = 0
+        return QtWidgets.QWidget.eventFilter(self, obj, event)
