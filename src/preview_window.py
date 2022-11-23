@@ -144,4 +144,7 @@ class Preview_widget(object):
         self.label_preview.show()
 
     def reset(self):
-        pass
+        self.preview_fit = False
+        self.preview_zoom = 1
+        self.w_preview_window = 0
+        self.h_preview_window = 0
