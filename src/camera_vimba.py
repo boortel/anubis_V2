@@ -443,6 +443,9 @@ class Camera_vimba(Camera_template):
             if self.params_set_parameter["parameter_name"] == "PixelFormat":
                 self.cam.set_pixel_format(getattr(PixelFormat, self.params_set_parameter["new_value"]))
             else:
+                print(self.params_set_parameter["new_value"])
+                print(type(self.params_set_parameter["new_value"]))
+
                 getattr(self.cam, self.params_set_parameter["parameter_name"]).set(self.params_set_parameter["new_value"])
             self.params_set_parameter["return"] = True
         except (AttributeError, VimbaFeatureError):
@@ -468,15 +471,48 @@ class Camera_vimba(Camera_template):
         """!@brief Grab single frame from camera
         @return Unmodified frame from camera
         """
-        while(True):
-            try:
-                frame = self.cam.get_frame()
-                pixel_format = str(frame.get_pixel_format())
-                self.params_get_single_frame["return"] = [frame.as_opencv_image(), pixel_format]
-                self.flag_get_single_frame.set()
-                return
-            except:
-                pass
+        #while(True):     
+        # 
+        self._set_conversion_format()
+        frame = self.cam.get_frame()
+        pixel_format = None
+        frame_copy = None
+
+        if not self.pixel_conversion[1] == None:  
+            pixel_format = str(frame.get_pixel_format())
+            
+            frame_np = frame.as_numpy_ndarray()
+            if "16" in pixel_format:
+                frame_np = frame_np/256
+            elif "14" in pixel_format:
+                frame_np = frame_np/64
+            elif "12" in pixel_format:
+                frame_np = frame_np/16
+            elif "10" in pixel_format:
+                frame_np = frame_np/4
+
+            if not self.pixel_conversion[0] == None:
+                frame_copy = copy.deepcopy(cv2.cvtColor(frame_np.astype(np.uint8), self.pixel_conversion[0]))
+            else:
+                frame_copy = copy.deepcopy(frame_np.astype(np.uint8))
+            
+            format = self.pixel_conversion[1]
+
+        else:
+            frame_copy = copy.deepcopy(frame.as_opencv_image())
+            format = str(frame.get_pixel_format())
+        
+        self.params_get_single_frame["return"] = [frame_copy, format]
+        self.flag_get_single_frame.set()
+        return
+            #try:
+            #    frame = self.cam.get_frame()
+            #    pixel_format = str(frame.get_pixel_format())
+            #    self.params_get_single_frame["return"] = [frame.as_opencv_image(), pixel_format]
+            #    self.flag_get_single_frame.set()
+            #    return
+            #except:
+            #    pass
             
     def _load_config(self):
         """!@brief Load existing camera configuration
