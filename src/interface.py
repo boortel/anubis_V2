@@ -111,22 +111,22 @@ class Ui_MainWindow(QtCore.QObject):
         #Tab - Camera control
         self.tab_camera_cfg = []
         self.tab_camera_cfg.append(Tab_camera(0, 
-                                    self.preview_and_control.camera_preview_1, 
+                                    self.preview_and_control.camera_previews[0], 
                                     self.preview_and_control.preview_widgets[0]))
         self.tabs.addTab(self.tab_camera_cfg[0], "")
 
         self.tab_camera_cfg.append(Tab_camera(1, 
-                                    self.preview_and_control.camera_preview_2,
+                                    self.preview_and_control.camera_previews[1],
                                     self.preview_and_control.preview_widgets[1]))
         self.tabs.addTab(self.tab_camera_cfg[1], "")
 
         self.tab_camera_cfg.append(Tab_camera(2, 
-                                    self.preview_and_control.camera_preview_3,
+                                    self.preview_and_control.camera_previews[2],
                                     self.preview_and_control.preview_widgets[2]))
         self.tabs.addTab(self.tab_camera_cfg[2], "")
 
         self.tab_camera_cfg.append(Tab_camera(3, 
-                                    self.preview_and_control.camera_preview_4,
+                                    self.preview_and_control.camera_previews[3],
                                     self.preview_and_control.preview_widgets[3]))
         self.tabs.addTab(self.tab_camera_cfg[3], "")
 
