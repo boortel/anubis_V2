@@ -86,12 +86,6 @@ class Tab_camera(QtWidgets.QWidget):
         ##Height of the preview area
         self.h_preview = 0
 
-        self.image_pixmap_window = None
-        ##Width of the preview area
-        self.w_preview_window = 0
-        ##Height of the preview area
-        self.h_preview_window = 0
-
         ##Signals that a recording was stopped, either by timer or manually
         self.interrupt_flag = threading.Event()
 
@@ -366,9 +360,6 @@ class Tab_camera(QtWidgets.QWidget):
         self.image_pixmap = None
         self.w_preview = 0
         self.h_preview = 0
-        self.image_pixmap_window = None
-        self.w_preview_window = 0
-        self.h_preview_window = 0
         self.interrupt_flag.clear()
         self.fps = 0.0
         self.received = 0
@@ -377,6 +368,8 @@ class Tab_camera(QtWidgets.QWidget):
         self.preview_zoom = 1
         self.preview_fit = True
         self.connected = False
+
+        self.camera_preview_window.reset()
 
         self.thread_auto_refresh_params = threading.Thread(target=self.start_refresh_parameters)
         self.thread_auto_refresh_params.setDaemon(True)
@@ -572,28 +565,18 @@ class Tab_camera(QtWidgets.QWidget):
             w_preview = self.camera_preview.size().width()
             h_preview = self.camera_preview.size().height()
 
-            w_preview_window = self.camera_preview_window.size().width()
-            h_preview_window = self.camera_preview_window.size().height()
             
             image_scaled = image.scaled(w_preview, 
                                         h_preview, 
                                         QtCore.Qt.KeepAspectRatio)
 
-            image_scaled_window = image.scaled(w_preview_window, 
-                                        h_preview_window, 
-                                        QtCore.Qt.KeepAspectRatio)
-            
             #Set image to gui
             self.camera_preview.resize(w_preview,
                                        h_preview)
             self.camera_preview.setPixmap(QtGui.QPixmap.fromImage(image_scaled))
             self.camera_preview.show()
 
-             #Set image to gui
-            self.camera_preview_window.resize(w_preview_window,
-                                       h_preview_window)
-            self.camera_preview_window.setPixmap(QtGui.QPixmap.fromImage(image_scaled_window))
-            self.camera_preview_window.show()
+            self.camera_preview_window.draw_image(image, w, h)
             
             #Reset status icon
             self.connection_update.emit(True, 1, "-1", self.camIndex)
@@ -678,27 +661,16 @@ class Tab_camera(QtWidgets.QWidget):
                     image_scaled = image.scaled(self.w_preview, 
                                                 self.h_preview, 
                                                 QtCore.Qt.KeepAspectRatio)
-
-                    self.w_preview_window = self.camera_preview_window.size().width()
-                    self.h_preview_window = self.camera_preview_window.size().height()
-                    image_scaled_window = image.scaled(self.w_preview_window, 
-                                                        self.h_preview_window, 
-                                                        QtCore.Qt.KeepAspectRatio)
                 else:#else use zoom percentage
                     self.w_preview = w*self.preview_zoom
                     self.h_preview = h*self.preview_zoom
                     image_scaled = image.scaled(self.w_preview,
                                          self.h_preview,
                                          QtCore.Qt.KeepAspectRatio)
-
-                    self.w_preview_window = w*self.preview_zoom
-                    self.h_preview_window = h*self.preview_zoom
-                    image_scaled_window = image.scaled(self.w_preview_window,
-                                                self.h_preview_window,
-                                                QtCore.Qt.KeepAspectRatio)
                 
                 self.image_pixmap = QtGui.QPixmap.fromImage(image_scaled)
-                self.image_pixmap_window = QtGui.QPixmap.fromImage(image_scaled_window)
+
+                self.camera_preview_window.draw_image(image, w, h)
                 self.preview_callback()
                 #Set image to gui
             #Wait for next display frame
@@ -750,7 +722,8 @@ class Tab_camera(QtWidgets.QWidget):
         @details This method must run in the main thread as it modifies frontend
         data of the gui.
         """
-        if type(self.image_pixmap) == type(None) or type(self.image_pixmap_window) == type(None):
+        if type(self.image_pixmap) == type(None):
+            print("WILL NOT UPDATE")
             return
 
         #Resize preview label if preview window size changed
@@ -763,15 +736,7 @@ class Tab_camera(QtWidgets.QWidget):
         self.camera_preview.setPixmap(self.image_pixmap)
         self.camera_preview.show()
 
-        #Resize preview label if preview window size changed
-        if(self.w_preview_window != self.camera_preview_window.size().width() or
-                   self.h_preview_window != self.camera_preview_window.size().height()):
-            self.camera_preview_window.resize(self.w_preview_window,
-                                            self.h_preview_window)
-        
-        #set a new image to the preview area
-        self.camera_preview_window.setPixmap(self.image_pixmap_window)
-        self.camera_preview_window.show()
+        self.camera_preview_window.update()
 
     # ==============================================
     # Recording 
