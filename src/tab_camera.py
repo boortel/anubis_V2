@@ -7,7 +7,7 @@ from queue import Queue
 from src.config_level import Config_level
 
 import numpy as np
-import src.image_processing as imp
+from src.image_processing import Image_processing
 import time
 #import win32api
 import src.global_queue as global_queue
@@ -20,6 +20,8 @@ class Tab_camera(QtWidgets.QWidget):
     signal_update_parameters = Signal()
     signal_show_parameters = Signal()
     signal_clear_parameters = Signal()
+    signal_processing = Signal(bool)
+    signal_process_score = Signal(float)
 
     ##Camera Control signals
     send_status_msg = Signal(str, int, int)
@@ -106,6 +108,10 @@ class Tab_camera(QtWidgets.QWidget):
 
         ##True if the processing is enabled, False otherwise
         self.processing = False
+
+        ## Image processor object
+        self.imp = Image_processing()
+        #self.imp.setup_image_process("svdd_anubis/model")
 
         self.connected = False
 
@@ -385,6 +391,7 @@ class Tab_camera(QtWidgets.QWidget):
     def toggle_processing(self):
         """just toggle processing of the preview image"""
         self.processing = not self.processing
+        self.signal_processing.emit(self.processing)
 
     def record(self, fps = 0):
         """!@brief Starts and stops recording
@@ -620,9 +627,10 @@ class Tab_camera(QtWidgets.QWidget):
                 
                 if self.processing:
                     #Try to process the image
-                    image = imp.processImage_main(image)
+                    image, score = self.imp.processImage_main(image)
                     h, w, ch = image[0].shape
                     bytes_per_line = ch * w
+                    self.signal_process_score.emit(score)
                 else:
                     #Convert image to proper format for PyQt
                     h, w, ch = image[0].shape
@@ -1075,6 +1083,15 @@ class Tab_camera(QtWidgets.QWidget):
         self.update_flag.set()
         self.signal_update_parameters.emit()
     
+    def setup_image_process(self, path):
+        if self.processing:
+            self.processing = False
+            self.imp.setup_image_process(path)
+            self.processing = True
+        else:
+            self.imp.setup_image_process(path)
+
+            
     def update_parameters(self):
         """!@brief Writes new values of the parameters to the GUI.
         @details After get_new_val_parameters finishes, the update_flag is set 
