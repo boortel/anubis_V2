@@ -28,7 +28,6 @@ class Tab_connect(QtWidgets.QWidget):
         self.connect_actions()
         self.set_texts()
         
-
     def add_widgets(self):
         self.setObjectName("tab_connect")
         self.layout_main = QtWidgets.QVBoxLayout(self)
@@ -63,8 +62,6 @@ class Tab_connect(QtWidgets.QWidget):
         self.layout_buttons.addWidget(self.combo_tab_selector)
         
         self.layout_main.addWidget(self.list_detected_cameras)
-        
-        
 
     def connect_actions(self):
         self.btn_refresh_cameras.clicked.connect(self.refresh_cameras)
