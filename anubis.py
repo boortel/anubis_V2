@@ -1,5 +1,5 @@
 #    Anubis is a program to control industrial cameras and train and use artificial neural networks
-#    Copyright (C) 2021 Lukaszczyk Jakub
+#    Copyright (C) 2023 Lukaszczyk Jakub
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU General Public License as published by
@@ -14,13 +14,11 @@
 #    You should have received a copy of the GNU General Public License
 #    along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-
 """!@brief Main application file used to start and properly close the application
 """
 
 from PyQt5 import QtWidgets
 from src.interface import Ui_MainWindow
-
 #Start the app. UI and its behavior is defined in interface.py
 if __name__ == "__main__":
     import sys
