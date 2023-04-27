@@ -170,7 +170,7 @@ class Tab_dataset(QtWidgets.QWidget):
                 if cam.recording:
                     cam.record()
                 if cam.preview_live:
-                    cam.preview(1)
+                    cam.preview()
 
                 # set naming scheme on given tab
                 cam.line_edit_sequence_name.setText(self.lineEdit_naming_scheme.text())
@@ -184,11 +184,11 @@ class Tab_dataset(QtWidgets.QWidget):
                     cam.line_edit_sequence_duration.setValue(0)
                     global_camera.cams.active_devices[global_camera.active_cam[cam.camIndex]].set_parameter("AcquisitionMode",1)
                     #Trigger source is line1
-                    global_camera.cams.active_devices[global_camera.active_cam[cam.camIndex]].set_parameter("TriggerSource",2)
-                if self.radioButton_group0_2.isChecked():
+                    global_camera.cams.active_devices[global_camera.active_cam[cam.camIndex]].set_parameter("TriggerSource",1)
+                elif self.radioButton_group0_2.isChecked():
                     cam.line_edit_sequence_duration.setValue(self.doubleSpinBox_recording_time.value())
                     global_camera.cams.active_devices[global_camera.active_cam[cam.camIndex]].set_parameter("AcquisitionMode",1)
-                if self.radioButton_group0_3.isChecked():
+                elif self.radioButton_group0_3.isChecked():
                     cam.line_edit_sequence_duration.setValue(0)
                     global_camera.cams.active_devices[global_camera.active_cam[cam.camIndex]].set_parameter("AcquisitionMode",3)
                     global_camera.cams.active_devices[global_camera.active_cam[cam.camIndex]].set_parameter("AcquisitionFrameCount",self.spinBox_num_imgs.value())
@@ -209,7 +209,7 @@ class Tab_dataset(QtWidgets.QWidget):
             if self.checkBox_cameras[cam.camIndex].isChecked() and cam.connected:
                 # If preview or recording running -> stop it first
                 if cam.preview_live:
-                    cam.preview(1)
+                    cam.preview()
                 if cam.recording:
                     cam.record()
         

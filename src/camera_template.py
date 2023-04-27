@@ -201,7 +201,7 @@ class Camera_template:
             name_scheme = name_scheme + "(%n)"
         
         num = 0
-        extension = '.png'
+        extension = '.bmp'
         frame = None
         if fps > 0: 
             wait_time = 1/fps
