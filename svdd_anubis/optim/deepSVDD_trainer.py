@@ -11,7 +11,6 @@ import torch.optim as optim
 import numpy as np
 import copy
 
-from PIL import Image
 
 class DeepSVDDTrainer(BaseTrainer):
 
@@ -163,6 +162,35 @@ class DeepSVDDTrainer(BaseTrainer):
 
         return net
 
+    def test_image(self, image: torch.Tensor, net: BaseNet):
+        logger = logging.getLogger()
+        
+        # Set device for network
+        net = net.to(self.device)
+
+        # Testing
+        logger.info('Starting testing...')
+        start_time = time.time()
+        
+        idx_label_score = []
+        net.eval()
+        with torch.no_grad():
+            image = image.expand(1, -1, -1, -1)
+            inputs = image.to(self.device)
+            outputs = net(inputs)
+            dist = torch.sum((outputs - self.c) ** 2, dim=1)
+            if self.objective == 'soft-boundary':
+                scores = dist - self.R ** 2
+            elif self.objective == 'NN':
+                scores = outputs[..., 0]
+            else:
+                scores = dist
+            
+            self.test_time = time.time() - start_time
+            logger.info('Testing time: %.3f' % self.test_time)
+            logger.info('Finished testing.')
+            return scores.cpu().data.numpy().tolist()
+    
     def test(self, dataset: BaseADDataset, net: BaseNet):
         logger = logging.getLogger()
 
@@ -212,34 +240,6 @@ class DeepSVDDTrainer(BaseTrainer):
 
         logger.info('Finished testing.')
 
-    def test_image(self, image: torch.Tensor, net: BaseNet):
-        logger = logging.getLogger()
-        
-        # Set device for network
-        net = net.to(self.device)
-
-        # Testing
-        logger.info('Starting testing...')
-        start_time = time.time()
-        
-        idx_label_score = []
-        net.eval()
-        image = image.expand(1, -1, -1, -1)
-        inputs = image.to(self.device)
-        outputs = net(inputs)
-        dist = torch.sum((outputs - self.c) ** 2, dim=1)
-        if self.objective == 'soft-boundary':
-            scores = dist - self.R ** 2
-        elif self.objective == 'NN':
-            scores = outputs[..., 0]
-        else:
-            scores = dist
-        
-        self.test_time = time.time() - start_time
-        logger.info('Testing time: %.3f' % self.test_time)
-        logger.info('Finished testing.')
-        return scores.cpu().data.numpy().tolist()
-    
     def init_center_c(self, train_loader: DataLoader, net: BaseNet, eps=0.1):
         """Initialize hypersphere center c as the mean from an initial forward pass on the data."""
         n_samples = 0

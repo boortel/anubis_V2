@@ -14,11 +14,16 @@ from datasets.main import load_dataset
 # Settings
 ################################################################################
 @click.command()
-@click.argument('dataset_name', type=click.Choice(['mnist', 'cifar10','mydata100', 'mydata300',
+@click.argument('dataset_name', type=click.Choice(['top', 'side', 'lotus', 'mnist', 'cifar10','mydata100', 'mydata300',
                                                    'mydata100HRes', 'mydata300HRes','mydata100HRes_480',
-                                                   'mydata300HRes_480','bee']))
-@click.argument('net_name', type=click.Choice(['mnist_LeNet', 'cifar10_LeNet', 'cifar10_LeNet_ELU',
+                                                   'mydata300HRes_480','bee','mydata100aa','mydata300aa']))
+@click.argument('net_name', type=click.Choice(['lotus_LeNet','lotus_more_filters','lotus_fewer_filters', 'lotus_4conv', 'lotus_2conv', 'lotus_LeNet_single', 'mnist_LeNet', 'cifar10_LeNet', 'cifar10_LeNet_ELU',
                                                'my_LeNet', 'my_LeNet_480', 'my_LeNet_NN']))
+@click.option('--net_res', type=int, default=32,
+              help='Specify the model resolution.')
+@click.option('--net_rep_dim', type=int, default=128,
+              help='Specify the model reproduction dimension.')
+
 @click.argument('xp_path', type=click.Path(exists=True))
 @click.argument('data_path', type=click.Path(exists=True))
 @click.option('--load_config', type=click.Path(exists=True), default=None,
@@ -28,7 +33,7 @@ from datasets.main import load_dataset
 @click.option('--objective', type=click.Choice(['one-class', 'soft-boundary', 'NN']), default='one-class',
               help='Specify Deep SVDD objective ("one-class" or "soft-boundary").')
 @click.option('--nu', type=float, default=0.1, help='Deep SVDD hyperparameter nu (must be 0 < nu <= 1).')
-@click.option('--device', type=str, default='cuda', help='Computation device to use ("cpu", "cuda", "cuda:2", etc.).')
+@click.option('--device', type=str, default='cpu', help='Computation device to use ("cpu", "cuda", "cuda:2", etc.).')
 @click.option('--seed', type=int, default=-1, help='Set seed. If -1, use randomization.')
 @click.option('--optimizer_name', type=click.Choice(['adam', 'amsgrad']), default='adam',
               help='Name of the optimizer to use for Deep SVDD network training.')
@@ -56,7 +61,7 @@ from datasets.main import load_dataset
               help='Number of workers for data loading. 0 means that the data will be loaded in the main process.')
 @click.option('--normal_class', type=int, default=0,
               help='Specify the normal class of the dataset (all other classes are considered anomalous).')
-def main(dataset_name, net_name, xp_path, data_path, load_config, load_model, objective, nu, device, seed,
+def main(dataset_name, net_name, net_res, net_rep_dim, xp_path, data_path, load_config, load_model, objective, nu, device, seed,
          optimizer_name, lr, n_epochs, lr_milestone, batch_size, weight_decay, pretrain, ae_optimizer_name, ae_lr,
          ae_n_epochs, ae_lr_milestone, ae_batch_size, ae_weight_decay, n_jobs_dataloader, normal_class):
     """
@@ -82,6 +87,20 @@ def main(dataset_name, net_name, xp_path, data_path, load_config, load_model, ob
     file_handler.setFormatter(formatter)
     logger.addHandler(file_handler)
 
+    # If specified, load experiment config from JSON-file
+    if load_config:
+        cfg.load_config(import_json=load_config)
+        logger.info('Loaded configuration from %s.' % load_config)
+
+#TODO Dokumentovat, že jsem toto přidal
+        net_res = cfg.settings['net_res']
+        net_rep_dim = cfg.settings['net_rep_dim']
+        dataset_name = cfg.settings['dataset_name']
+        net_name =  cfg.settings['net_name']
+        pretrain = cfg.settings['pretrain']
+        n_jobs_dataloader =  cfg.settings['n_jobs_dataloader']
+        normal_class =  cfg.settings['normal_class']
+
     # Print arguments
     logger.info('Log file is %s.' % log_file)
     logger.info('Data path is %s.' % data_path)
@@ -90,11 +109,10 @@ def main(dataset_name, net_name, xp_path, data_path, load_config, load_model, ob
     logger.info('Dataset: %s' % dataset_name)
     logger.info('Normal class: %d' % normal_class)
     logger.info('Network: %s' % net_name)
+    logger.info('Network resolution: %d' % net_res)
+    logger.info('Network reproduction dimension: %d' % net_rep_dim)
 
-    # If specified, load experiment config from JSON-file
-    if load_config:
-        cfg.load_config(import_json=load_config)
-        logger.info('Loaded configuration from %s.' % load_config)
+    
 
     # Print configuration
     logger.info('Deep SVDD objective: %s' % cfg.settings['objective'])
@@ -117,11 +135,11 @@ def main(dataset_name, net_name, xp_path, data_path, load_config, load_model, ob
     logger.info('Number of dataloader workers: %d' % n_jobs_dataloader)
 
     # Load data
-    dataset = load_dataset(dataset_name, data_path, normal_class)
+    dataset = load_dataset(dataset_name, data_path, normal_class, net_res)
 
     # Initialize DeepSVDD model and set neural network \phi
     deep_SVDD = DeepSVDD(cfg.settings['objective'], cfg.settings['nu'])
-    deep_SVDD.set_network(net_name)
+    deep_SVDD.set_network(net_name, net_res, net_rep_dim)
     # If specified, load Deep SVDD model (radius R, center c, network weights, and possibly autoencoder weights)
     if load_model:
         deep_SVDD.load_model(model_path=load_model, load_ae=True)

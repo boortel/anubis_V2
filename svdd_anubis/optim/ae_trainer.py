@@ -43,20 +43,21 @@ class AETrainer(BaseTrainer):
         start_time = time.time()
         
         for epoch in range(self.n_epochs):
-            
             ae_net.train()
             loss_epoch = 0.0
             n_batches = 0
             epoch_start_time = time.time()
+            
             for data in train_loader:
                 inputs, _, _ = data
                 inputs = inputs.to(self.device)
 
                 # Zero the network parameter gradients
                 optimizer.zero_grad()
-
                 # Update network parameters via backpropagation: forward + backward + optimize
                 outputs = ae_net(inputs)
+                #inputs = inputs.unsqueeze(-1)
+                #print(outputs - inputs)
                 scores = torch.sum((outputs - inputs) ** 2, dim=tuple(range(1, outputs.dim())))
                 loss = torch.mean(scores)
                 loss.backward()
@@ -81,6 +82,8 @@ class AETrainer(BaseTrainer):
                         inputs = inputs.to(self.device)
             
                         outputs = ae_net(inputs)
+                        
+                        #inputs = inputs.unsqueeze(-1)
                         scores = torch.sum((outputs - inputs) ** 2, dim=tuple(range(1, outputs.dim())))
                         loss = torch.mean(scores)
                         idx_label_score += list(zip(idx.cpu().data.numpy().tolist(),
@@ -140,6 +143,8 @@ class AETrainer(BaseTrainer):
                 inputs, labels, idx = data
                 inputs = inputs.to(self.device)
                 outputs = ae_net(inputs)
+                
+                #inputs = inputs.unsqueeze(-1)
                 scores = torch.sum((outputs - inputs) ** 2, dim=tuple(range(1, outputs.dim())))
                 loss = torch.mean(scores)
 

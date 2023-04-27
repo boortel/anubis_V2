@@ -37,6 +37,8 @@ class DeepSVDD(object):
 
         self.net_name = None
         self.net = None  # neural network \phi
+        self.net_res = None
+        self.net_rep_dim = None
 
         self.trainer = None
         self.optimizer_name = None
@@ -52,10 +54,19 @@ class DeepSVDD(object):
             'test_scores': None,
         }
 
-    def set_network(self, net_name):
+    def set_network(self, net_name,  net_res, net_rep_dim):
         """Builds the neural network \phi."""
         self.net_name = net_name
-        self.net = build_network(net_name)
+        self.net_res = net_res
+        self.net_rep_dim = net_rep_dim
+        self.net = build_network(net_name, net_res, net_rep_dim)
+
+    def set_ae_network(self):
+        """Builds the neural network \phi."""
+        if self.net_res != None:
+            self.ae_net = build_autoencoder(self.net_name, self.net_res, self.net_rep_dim)
+        else:
+            print("Please first define net!")
 
     def train(self, dataset: BaseADDataset, optimizer_name: str = 'adam', lr: float = 0.001, n_epochs: int = 50,
               lr_milestones: tuple = (), batch_size: int = 128, weight_decay: float = 1e-6, device: str = 'cuda',
@@ -72,6 +83,16 @@ class DeepSVDD(object):
         self.c = self.trainer.c.cpu().data.numpy().tolist()  # get list
         self.results['train_time'] = self.trainer.train_time
 
+    def test_image(self, image: torch.Tensor, device: str = 'cuda'):
+        """Tests the Deep SVDD model on the test image.
+           return scores
+        """
+
+        if self.trainer is None:
+            self.trainer = DeepSVDDTrainer(self.objective, self.R, self.c, self.nu,
+                                           device=device, n_jobs_dataloader=0, batch_size=1)
+        return self.trainer.test_image(image, self.net)
+
     def test(self, dataset: BaseADDataset, device: str = 'cuda', n_jobs_dataloader: int = 0, batch_size: int = 128):
         """Tests the Deep SVDD model on the test data."""
 
@@ -84,23 +105,13 @@ class DeepSVDD(object):
         self.results['test_auc'] = self.trainer.test_auc
         self.results['test_time'] = self.trainer.test_time
         self.results['test_scores'] = self.trainer.test_scores
-        
-    def test_image(self, image: torch.Tensor, device: str = 'cuda'):
-        """Tests the Deep SVDD model on the test image.
-           return scores
-        """
-
-        if self.trainer is None:
-            self.trainer = DeepSVDDTrainer(self.objective, self.R, self.c, self.nu,
-                                           device=device, n_jobs_dataloader=0, batch_size=1)
-        return self.trainer.test_image(image, self.net)
 
     def pretrain(self, dataset: BaseADDataset, optimizer_name: str = 'adam', lr: float = 0.001, n_epochs: int = 100,
                  lr_milestones: tuple = (), batch_size: int = 128, weight_decay: float = 1e-6, device: str = 'cuda',
                  n_jobs_dataloader: int = 0):
         """Pretrains the weights for the Deep SVDD network \phi via autoencoder."""
 
-        self.ae_net = build_autoencoder(self.net_name)
+        self.set_ae_network()
         self.ae_optimizer_name = optimizer_name
         self.ae_trainer = AETrainer(optimizer_name, lr=lr, n_epochs=n_epochs, lr_milestones=lr_milestones,
                                     batch_size=batch_size, weight_decay=weight_decay, device=device,
@@ -133,17 +144,17 @@ class DeepSVDD(object):
                     'net_dict': net_dict,
                     'ae_net_dict': ae_net_dict}, export_model)
 
-    def load_model(self, model_path, load_ae=False, device=torch.device('cuda')):
+    def load_model(self, model_path, load_ae=False, map_location="cuda"):
         """Load Deep SVDD model from model_path."""
 
-        model_dict = torch.load(model_path, device)
+        model_dict = torch.load(model_path, map_location=map_location)
 
         self.R = model_dict['R']
         self.c = model_dict['c']
         self.net.load_state_dict(model_dict['net_dict'])
         if load_ae:
             if self.ae_net is None:
-                self.ae_net = build_autoencoder(self.net_name)
+                self.ae_net = build_autoencoder(self.net_name, self.net_res, self.net_rep_dim)
             self.ae_net.load_state_dict(model_dict['ae_net_dict'])
 
     def save_results(self, export_json):
